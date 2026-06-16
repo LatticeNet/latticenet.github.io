@@ -17,6 +17,9 @@ released and secured independently.
 ## Current release shape
 
 - Server image: `ghcr.io/latticenet/lattice-server`.
+- Dashboard: canonical Vue console embedded in the server image, currently
+  covering Login, Overview, Security & 2FA, Nodes, Fleet Map, Approvals, Tasks,
+  and Audit.
 - Agent binaries: `lattice-agent-linux-amd64`, `lattice-agent-linux-arm64`, and
   `SHA256SUMS` on GitHub Releases.
 - Docs/site: GitHub Pages.
