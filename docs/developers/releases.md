@@ -9,11 +9,13 @@ contract, docs, and plugin index.
 
 ```txt
 ghcr.io/latticenet/lattice-server:main
+ghcr.io/latticenet/lattice-server:latest
 ghcr.io/latticenet/lattice-server:<tag>
 ```
 
 Use a version tag or digest for production deployments. `:main` is useful for
-testing but should not be the long-term production pin.
+testing, and `:latest` is only a compatibility alias for the default-branch
+image; neither should be the long-term production pin.
 
 ## Node-agent binaries
 

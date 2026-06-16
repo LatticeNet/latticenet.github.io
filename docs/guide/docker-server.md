@@ -9,7 +9,8 @@ ghcr.io/latticenet/lattice-server
 ```
 
 Use a version tag or digest for production. `:main` is acceptable for a first
-private test, but avoid unattended mutable tags for long-running deployments.
+private test, and `:latest` is published only as a compatibility alias. Avoid
+unattended mutable tags for long-running deployments.
 
 ## Compose
 
@@ -24,6 +25,10 @@ docker compose up -d
 
 The compose file binds the server to `127.0.0.1:8088`. Put a trusted HTTPS
 reverse proxy in front of it.
+
+The first boot creates `data/master.key` automatically. Do not set
+`LATTICE_MASTER_KEY_FILE` unless you are mounting an existing key from a restore
+or secret manager; pointing it at a missing file makes startup fail closed.
 
 ## Required settings
 

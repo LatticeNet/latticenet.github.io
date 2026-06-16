@@ -44,6 +44,23 @@ const checks = [
       "runner sandbox maturity",
     ],
   },
+  {
+    file: "docs/guide/docker-server.md",
+    patterns: [
+      "`:latest` is published only as a compatibility alias",
+      "The first boot creates `data/master.key` automatically",
+      "pointing it at a missing file makes startup fail closed",
+    ],
+  },
+  {
+    file: "docs/guide/index.md",
+    patterns: [
+      "OIDC/SSO is optional",
+      "pre-creates local users",
+      "verified IdP email",
+      "Lattice still issues its own `lattice_session` cookie",
+    ],
+  },
 ];
 
 let failed = false;

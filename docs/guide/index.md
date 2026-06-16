@@ -37,6 +37,15 @@ configure intent -> render reviewed plan -> approve hash -> queue task -> agent 
 That shape is used for nft, DNS, proxy-core apply, and server-controlled
 node-agent updates.
 
+## Login and SSO
+
+The bootstrap path is a local admin password, then TOTP. OIDC/SSO is optional:
+an admin configures a provider in the dashboard, registers the redirect URL with
+that identity provider, and pre-creates local users whose usernames match the
+verified IdP email. The first successful SSO login binds the provider subject to
+that local user; Lattice still issues its own `lattice_session` cookie and still
+requires local TOTP when enabled.
+
 ## What to back up
 
 Back up server data and encryption material together:
