@@ -49,7 +49,9 @@ const checks = [
   {
     file: "docs/guide/docker-server.md",
     patterns: [
-      "`:latest` is published only as a compatibility alias",
+      "`:latest` for the current stable image",
+      "`:alpha` for the moving alpha test",
+      "no `main` image channel",
       "The first boot creates `data/master.key` automatically",
       "pointing it at a missing file makes startup fail closed",
       "fixes ownership of the mounted data directory",

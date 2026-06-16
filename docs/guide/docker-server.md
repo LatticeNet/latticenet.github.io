@@ -8,9 +8,9 @@ The public image is:
 ghcr.io/latticenet/lattice-server
 ```
 
-Use a version tag or digest for production. `:main` is acceptable for a first
-private test, and `:latest` is published only as a compatibility alias. Avoid
-unattended mutable tags for long-running deployments.
+Use `:latest` for the current stable image, `:alpha` for the moving alpha test
+channel, and a version tag or digest for unattended production deployments.
+There is intentionally no `main` image channel.
 
 ## Compose
 

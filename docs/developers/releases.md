@@ -8,14 +8,15 @@ contract, docs, and plugin index.
 `lattice-server` publishes to GHCR from its container workflow.
 
 ```txt
-ghcr.io/latticenet/lattice-server:main
 ghcr.io/latticenet/lattice-server:latest
-ghcr.io/latticenet/lattice-server:<tag>
+ghcr.io/latticenet/lattice-server:alpha
+ghcr.io/latticenet/lattice-server:<version>
 ```
 
-Use a version tag or digest for production deployments. `:main` is useful for
-testing, and `:latest` is only a compatibility alias for the default-branch
-image; neither should be the long-term production pin.
+Image publication is tag-driven. Stable `v*` tags publish the matching version
+tag plus `:latest`; the moving `alpha` git tag publishes `:alpha`. There is no
+`main` image channel. Use a version tag or digest for unattended production
+deployments.
 
 ## Node-agent binaries
 
