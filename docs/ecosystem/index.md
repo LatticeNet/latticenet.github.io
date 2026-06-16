@@ -8,7 +8,7 @@ released and secured independently.
 | [`lattice`](https://github.com/LatticeNet/lattice) | Umbrella docs, roadmap, compose, workspace orchestration | GitHub repo docs |
 | [`lattice-server`](https://github.com/LatticeNet/lattice-server) | Control plane server and APIs | GHCR image |
 | [`lattice-node-agent`](https://github.com/LatticeNet/lattice-node-agent) | Outbound node agent | GitHub Release binaries |
-| [`lattice-dashboard`](https://github.com/LatticeNet/lattice-dashboard) | Static dashboard | Bundled into server image |
+| [`lattice-dashboard`](https://github.com/LatticeNet/lattice-dashboard) | Vue static operator console | Bundled into server image |
 | [`lattice-sdk`](https://github.com/LatticeNet/lattice-sdk) | Shared Go model/contracts | Semver Git tags |
 | [`lattice-plugin-template`](https://github.com/LatticeNet/lattice-plugin-template) | Plugin author kit | Template repo |
 | [`lattice-plugin-index`](https://github.com/LatticeNet/lattice-plugin-index) | Signed plugin marketplace index | Static signed JSON |

@@ -8,7 +8,7 @@ own release and security boundary.
 | [`lattice`](https://github.com/LatticeNet/lattice) | Umbrella docs, roadmap, compose files, workspace orchestration |
 | [`lattice-server`](https://github.com/LatticeNet/lattice-server) | Go control plane, APIs, storage, approvals, task queue |
 | [`lattice-node-agent`](https://github.com/LatticeNet/lattice-node-agent) | Outbound node agent and bounded task executor |
-| [`lattice-dashboard`](https://github.com/LatticeNet/lattice-dashboard) | Static dashboard assets |
+| [`lattice-dashboard`](https://github.com/LatticeNet/lattice-dashboard) | Vue static operator console |
 | [`lattice-sdk`](https://github.com/LatticeNet/lattice-sdk) | Shared Go model and wire contracts |
 | [`lattice-plugin-template`](https://github.com/LatticeNet/lattice-plugin-template) | Plugin authoring kit |
 | [`lattice-plugin-index`](https://github.com/LatticeNet/lattice-plugin-index) | Static signed plugin index foundation |
