@@ -18,6 +18,8 @@ const checks = [
       "lattice-agent-linux-arm64",
       "SHA256SUMS",
       "lattice-agent.service",
+      "`node-token` is a per-node bearer token",
+      "The dashboard install script downloads the matching Linux release artifact",
     ],
   },
   {
@@ -51,6 +53,9 @@ const checks = [
       "The first boot creates `data/master.key` automatically",
       "pointing it at a missing file makes startup fail closed",
       "fixes ownership of the mounted data directory",
+      "conflicting server name",
+      "Full (strict)",
+      "Bypass cache",
     ],
   },
   {
