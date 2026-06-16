@@ -50,6 +50,7 @@ const checks = [
       "`:latest` is published only as a compatibility alias",
       "The first boot creates `data/master.key` automatically",
       "pointing it at a missing file makes startup fail closed",
+      "fixes ownership of the mounted data directory",
     ],
   },
   {

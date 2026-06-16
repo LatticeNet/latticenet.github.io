@@ -30,6 +30,10 @@ The first boot creates `data/master.key` automatically. Do not set
 `LATTICE_MASTER_KEY_FILE` unless you are mounting an existing key from a restore
 or secret manager; pointing it at a missing file makes startup fail closed.
 
+The image entrypoint fixes ownership of the mounted data directory before
+dropping privileges to the `lattice` user, so a root-created `./data` directory
+from the quickstart works without running the server process as root.
+
 ## Required settings
 
 ```ini
