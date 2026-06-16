@@ -3,23 +3,25 @@ import { defineConfig } from "vitepress";
 export default defineConfig({
   lang: "en-US",
   title: "LatticeNet",
-  description: "Security-first fleet monitoring, automation, and network control plane.",
+  description: "Reviewed control plane for self-hosted fleet operations, node automation, DNS, proxy-core, and signed plugins.",
   cleanUrls: true,
   lastUpdated: true,
   head: [
-    ["meta", { name: "theme-color", content: "#0f766e" }],
+    ["meta", { name: "theme-color", content: "#f5efe4" }],
     ["meta", { property: "og:type", content: "website" }],
     ["meta", { property: "og:title", content: "LatticeNet" }],
-    ["meta", { property: "og:description", content: "Security-first fleet monitoring, automation, and network control plane." }],
+    ["meta", { property: "og:description", content: "Reviewed control plane for self-hosted fleet operations, node automation, DNS, proxy-core, and signed plugins." }],
+    ["meta", { name: "twitter:card", content: "summary_large_image" }],
   ],
   themeConfig: {
     logo: "/logo.svg",
     siteTitle: "LatticeNet",
     nav: [
-      { text: "Guide", link: "/guide/" },
+      { text: "Install", link: "/guide/docker-server" },
       { text: "Security", link: "/security/" },
       { text: "Plugins", link: "/plugins/" },
-      { text: "Ecosystem", link: "/ecosystem/" },
+      { text: "Developers", link: "/developers/" },
+      { text: "Roadmap", link: "/ecosystem/roadmap" },
       { text: "GitHub", link: "https://github.com/LatticeNet" },
     ],
     sidebar: {
@@ -54,6 +56,15 @@ export default defineConfig({
           ],
         },
       ],
+      "/developers/": [
+        {
+          text: "Developers",
+          items: [
+            { text: "Developer Guide", link: "/developers/" },
+            { text: "Release Workflow", link: "/developers/releases" },
+          ],
+        },
+      ],
       "/ecosystem/": [
         {
           text: "Ecosystem",
@@ -71,7 +82,7 @@ export default defineConfig({
       provider: "local",
     },
     footer: {
-      message: "Released under the MIT License.",
+      message: "Security-first, self-hosted, and release-gated.",
       copyright: "Copyright 2026 LatticeNet contributors",
     },
   },

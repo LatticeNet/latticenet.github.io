@@ -1,9 +1,9 @@
 # Plugin Marketplace
 
-The Lattice marketplace starts as a signed plugin index, not an open upload
-store.
+The first Lattice marketplace is a read-only signed index, not an open upload
+store and not a remote execution channel.
 
-## Current State
+## Current state
 
 Implemented in Lattice:
 
@@ -15,14 +15,17 @@ Implemented in Lattice:
 - capability broker;
 - noop runtime manager.
 
+Plugin artifact execution is still disabled by default. The dashboard may show
+marketplace metadata, but it does not install or execute remote community bundles automatically.
+
 Not implemented yet:
 
-- remote index installation;
+- remote index install workflow;
 - plugin artifact execution;
 - system/worker/wasm runner isolation;
 - community plugin publishing flow.
 
-## Planned Sources
+## Planned sources
 
 ```txt
 official   LatticeNet signed and reviewed
@@ -37,13 +40,19 @@ Official index repository:
 https://github.com/LatticeNet/lattice-plugin-index
 ```
 
-## Local Storage
+## Local storage
 
 Installed bundle bytes are local server files under `LATTICE_PLUGIN_DIR`, for
-example `/plugins/example.plugin/{manifest.json,artifact}`. The server stores
-only lifecycle metadata, verified identity, capabilities, digest, timestamps,
-and runtime health in its state store. Plugin-owned durable data should use a
-plugin namespace such as `plugin:<id>`.
+example:
+
+```txt
+/plugins/example.plugin/manifest.json
+/plugins/example.plugin/artifact
+```
+
+The server stores lifecycle metadata, verified identity, capabilities, digest,
+timestamps, and runtime health in its state store. Plugin-owned durable data
+should use a plugin namespace such as `plugin:<id>`.
 
 The recommended Docker mount is read-only:
 
@@ -51,11 +60,12 @@ The recommended Docker mount is read-only:
 ./plugins -> /plugins:ro
 ```
 
-## Safety Rule
+## Safety rule
 
 A marketplace entry is only an install candidate. It must never bypass manifest
-verification, capability review, or the lifecycle gate.
+verification, capability review, trusted-publisher policy, or the lifecycle
+gate.
 
-Until remote install and runner sandboxing are reviewed, the dashboard should
-display marketplace metadata only; it should not install or execute remote
-community bundles automatically.
+Marketplace install must remain separate from runner activation. Real community
+plugin execution depends on runner sandbox maturity, limits, audit, and rollback
+behavior.

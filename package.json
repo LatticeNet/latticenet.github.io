@@ -4,10 +4,11 @@
   "private": true,
   "type": "module",
   "scripts": {
-    "docs:dev": "vitepress dev docs --host 127.0.0.1",
-    "docs:build": "vitepress build docs",
-    "docs:preview": "vitepress preview docs --host 127.0.0.1",
-    "check": "vitepress build docs"
+    "docs:dev": "node scripts/generate-hero.mjs && vitepress dev docs --host 127.0.0.1",
+    "docs:build": "node scripts/generate-hero.mjs && vitepress build docs",
+    "docs:preview": "node scripts/generate-hero.mjs && vitepress preview docs --host 127.0.0.1",
+    "test": "node scripts/check-site-content.mjs && npm run docs:build",
+    "check": "npm test"
   },
   "devDependencies": {
     "vitepress": "^1.6.4"

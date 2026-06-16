@@ -26,12 +26,13 @@ jobs:
         uses: actions/setup-node@v4
         with:
           node-version: 22
+          cache: npm
       - name: setup pages
         uses: actions/configure-pages@v5
       - name: install
-        run: npm install --no-audit --no-fund
-      - name: build
-        run: npm run docs:build
+        run: npm ci --no-audit --no-fund
+      - name: test and build
+        run: npm test
       - name: upload artifact
         uses: actions/upload-pages-artifact@v3
         with:

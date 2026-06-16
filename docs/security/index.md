@@ -1,39 +1,52 @@
 # Security Model
 
-Lattice is security-first, not magic. It reduces operational risk by separating
-identity, intent, review, execution, result reporting, and audit.
+Lattice reduces operational risk by separating identity, intent, review,
+execution, result reporting, and audit.
 
 ## Defaults
 
 - Agents dial out to the server.
-- Management APIs are intended for localhost, WireGuard, Cloudflare Access, or a
-  trusted HTTPS reverse proxy.
+- The control plane should sit behind localhost, WireGuard, Cloudflare Access,
+  or a trusted HTTPS reverse proxy.
 - High-risk host mutations require reviewed approvals.
+- Pending high-risk approvals require the dashboard-computed SHA-256 of the
+  visible plan.
 - API tokens use scopes and node allowlists.
 - Plugin host APIs are capability-gated and audited.
 - Secrets are encrypted at rest when `master.key` is present.
 - Audit events are append-only and hash-chained.
 
-## Host Mutation
+## Host mutation
 
-Any feature that changes nft, DNS, proxy-core configs, or the agent binary should
-follow:
+Any feature that changes nft, DNS, proxy-core configs, or the agent binary
+follows:
 
 ```txt
 plan -> review -> approve(plan_sha256) -> queue task -> result -> audit
 ```
 
-Unknown future plugins with reviewable plans should fail closed until they
-choose explicit approval semantics.
+Agent updates add artifact gates: HTTPS URL, SHA-256, and a candidate version
+that must match the policy target before install.
+
+## Plugin trust
+
+Plugins are capability-scoped. Host-risk plugins require signed manifests from
+trusted publishers unless the operator explicitly accepts local development
+risk.
+
+Plugin artifact execution is not enabled by default. The current runtime
+foundation can register lifecycle state and broker capabilities, but real
+system, worker, and wasm runners remain gated by sandbox maturity.
 
 ## Network
 
 Host-side firewalling helps, but upstream DDoS protection still matters. If
-traffic saturates the uplink before it reaches your server, nftables/XDP cannot
-recover the lost bandwidth. Use cloud security groups, upstream ACLs, or DDoS
-protection for public services.
+traffic saturates the uplink before it reaches your server, nftables or XDP on
+that host cannot recover the lost bandwidth. Use cloud security groups,
+upstream ACLs, or DDoS protection for public services.
 
-## Residual Risk
+## Residual risk
 
 Privileged node execution is inherently dangerous. Only enable `-allow-exec` and
-`-allow-root-exec` on nodes where reviewed host mutation is required.
+`-allow-root-exec` on nodes where reviewed host mutation is required, and keep
+release artifacts pinned by version and digest.

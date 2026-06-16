@@ -22,6 +22,9 @@ plugin artifact code does not execute by default
 The runtime manager can arm a noop runner and report lifecycle health. Concrete
 system, worker, and wasm runners are future work.
 
+This means a verified plugin bundle can be known to the server without giving
+its artifact code execution privileges.
+
 ## Bundle Layout
 
 ```txt
@@ -46,3 +49,6 @@ still require:
 5. register lifecycle state.
 
 Community host-risk plugins should remain blocked by default.
+
+Marketplace install should remain separate from activation, and activation
+should depend on runner sandbox maturity for the selected plugin tier.

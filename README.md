@@ -15,11 +15,19 @@ npm install
 npm run docs:dev
 ```
 
+The homepage generates a deterministic bitmap hero asset before dev/build.
+
 ## Build
 
 ```sh
+npm test
 npm run docs:build
 ```
+
+`npm test` runs content consistency checks before the VitePress build. Those
+checks intentionally guard project facts that tend to drift: Docker server
+deployment, GitHub Release agent binaries, target-bound agent updates, and the
+plugin marketplace safety boundary.
 
 ## Deployment
 
