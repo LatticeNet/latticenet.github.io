@@ -19,7 +19,7 @@ SHA256SUMS
 Install the matching architecture:
 
 ```sh
-VERSION=v0.2.1
+VERSION=v0.2.2
 ARCH=amd64
 curl -fsSLO "https://github.com/LatticeNet/lattice-node-agent/releases/download/${VERSION}/lattice-agent-linux-${ARCH}"
 curl -fsSLO "https://github.com/LatticeNet/lattice-node-agent/releases/download/${VERSION}/SHA256SUMS"
@@ -71,8 +71,8 @@ inbound SSH server and it does not require storing SSH credentials in Lattice.
 The agent keeps its no-inbound-listener model: it polls the server for pending
 sessions, receives input, and posts output back to the dashboard.
 
-Terminal mode is off by default. Enable it only on nodes where interactive shell
-access through Lattice is acceptable:
+Terminal mode requires `lattice-agent 0.2.2+` and is off by default. Enable it
+only on nodes where interactive shell access through Lattice is acceptable:
 
 ```sh
 lattice-agent \
@@ -253,8 +253,8 @@ target version + HTTPS binary URL + SHA-256 + install path + service name
 For the default service above:
 
 ```txt
-target version: 0.2.1
-binary URL: https://github.com/LatticeNet/lattice-node-agent/releases/download/v0.2.1/lattice-agent-linux-amd64
+target version: 0.2.2
+binary URL: https://github.com/LatticeNet/lattice-node-agent/releases/download/v0.2.2/lattice-agent-linux-amd64
 SHA-256: value from SHA256SUMS
 install path: /usr/local/bin/lattice-agent
 service name: lattice-agent.service
