@@ -45,6 +45,16 @@ Copy the generated Client ID and Client Secret into Lattice.
 
 Open **Settings -> Single Sign-On -> New provider**.
 
+The dialog shows the redirect URI for the current dashboard origin. If the
+dashboard is served at `https://lattice.example.com`, the value is:
+
+```txt
+https://lattice.example.com/api/auth/oidc/callback
+```
+
+Copy that exact value into the IdP application before saving the Lattice
+provider. Behind a reverse proxy, the origin must match `LATTICE_PUBLIC_URL`.
+
 | Lattice field | What it means | What to enter |
 | --- | --- | --- |
 | Display name | Human label shown on the login button. | `Google Workspace`, `Authelia`, `Keycloak`, or any operator-friendly name. |
@@ -54,6 +64,9 @@ Open **Settings -> Single Sign-On -> New provider**.
 | Scopes | OIDC scopes requested during login. | Start with `openid, profile, email`. Keep `openid` and `email` unless your IdP maps email differently. |
 | Allowed domains | Email-domain gate after the IdP verifies the user. | `example.com, corp.example.com`, or leave empty to allow any verified email that maps to a local user. |
 | Enabled | Whether this provider appears on the login screen. | Enable after the IdP app and local user mapping are ready. |
+
+The dashboard form includes the same field guide inline, so an operator can
+configure a new provider without keeping this page open.
 
 ## User Mapping
 

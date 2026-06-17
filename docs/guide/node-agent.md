@@ -66,7 +66,8 @@ nodes.
 
 ## Debug mode
 
-For temporary troubleshooting, enable verbose non-secret diagnostics:
+For temporary troubleshooting on the node itself, enable verbose non-secret
+diagnostics:
 
 ```sh
 lattice-agent \
@@ -85,6 +86,49 @@ LATTICE_AGENT_DEBUG=1
 Debug logs include poll-cycle progress, POST paths, payload key names, metric
 summaries, monitor counts, task IDs, and task exit status. They do not print the
 node token, task script body, proxy usage secret, or client secret values.
+
+### Server-controlled debug
+
+`lattice-agent 0.2.1+` also polls a server-owned debug policy from
+`/api/agent/config`. From the dashboard, open
+**Nodes -> node detail -> Diagnostics**:
+
+- **Enable agent debug mode** makes the node-agent emit the same non-secret
+  debug lines to the node machine's normal service logs.
+- **Collect debug lines in server Logs** additionally ships those lines back to
+  the server. This is enabled by default when server-controlled debug is turned
+  on. The server stores them under the managed log source
+  `agent-debug://<node_id>`.
+- Disable collection while leaving debug enabled when you want local node
+  diagnostics only.
+
+Equivalent API calls:
+
+```sh
+# Enable debug and collect centrally (default collect=true).
+curl -fsS -b /tmp/lattice.cookies \
+  -H "X-Lattice-CSRF: $csrf" \
+  -H 'Content-Type: application/json' \
+  -d '{"node_id":"gmami-jp1","enabled":true}' \
+  https://lattice.example.com/api/nodes/debug
+
+# Keep debug enabled on the node, but do not collect it on the server.
+curl -fsS -b /tmp/lattice.cookies \
+  -H "X-Lattice-CSRF: $csrf" \
+  -H 'Content-Type: application/json' \
+  -d '{"node_id":"gmami-jp1","enabled":true,"collect":false}' \
+  https://lattice.example.com/api/nodes/debug
+
+# Disable server-controlled debug.
+curl -fsS -b /tmp/lattice.cookies \
+  -H "X-Lattice-CSRF: $csrf" \
+  -H 'Content-Type: application/json' \
+  -d '{"node_id":"gmami-jp1","enabled":false}' \
+  https://lattice.example.com/api/nodes/debug
+```
+
+If server log storage is disabled, the server still tells the agent to emit
+local debug logs, but the returned policy disables central collection.
 
 ## systemd service
 
