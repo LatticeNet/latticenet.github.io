@@ -13,6 +13,7 @@ released and secured independently.
 | [`lattice-plugin-template`](https://github.com/LatticeNet/lattice-plugin-template) | Plugin author kit | Template repo |
 | [`lattice-plugin-index`](https://github.com/LatticeNet/lattice-plugin-index) | Signed plugin marketplace index | Static signed JSON |
 | [`latticenet.github.io`](https://github.com/LatticeNet/latticenet.github.io) | Public website | GitHub Pages |
+| `Astra` | iOS companion app for phone-first fleet operations | Local worktree, remote pending |
 
 ## Current release shape
 
@@ -24,7 +25,10 @@ released and secured independently.
   `SHA256SUMS` on GitHub Releases.
 - Docs/site: GitHub Pages.
 - Plugins: signed artifact releases plus static signed index foundation.
-- SDK contract: `github.com/LatticeNet/lattice-sdk v0.2.0`.
+- SDK contract: `github.com/LatticeNet/lattice-sdk v0.2.3`.
+- Astra iOS companion: local v2 worktree covering Overview, Nodes, Monitors,
+  Inventory, and More with a typed Swift API client. It is not published as a
+  remote repository or TestFlight build yet.
 
 ## Stability note
 

@@ -31,6 +31,10 @@ https://github.com/LatticeNet/lattice/blob/main/docs/roadmap.md
 - Browser Terminal MVP: scoped `terminal:open` dashboard page, server-side
   bounded in-memory sessions with TTL pruning, open/close audit events, and
   opt-in agent-side PTY runner enabled with `LATTICE_AGENT_ALLOW_TERMINAL=1`.
+- Astra iOS companion v2 local expansion: Overview, Nodes, Monitors, Inventory,
+  and More tabs; typed Swift `LatticeClient`; fleet/inventory/monitor analytics;
+  `AstraCoreCheck` and iOS Simulator build verification. The remote repository
+  is not published yet.
 
 ## Near-term
 
@@ -48,6 +52,10 @@ https://github.com/LatticeNet/lattice/blob/main/docs/roadmap.md
    the dashboard.
 8. Notifications follow-up: delivery history, retry policy, mute windows, and
    richer channel-specific field help.
+9. Astra publication follow-up: authorize/create the remote repository, push the
+   local expansion branch, add CI for `AstraCoreCheck` plus simulator builds,
+   then validate signing, iPhone live-service behavior, Bark, and background
+   refresh.
 
 ## Longer-term
 
@@ -75,3 +83,6 @@ https://github.com/LatticeNet/lattice/blob/main/docs/roadmap.md
   support. KV and Static controls now have server-side authorization, audit
   events, and documented failure modes; future publishing workflows must
   preserve that bar.
+- Astra mobile write actions must stay narrower than the Web dashboard until
+  their review, rollback, and permission UX is explicit. Do not present heavy
+  mutation planes as mobile-ready just because the server API exists.
