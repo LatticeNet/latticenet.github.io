@@ -20,6 +20,11 @@ https://github.com/LatticeNet/lattice/blob/main/docs/roadmap.md
   bucket-scoped access tokens, dashboard management, and public static serving.
 - Notifications v2 foundation: multi-channel destinations, event routing rules,
   simple templates, and dashboard management.
+- SSO provider setup guide in both the public docs and the dashboard New
+  Provider dialog, including redirect URI and field-by-field OIDC guidance.
+- Server-controlled node-agent diagnostics: per-node debug mode, optional
+  central collection into managed Logs sources, and `lattice-agent` `v0.2.1`
+  release artifacts.
 
 ## Near-term
 
@@ -29,7 +34,8 @@ https://github.com/LatticeNet/lattice/blob/main/docs/roadmap.md
 3. Concrete runner isolation tests before enabling system, worker, or wasm
    plugin execution.
 4. Geo-Routing apply and parent-zone publication workflow.
-5. Log ingestion v2 with per-line accepted offsets.
+5. Log ingestion v2 with per-line accepted offsets and richer debug retention
+   controls.
 6. Static hosting follow-up: immutable object publishing, optional Cloudflare
    Pages integration, cache purge hooks, and reviewed cutover workflow.
 7. Browser terminal design: explicit opt-in, audited interactive sessions,
