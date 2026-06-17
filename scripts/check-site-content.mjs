@@ -97,7 +97,7 @@ const checks = [
     patterns: [
       "KV Store v2",
       "Static hosting v2",
-      "Browser terminal design",
+      "Browser Terminal MVP",
       "Optional group-leader / relay topology",
       "authorization, audit events",
     ],

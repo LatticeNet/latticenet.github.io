@@ -64,6 +64,35 @@ Remote cleartext `http://` is refused by default.
 The foreground command is useful for smoke testing. Use systemd for persistent
 nodes.
 
+## Browser terminal
+
+The dashboard Terminal page uses outbound, agent-side PTY sessions. It is not an
+inbound SSH server and it does not require storing SSH credentials in Lattice.
+The agent keeps its no-inbound-listener model: it polls the server for pending
+sessions, receives input, and posts output back to the dashboard.
+
+Terminal mode is off by default. Enable it only on nodes where interactive shell
+access through Lattice is acceptable:
+
+```sh
+lattice-agent \
+  -server https://lattice.example.com \
+  -node-id gmami-jp1 \
+  -token '<node-token>' \
+  -allow-terminal=true
+```
+
+Equivalent environment variable:
+
+```ini
+LATTICE_AGENT_ALLOW_TERMINAL=1
+```
+
+Dashboard access requires the `terminal:open` scope. Initial superuser accounts
+with `*` include it. If the agent process runs as root, terminal mode is refused
+unless `-allow-root-exec=true` is also set; prefer a dedicated least-privilege
+service user for nodes where browser terminal access is enabled.
+
 ## Debug mode
 
 For temporary troubleshooting on the node itself, enable verbose non-secret
@@ -163,6 +192,8 @@ LATTICE_NODE_ID=gmami-jp1
 LATTICE_NODE_TOKEN=replace-with-node-token
 # Optional, for short-lived troubleshooting only:
 # LATTICE_AGENT_DEBUG=1
+# Optional, high risk: enables dashboard Terminal PTY sessions.
+# LATTICE_AGENT_ALLOW_TERMINAL=1
 ```
 
 Enable it:
