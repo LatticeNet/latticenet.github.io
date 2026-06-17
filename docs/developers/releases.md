@@ -23,7 +23,9 @@ GitHub Container Registry lists package versions by digest. A tagged manifest
 appears with tags such as `latest` or `alpha`; historical untagged digests cannot
 be renamed after the fact. The server repository disables buildx provenance/SBOM
 attestation manifests for the image workflow and runs `package cleanup` to prune
-old `tags: []` container versions while retaining a small rollback window.
+old `tags: []` container versions. Cleanup protects the architecture child
+digests referenced by the active `latest` and `alpha` manifest lists, then
+removes stale untagged versions.
 
 Every server image exposes its build metadata through:
 
