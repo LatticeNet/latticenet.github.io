@@ -93,6 +93,12 @@ with `*` include it. If the agent process runs as root, terminal mode is refused
 unless `-allow-root-exec=true` is also set; prefer a dedicated least-privilege
 service user for nodes where browser terminal access is enabled.
 
+The server keeps live terminal I/O in bounded process memory, not as permanent
+audit transcripts. It limits each node to four active terminal sessions, expires
+unaccepted sessions after 10 minutes, expires idle sessions after four hours,
+and prunes closed transcript buffers after 30 minutes. Open and close events are
+audited separately.
+
 ## Debug mode
 
 For temporary troubleshooting on the node itself, enable verbose non-secret
