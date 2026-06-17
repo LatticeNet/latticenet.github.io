@@ -208,6 +208,17 @@ Settings -> Security, or call authenticated `POST /api/auth/password`.
 Use `LATTICE_TRUST_PROXY=1` only when the only public path is a trusted reverse
 proxy that sets client IP headers correctly.
 
+Optional Fleet Map IP lookup:
+
+```ini
+# Disabled when unset. The URL must contain {ip}.
+LATTICE_GEOIP_LOOKUP_URL=https://ipinfo.io/{ip}/json?token=replace-with-token
+```
+
+Only enable this after choosing a trusted GeoIP source, because the server will
+send each selected node's reported public IP to that endpoint when an operator
+uses Fleet Map auto-location. Manual coordinates do not require this setting.
+
 ## Persistent data
 
 Back up these together:

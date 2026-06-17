@@ -25,6 +25,8 @@ https://github.com/LatticeNet/lattice/blob/main/docs/roadmap.md
 - Server-controlled node-agent diagnostics: per-node debug mode, optional
   central collection into managed Logs sources, and `lattice-agent` `v0.2.1`
   release artifacts.
+- Fleet Map v2: refined CSP-safe world map, region rollups, manual versus GeoIP
+  source tracking, and opt-in server-side IP lookup via `LATTICE_GEOIP_LOOKUP_URL`.
 
 ## Near-term
 
