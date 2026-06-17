@@ -18,6 +18,20 @@ tag plus `:latest`; the moving `alpha` git tag publishes `:alpha`. There is no
 `main` image channel. Use a version tag or digest for unattended production
 deployments.
 
+GitHub Container Registry lists package versions by digest. A tagged manifest
+appears with tags such as `latest` or `alpha`; historical untagged digests cannot
+be renamed after the fact. The server repository disables buildx provenance/SBOM
+attestation manifests for the image workflow and runs `package cleanup` to prune
+old `tags: []` container versions while retaining a small rollback window.
+
+Every server image exposes its build metadata through:
+
+```sh
+curl -fsS https://lattice.example.com/api/version
+```
+
+The dashboard also shows the same information under Settings -> About.
+
 ## Node-agent binaries
 
 `lattice-node-agent` publishes Linux binaries from `v*` tags:

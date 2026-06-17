@@ -65,6 +65,7 @@ Losing `master.key` makes encrypted secrets unrecoverable.
 
 - [Docker Server](/guide/docker-server): first production deployment.
 - [Node Agent](/guide/node-agent): release binaries, systemd service, update policy.
+- [Storage Hosting](/guide/storage-hosting): KV buckets, static sites, host bindings, and scoped storage tokens.
 - [Single Sign-On](/guide/sso): OIDC provider setup and field mapping.
 - [Operations](/guide/operations): implemented operational surfaces and rules.
 - [Security Model](/security/): trust boundaries and residual risks.

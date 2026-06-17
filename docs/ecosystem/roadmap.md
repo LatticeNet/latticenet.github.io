@@ -16,6 +16,10 @@ https://github.com/LatticeNet/lattice/blob/main/docs/roadmap.md
 - Server-controlled node-agent update policies with manual plan and auto-plan
   pending approvals.
 - Static plugin index foundation.
+- KV Store v2 / Static hosting v2 foundation: bucket model, host/IP bindings,
+  bucket-scoped access tokens, dashboard management, and public static serving.
+- Notifications v2 foundation: multi-channel destinations, event routing rules,
+  simple templates, and dashboard management.
 
 ## Near-term
 
@@ -26,12 +30,12 @@ https://github.com/LatticeNet/lattice/blob/main/docs/roadmap.md
    plugin execution.
 4. Geo-Routing apply and parent-zone publication workflow.
 5. Log ingestion v2 with per-line accepted offsets.
-6. KV Store v2: bucket model, bucket-bound access tokens, admin/read/write
-   scopes, domain/IP binding, and audit-visible credential management.
-7. Static hosting v2: domain-bound static sites, immutable object publishing,
-   optional Cloudflare Pages integration, and reviewed cutover workflow.
-8. Browser terminal design: explicit opt-in, audited interactive sessions,
+6. Static hosting follow-up: immutable object publishing, optional Cloudflare
+   Pages integration, cache purge hooks, and reviewed cutover workflow.
+7. Browser terminal design: explicit opt-in, audited interactive sessions,
    scoped node access, PTY/session transport, and safe disconnect semantics.
+8. Notifications follow-up: delivery history, retry policy, mute windows, and
+   richer channel-specific field help.
 
 ## Longer-term
 
@@ -52,6 +56,7 @@ https://github.com/LatticeNet/lattice/blob/main/docs/roadmap.md
 - Marketplace activation must wait for runner sandbox maturity.
 - Agent update channels must resolve to immutable URL + SHA + version tuples.
 - Community host-risk plugins stay blocked by default.
-- KV, Static, terminal, and group-leader features must ship with server-side
-  authorization, audit events, and documented failure modes before dashboard
-  controls claim support.
+- Terminal and group-leader features must ship with server-side authorization,
+  audit events, and documented failure modes before dashboard controls claim
+  support. KV and Static controls now have server-side authorization, audit events,
+  and documented failure modes; future publishing workflows must preserve that bar.

@@ -47,6 +47,12 @@ The health endpoint should return:
 {"status":"ok"}
 ```
 
+The version endpoint returns build metadata used by the dashboard About page:
+
+```sh
+curl -fsS http://127.0.0.1:8088/api/version
+```
+
 ## HTTPS reverse proxy
 
 Keep the container bound to localhost and publish HTTPS through NGINX, Caddy, a
@@ -178,14 +184,25 @@ curl -I https://lattice.example.com/login | grep -i '^cache-control:'
 
 Both should report `no-cache`. Hashed files under `/assets/` should be immutable.
 
+If you use Platform -> KV Store or Platform -> Static host bindings, route those
+hostnames or IPs to the same origin and keep `proxy_set_header Host $host;` in
+the reverse proxy. See [Storage Hosting](/guide/storage-hosting) for bucket,
+binding, and access-token semantics.
+
 ## Required settings
 
 ```ini
+LATTICE_ADMIN_USERNAME=admin
 LATTICE_ADMIN_PASSWORD=replace-with-a-long-random-password
 LATTICE_PUBLIC_URL=https://lattice.example.com
 LATTICE_SECURE_COOKIES=1
 LATTICE_TRUST_PROXY=1
 ```
+
+`LATTICE_ADMIN_USERNAME` and `LATTICE_ADMIN_PASSWORD` are first-boot bootstrap
+settings. Once the state file contains a user, changing either variable does not
+rename the current account or rotate its password. Rotate the password from
+Settings -> Security, or call authenticated `POST /api/auth/password`.
 
 Use `LATTICE_TRUST_PROXY=1` only when the only public path is a trusted reverse
 proxy that sets client IP headers correctly.

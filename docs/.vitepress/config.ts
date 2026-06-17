@@ -32,6 +32,7 @@ export default defineConfig({
             { text: "Overview", link: "/guide/" },
             { text: "Docker Server", link: "/guide/docker-server" },
             { text: "Node Agent", link: "/guide/node-agent" },
+            { text: "Storage Hosting", link: "/guide/storage-hosting" },
             { text: "Single Sign-On", link: "/guide/sso" },
             { text: "Operations", link: "/guide/operations" },
           ],
