@@ -8,9 +8,10 @@ The public image is:
 ghcr.io/latticenet/lattice-server
 ```
 
-Use `:latest` for the current stable image, `:alpha` for the moving alpha test
-channel, and a version tag or digest for unattended production deployments.
-There is intentionally no `main` image channel.
+Use `:latest` for the current stable image, published by the moving `latest`
+git tag. Use `:alpha` for the moving alpha test channel, and a version tag or
+digest for unattended production deployments that must not move. There is
+intentionally no `main` image channel.
 
 ## Compose
 

@@ -13,10 +13,11 @@ ghcr.io/latticenet/lattice-server:alpha
 ghcr.io/latticenet/lattice-server:<version>
 ```
 
-Image publication is tag-driven. Stable `v*` tags publish the matching version
-tag plus `:latest`; the moving `alpha` git tag publishes `:alpha`. There is no
-`main` image channel. Use a version tag or digest for unattended production
-deployments.
+Image publication is tag-driven. The moving `latest` git tag publishes
+`:latest`, the moving `alpha` git tag publishes `:alpha`, and stable `v*` tags
+publish immutable version tags. There is no `main` image channel. Use a version
+tag or digest for unattended production deployments when you do not want a
+moving channel.
 
 GitHub Container Registry lists package versions by digest. A tagged manifest
 appears with tags such as `latest` or `alpha`; historical untagged digests cannot
