@@ -45,6 +45,21 @@ traffic saturates the uplink before it reaches your server, nftables or XDP on
 that host cannot recover the lost bandwidth. Use cloud security groups,
 upstream ACLs, or DDoS protection for public services.
 
+## Login Transport
+
+The password login endpoint receives username and password as JSON over HTTPS.
+That is the standard browser login shape: the credential is not separately
+encrypted by JavaScript because front-end encryption cannot replace TLS and often
+creates misleading security assumptions.
+
+Production deployments should use:
+
+- HTTPS at the public edge;
+- `LATTICE_SECURE_COOKIES=1`;
+- `LATTICE_TRUST_PROXY=1` only behind a trusted reverse proxy;
+- HSTS from the server when secure cookies are enabled;
+- no remote cleartext `http://` path for operators or agents.
+
 ## Residual risk
 
 Privileged node execution is inherently dangerous. Only enable `-allow-exec` and

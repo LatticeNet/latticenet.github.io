@@ -20,6 +20,8 @@ const checks = [
       "lattice-agent.service",
       "`node-token` is a per-node bearer token",
       "The dashboard install script downloads the matching Linux release artifact",
+      "LATTICE_AGENT_DEBUG=1",
+      "Current Lattice node-agent topology is hub-and-spoke",
     ],
   },
   {
@@ -28,6 +30,14 @@ const checks = [
       "candidate's `-version` output must equal `target_version`",
       "SHA256SUMS",
       "auto-plan never auto-approves",
+    ],
+  },
+  {
+    file: "docs/security/index.md",
+    patterns: [
+      "The password login endpoint receives username and password as JSON over HTTPS",
+      "front-end encryption cannot replace TLS",
+      "LATTICE_SECURE_COOKIES=1",
     ],
   },
   {
@@ -58,6 +68,8 @@ const checks = [
       "conflicting server name",
       "Full (strict)",
       "Bypass cache",
+      "Cache-Control: no-cache",
+      "Cache-Control: public, max-age=31536000, immutable",
     ],
   },
   {
@@ -67,6 +79,27 @@ const checks = [
       "pre-creates local users",
       "verified IdP email",
       "Lattice still issues its own `lattice_session` cookie",
+    ],
+  },
+  {
+    file: "docs/guide/sso.md",
+    patterns: [
+      "https://lattice.example.com/api/auth/oidc/callback",
+      "Authorization code",
+      "PKCE",
+      "Client secret",
+      "Allowed domains",
+      "Lattice intentionally does not auto-create operator users from SSO",
+    ],
+  },
+  {
+    file: "docs/ecosystem/roadmap.md",
+    patterns: [
+      "KV Store v2",
+      "Static hosting v2",
+      "Browser terminal design",
+      "Optional group-leader / relay topology",
+      "authorization, audit events",
     ],
   },
 ];

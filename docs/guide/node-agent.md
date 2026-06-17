@@ -64,6 +64,28 @@ Remote cleartext `http://` is refused by default.
 The foreground command is useful for smoke testing. Use systemd for persistent
 nodes.
 
+## Debug mode
+
+For temporary troubleshooting, enable verbose non-secret diagnostics:
+
+```sh
+lattice-agent \
+  -server https://lattice.example.com \
+  -node-id gmami-jp1 \
+  -token '<node-token>' \
+  -debug
+```
+
+The equivalent environment variable is:
+
+```ini
+LATTICE_AGENT_DEBUG=1
+```
+
+Debug logs include poll-cycle progress, POST paths, payload key names, metric
+summaries, monitor counts, task IDs, and task exit status. They do not print the
+node token, task script body, proxy usage secret, or client secret values.
+
 ## systemd service
 
 Create `/etc/systemd/system/lattice-agent.service`:
@@ -95,6 +117,8 @@ Create `/etc/lattice/agent.env`:
 LATTICE_SERVER_URL=https://lattice.example.com
 LATTICE_NODE_ID=gmami-jp1
 LATTICE_NODE_TOKEN=replace-with-node-token
+# Optional, for short-lived troubleshooting only:
+# LATTICE_AGENT_DEBUG=1
 ```
 
 Enable it:
@@ -122,6 +146,26 @@ ExecStart=/usr/local/bin/lattice-agent \
 ```
 
 `LATTICE_NO_EXEC=1` is a kill switch and wins over the enable flags.
+
+## Topology and group leaders
+
+Current Lattice node-agent topology is hub-and-spoke:
+
+```txt
+each node-agent -> primary lattice-server
+```
+
+Every node should point at the primary server URL in `-server` /
+`LATTICE_SERVER_URL`. There is no production group-leader or relay-agent mode in
+the current protocol. The dashboard `role` and `tags` fields are organizational
+metadata for filtering, planning, and display; they do not make one node forward
+metrics, tasks, logs, or approvals for other nodes.
+
+If you need regional organization today, use stable node IDs plus tags such as
+`region:jp`, `group:tokyo`, or `role:edge`. A true leader/child topology must add
+server-side parent/leader fields, enrollment semantics, health propagation,
+token-bound delegation, and failure handling before agents can safely point at a
+leader instead of the primary server.
 
 ## Server-controlled updates
 

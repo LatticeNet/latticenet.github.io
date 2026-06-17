@@ -147,6 +147,18 @@ For a proxied `lattice.example.com` record:
 Set the rule action to `Bypass cache`. Do not add `Cache Everything` for the
 dashboard until every authenticated and API path has an explicit bypass.
 
+The server sends explicit dashboard cache headers:
+
+| Path | Cache behavior |
+| --- | --- |
+| `/`, `/login`, and other SPA fallback routes | `Cache-Control: no-cache` so the browser and edge revalidate the current app shell after each deploy. |
+| `/theme-init.js` | `Cache-Control: no-cache` because it is a boot-time behavior file, not a hashed chunk. |
+| `/assets/*` | `Cache-Control: public, max-age=31536000, immutable` because Vite emits content-hashed files. |
+
+Keep Cloudflare on the default behavior that respects origin cache headers. If a
+previous rule cached the whole dashboard, purge the hostname once after deploying
+the fixed server so stale `index.html` does not point at old chunk names.
+
 After orange-clouding DNS, `dig lattice.example.com` should return Cloudflare
 addresses rather than the origin IP. The functional check is still:
 
@@ -156,6 +168,15 @@ curl -I https://lattice.example.com/api/health | grep -iE 'cf-cache-status|serve
 ```
 
 `/api/health` should not be a cache `HIT`.
+
+For dashboard deploy checks:
+
+```sh
+curl -I https://lattice.example.com/ | grep -i '^cache-control:'
+curl -I https://lattice.example.com/login | grep -i '^cache-control:'
+```
+
+Both should report `no-cache`. Hashed files under `/assets/` should be immutable.
 
 ## Required settings
 

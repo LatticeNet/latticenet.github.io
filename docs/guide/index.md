@@ -46,6 +46,9 @@ verified IdP email. The first successful SSO login binds the provider subject to
 that local user; Lattice still issues its own `lattice_session` cookie and still
 requires local TOTP when enabled.
 
+See [Single Sign-On](/guide/sso) for the provider field guide and IdP callback
+setup.
+
 ## What to back up
 
 Back up server data and encryption material together:
@@ -62,5 +65,6 @@ Losing `master.key` makes encrypted secrets unrecoverable.
 
 - [Docker Server](/guide/docker-server): first production deployment.
 - [Node Agent](/guide/node-agent): release binaries, systemd service, update policy.
+- [Single Sign-On](/guide/sso): OIDC provider setup and field mapping.
 - [Operations](/guide/operations): implemented operational surfaces and rules.
 - [Security Model](/security/): trust boundaries and residual risks.
