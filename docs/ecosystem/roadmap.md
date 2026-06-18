@@ -29,8 +29,10 @@ https://github.com/LatticeNet/lattice/blob/main/docs/roadmap.md
   source tracking, and no-token default server-side IP lookup. Operators can set
   `LATTICE_GEOIP_LOOKUP_URL=off` or use an internal HTTPS provider when needed.
 - Browser Terminal MVP: scoped `terminal:open` dashboard page, server-side
-  bounded in-memory sessions with TTL pruning, open/close audit events, and
-  opt-in agent-side PTY runner enabled with `LATTICE_AGENT_ALLOW_TERMINAL=1`.
+  bounded in-memory sessions with TTL pruning, xterm rendering, node-level
+  dashboard entrypoints, immediate operator-close state, open/close audit
+  events, and opt-in agent-side PTY runner enabled with
+  `LATTICE_AGENT_ALLOW_TERMINAL=1`.
 - Astra iOS companion v2 source publication: `LatticeNet/Astra` now contains
   Overview, Nodes, Monitors, Inventory, More, and Network & security read views;
   typed Swift `LatticeClient`; plan-hash-bound approval for reviewed plans;
@@ -49,8 +51,7 @@ https://github.com/LatticeNet/lattice/blob/main/docs/roadmap.md
    controls.
 6. Static hosting follow-up: immutable object publishing, optional Cloudflare
    Pages integration, cache purge hooks, and reviewed cutover workflow.
-7. Terminal follow-up: reconnect semantics and clearer close/failure handling in
-   the dashboard.
+7. Terminal follow-up: reconnect semantics for interrupted browser sessions.
 8. Notifications follow-up: delivery history, retry policy, mute windows, and
    richer channel-specific field help.
 9. Astra release follow-up: validate signing, iPhone live-service behavior,

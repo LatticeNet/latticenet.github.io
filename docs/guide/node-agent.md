@@ -71,6 +71,11 @@ inbound SSH server and it does not require storing SSH credentials in Lattice.
 The agent keeps its no-inbound-listener model: it polls the server for pending
 sessions, receives input, and posts output back to the dashboard.
 
+The dashboard renders terminal sessions as a dedicated xterm workspace, not as a
+command input form. Operators can open it from Operations -> Terminal or from an
+individual node in the Nodes page; the node entry opens `/terminal?node_id=...`
+in a new browser tab and starts or resumes that node's latest live session.
+
 Terminal mode requires `lattice-agent 0.2.2+` and is off by default. Enable it
 only on nodes where interactive shell access through Lattice is acceptable:
 
@@ -97,7 +102,9 @@ The server keeps live terminal I/O in bounded process memory, not as permanent
 audit transcripts. It limits each node to four active terminal sessions, expires
 unaccepted sessions after 10 minutes, expires idle sessions after four hours,
 and prunes closed transcript buffers after 30 minutes. Open and close events are
-audited separately.
+audited separately. When an operator clicks close, the server immediately marks
+the session closed and still delivers a close input to the agent so the node-side
+PTY is torn down on the next poll.
 
 ## Debug mode
 
