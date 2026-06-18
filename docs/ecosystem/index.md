@@ -27,7 +27,8 @@ released and secured independently.
 - Plugins: signed artifact releases plus static signed index foundation.
 - SDK contract: `github.com/LatticeNet/lattice-sdk v0.2.3`.
 - Astra iOS companion: source repository with v2 Overview, Nodes, Monitors,
-  Inventory, and More tabs backed by a typed Swift API client. TestFlight and
+  Inventory, More, and Network & security read views backed by a typed Swift
+  API client. Mobile approval sends the reviewed plan's SHA-256; TestFlight and
   signed builds are not published yet.
 
 ## Stability note

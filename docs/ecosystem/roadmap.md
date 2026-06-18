@@ -32,9 +32,10 @@ https://github.com/LatticeNet/lattice/blob/main/docs/roadmap.md
   bounded in-memory sessions with TTL pruning, open/close audit events, and
   opt-in agent-side PTY runner enabled with `LATTICE_AGENT_ALLOW_TERMINAL=1`.
 - Astra iOS companion v2 source publication: `LatticeNet/Astra` now contains
-  Overview, Nodes, Monitors, Inventory, and More tabs; typed Swift
-  `LatticeClient`; fleet/inventory/monitor analytics; `AstraCoreCheck`; and iOS
-  Simulator build CI.
+  Overview, Nodes, Monitors, Inventory, More, and Network & security read views;
+  typed Swift `LatticeClient`; plan-hash-bound approval for reviewed plans;
+  fleet/inventory/monitor analytics; `AstraCoreCheck`; and iOS Simulator build
+  CI.
 
 ## Near-term
 
