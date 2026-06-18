@@ -52,7 +52,7 @@ const checks = [
     file: "docs/developers/index.md",
     patterns: [
       "SDK contract: `github.com/LatticeNet/lattice-sdk v0.2.3`",
-      "Astra",
+      "[`Astra`](https://github.com/LatticeNet/Astra)",
       "release tag order",
       "runner sandbox maturity",
     ],
@@ -99,7 +99,7 @@ const checks = [
       "KV Store v2",
       "Static hosting v2",
       "Browser Terminal MVP",
-      "Astra iOS companion v2",
+      "Astra iOS companion v2 source publication",
       "Optional group-leader / relay topology",
       "authorization, audit events",
     ],

@@ -12,7 +12,7 @@ own release and security boundary.
 | [`lattice-sdk`](https://github.com/LatticeNet/lattice-sdk) | Shared Go model and wire contracts |
 | [`lattice-plugin-template`](https://github.com/LatticeNet/lattice-plugin-template) | Plugin authoring kit |
 | [`lattice-plugin-index`](https://github.com/LatticeNet/lattice-plugin-index) | Static signed plugin index foundation |
-| `Astra` | Local iOS companion app worktree. Remote repository publication is pending operator authorization. |
+| [`Astra`](https://github.com/LatticeNet/Astra) | iOS companion app for phone-first fleet operations |
 
 ## Contracts
 
@@ -51,9 +51,8 @@ The release tag order is:
 2. `lattice-server` image through GHCR.
 3. `lattice-node-agent` binaries through GitHub Releases.
 4. Public docs and plugin index updates.
-5. Astra iOS publication after the remote repository is authorized. Until then
-   it is a local worktree only, with no GitHub Actions, TestFlight, or release
-   artifact.
+5. Astra iOS source publication through its repository. TestFlight and signed
+   release artifacts remain separate device/distribution work.
 
 Agent update policies consume release binaries by immutable URL and SHA-256
 digest. Server container deployments should use a version tag or digest in
