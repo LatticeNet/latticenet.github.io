@@ -25,7 +25,8 @@ docker compose up -d
 ```
 
 The compose file binds the server to `127.0.0.1:8088`. Put a trusted HTTPS
-reverse proxy in front of it.
+reverse proxy in front of it — see [HTTPS reverse proxy](#https-reverse-proxy)
+and [Cloudflare](#cloudflare) below.
 
 The first boot creates `data/master.key` automatically. Do not set
 `LATTICE_MASTER_KEY_FILE` unless you are mounting an existing key from a restore
@@ -190,6 +191,92 @@ hostnames or IPs to the same origin and keep `proxy_set_header Host $host;` in
 the reverse proxy. See [Storage Hosting](/guide/storage-hosting) for bucket,
 binding, and access-token semantics.
 
+### Restore the real client IP
+
+With the Cloudflare proxy on, NGINX sees a Cloudflare **edge** IP in
+`$remote_addr`, not the visitor. Rate limiting, the audit log, and session
+security all rely on the real client address — otherwise every visitor looks
+identical and blocking one Cloudflare IP blocks everyone behind it.
+
+Generate `/etc/nginx/conf.d/cloudflare-realip.conf` from Cloudflare's published
+ranges so it stays current:
+
+```sh
+{
+  curl -fsS https://www.cloudflare.com/ips-v4 | sed 's/^/set_real_ip_from /; s/$/;/'
+  curl -fsS https://www.cloudflare.com/ips-v6 | sed 's/^/set_real_ip_from /; s/$/;/'
+  echo 'real_ip_header CF-Connecting-IP;'
+} | sudo tee /etc/nginx/conf.d/cloudflare-realip.conf
+sudo nginx -t && sudo systemctl reload nginx
+```
+
+`set_real_ip_from`/`real_ip_header` must live in the `http {}` context, which is
+where `conf.d/*.conf` is included. Also set `LATTICE_TRUST_PROXY=1` (see
+[Required settings](#required-settings)) so the server trusts `CF-Connecting-IP`.
+
+### Lock the origin to Cloudflare
+
+Restoring the real IP does not stop someone from hitting the origin IP directly
+and bypassing Cloudflare. Reject any request whose TCP peer is not a Cloudflare
+edge.
+
+The subtlety: once `real_ip_header` is active, `$remote_addr` is the visitor, so
+an `allow`/`deny` on it would block real users. Gate on **`$realip_remote_addr`**
+instead — that keeps the original TCP peer (the Cloudflare edge for proxied
+traffic, the attacker for a direct hit). Append a `geo` map built from the same
+ranges to `conf.d/cloudflare-realip.conf`:
+
+```nginx
+# 1 = the request's TCP peer is Cloudflare (or loopback); 0 = direct/bypass.
+geo $realip_remote_addr $lattice_cf_ok {
+    default 0;
+    127.0.0.1 1;
+    ::1 1;
+    # ...every Cloudflare v4 and v6 range, e.g.:
+    173.245.48.0/20 1;
+    2400:cb00::/32 1;
+}
+```
+
+Then add the guard inside the **443** server block (leave port 80 open so ACME
+renewals keep working):
+
+```nginx
+    if ($lattice_cf_ok = 0) { return 403; }
+```
+
+Verify after `nginx -t && systemctl reload nginx`:
+
+```sh
+# Through Cloudflare -> expect 200:
+curl -s -o /dev/null -w '%{http_code}\n' https://lattice.example.com/api/health
+# Straight to the origin IP, bypassing Cloudflare -> expect 403:
+curl -s -o /dev/null -w '%{http_code}\n' \
+  --resolve lattice.example.com:443:<ORIGIN_IP> https://lattice.example.com/api/health
+```
+
+For an even stronger lock, enable Cloudflare **Authenticated Origin Pulls** or
+restrict port 443 at the host firewall to Cloudflare's ranges.
+
+### Disable Cloudflare features that break the dashboard CSP
+
+The dashboard ships a strict Content-Security-Policy (no inline scripts, no
+`eval`). Several Cloudflare features inject inline scripts or rewrite the page
+and are blocked by that CSP — disable them for this hostname:
+
+| Feature | Cloudflare dashboard path | Why |
+| --- | --- | --- |
+| Rocket Loader | Speed -> Optimization -> Content Optimization | Injects an inline loader script |
+| Auto Minify (JS) | Speed -> Optimization -> Content Optimization | Rewrites bundled JS (removed on newer accounts) |
+| Email Obfuscation | Scrape Shield | Injects an inline email-decode script |
+| Mirage | Speed -> Optimization -> Image Optimization | Rewrites image loading |
+| Web Analytics beacon | Analytics & Logs -> Web Analytics | Injects inline `beacon.min.js` — the `CF-beacon` CSP error |
+
+The automatic Web Analytics beacon is the usual source of a
+`Refused to load ... beacon.min.js` console error. Turn off automatic injection,
+or, to keep the analytics, add `https://static.cloudflareinsights.com` to
+`script-src` and `https://cloudflareinsights.com` to `connect-src` in the CSP.
+
 ## Required settings
 
 ```ini
@@ -219,6 +306,24 @@ LATTICE_GEOIP_LOOKUP_URL=off
 To use a self-hosted or internal provider instead, set
 `LATTICE_GEOIP_LOOKUP_URL` to an HTTPS URL template containing `{ip}`. Manual
 coordinates do not require external lookup.
+
+### Request logging
+
+The server logs HTTP requests with method, path, status, response size,
+latency, client IP, and request id. It is quiet by default: only requests
+slower than the threshold (or `5xx`) are logged, so it is safe to leave on.
+
+```ini
+# Log every request, not just slow ones (verbose).
+LATTICE_ACCESS_LOG=1
+# Slow-request threshold in milliseconds (default 1000).
+LATTICE_SLOW_REQUEST_MS=1000
+```
+
+Slow entries are tagged `SLOW request` in the container logs
+(`docker compose logs -f lattice-server`). The dashboard mirrors this in the
+browser: every API call is timed in the console (`debug` level; slow calls are
+promoted to `warn`), and the last slow calls are kept on `window.__latticePerf`.
 
 ## Persistent data
 
