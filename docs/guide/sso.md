@@ -115,9 +115,18 @@ user.
 
 Because there is no separate email field, the local user's **username must be
 the verified IdP email** (for Google, the full Gmail/Workspace address). To let
-an existing operator sign in via SSO, give that operator a local user whose
-username equals their IdP email; the bootstrap `admin` account, whose username is
-`admin`, will not match an email until you rename it or create a matching user.
+an operator sign in via SSO, create them under **Settings -> Users** with the
+**username set to their IdP email** and the scopes you want them to hold; on
+their first Google login Lattice binds the durable link automatically. The
+bootstrap `admin` account, whose username is `admin`, will not match an email
+until you create a matching user (or rename it).
+
+To provision operators: **Settings -> Users -> New user**. Set the username to
+the person's verified email, pick scopes (or "Full administrator" for `*`), and
+optionally an initial password. Leave the password blank for an **SSO-only**
+account (no password login). Deleting a user revokes their tokens, SSO links,
+and sessions. You cannot delete your own account or remove the last
+administrator.
 
 ## Verify
 
