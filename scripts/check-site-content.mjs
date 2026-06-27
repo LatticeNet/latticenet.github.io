@@ -19,7 +19,8 @@ const checks = [
       "SHA256SUMS",
       "lattice-agent.service",
       "`node-token` is a per-node bearer token",
-      "The dashboard install script downloads the matching Linux release artifact",
+      "The install script downloads the selected Linux release artifact",
+      "Script mode is high-trust host code",
       "LATTICE_AGENT_DEBUG=1",
       "Current Lattice node-agent topology is hub-and-spoke",
     ],
@@ -51,7 +52,7 @@ const checks = [
   {
     file: "docs/developers/index.md",
     patterns: [
-      "SDK contract: `github.com/LatticeNet/lattice-sdk v0.2.3`",
+      "SDK contract: `github.com/LatticeNet/lattice-sdk v0.2.6`",
       "[`Astra`](https://github.com/LatticeNet/Astra)",
       "release tag order",
       "runner sandbox maturity",

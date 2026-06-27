@@ -61,8 +61,8 @@ lattice-agent -version
 
 ```sh
 cd lattice-node-agent
-git tag v0.2.0
-git push origin v0.2.0
+git tag -a v0.2.4 -m "lattice-node-agent v0.2.4"
+git push origin v0.2.4
 ```
 
 The release workflow builds both Linux artifacts, publishes SHA checksums, and
@@ -71,14 +71,14 @@ attaches everything to the GitHub Release.
 After it completes, get the digest:
 
 ```sh
-curl -fsSL https://github.com/LatticeNet/lattice-node-agent/releases/download/v0.2.0/SHA256SUMS
+curl -fsSL https://github.com/LatticeNet/lattice-node-agent/releases/download/v0.2.4/SHA256SUMS
 ```
 
 Use the matching row in the dashboard policy:
 
 ```txt
-target version: 0.2.0
-binary URL: https://github.com/LatticeNet/lattice-node-agent/releases/download/v0.2.0/lattice-agent-linux-amd64
+target version: 0.2.4
+binary URL: https://github.com/LatticeNet/lattice-node-agent/releases/download/v0.2.4/lattice-agent-linux-amd64
 SHA-256: value from SHA256SUMS
 install path: /usr/local/bin/lattice-agent
 service name: lattice-agent.service
@@ -89,6 +89,19 @@ service name: lattice-agent.service
 If server or agent code depends on a new shared model, publish the
 `lattice-sdk` tag first. Downstream CI may use workspace replaces, but users who
 clone one repository should not need an unpublished SDK tag.
+
+```sh
+cd lattice-sdk
+git tag -a v0.2.6 -m "lattice-sdk v0.2.6"
+git push origin main
+git push origin v0.2.6
+
+cd ../lattice-server
+GOPROXY=direct GOSUMDB=off GOWORK=off go get github.com/LatticeNet/lattice-sdk@v0.2.6
+
+cd ../lattice-node-agent
+GOPROXY=direct GOSUMDB=off GOWORK=off go get github.com/LatticeNet/lattice-sdk@v0.2.6
+```
 
 ## Plugin index
 
