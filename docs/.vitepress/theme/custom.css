@@ -122,6 +122,10 @@ body {
 }
 
 .VPHomeHero .main {
+  /* VitePress sets .main { position: relative }, which would trap the absolute
+     mesh backdrop inside the 780px copy column. Make it static so inset:0
+     resolves to .VPHomeHero and the mesh is genuinely full-bleed. */
+  position: static;
   max-width: 780px !important;
 }
 
