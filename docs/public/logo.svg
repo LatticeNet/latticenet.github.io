@@ -1,9 +1,21 @@
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64" role="img" aria-label="LatticeNet">
-  <rect width="64" height="64" rx="14" fill="#0f172a"/>
-  <path d="M16 18h32M16 32h32M16 46h32M18 16v32M32 16v32M46 16v32" stroke="#14b8a6" stroke-width="3" stroke-linecap="round"/>
-  <circle cx="18" cy="18" r="4" fill="#f8fafc"/>
-  <circle cx="46" cy="18" r="4" fill="#f8fafc"/>
-  <circle cx="32" cy="32" r="5" fill="#38bdf8"/>
-  <circle cx="18" cy="46" r="4" fill="#f8fafc"/>
-  <circle cx="46" cy="46" r="4" fill="#f8fafc"/>
+  <defs>
+    <linearGradient id="lg" x1="0" y1="0" x2="64" y2="64" gradientUnits="userSpaceOnUse">
+      <stop offset="0" stop-color="#5eead4"/>
+      <stop offset="1" stop-color="#0d9488"/>
+    </linearGradient>
+    <radialGradient id="hub" cx="32" cy="32" r="9" gradientUnits="userSpaceOnUse">
+      <stop offset="0" stop-color="#99f6e4"/>
+      <stop offset="1" stop-color="#2dd4bf"/>
+    </radialGradient>
+  </defs>
+  <rect width="64" height="64" rx="14" fill="#0d1117"/>
+  <rect x="0.75" y="0.75" width="62.5" height="62.5" rx="13.25" fill="none" stroke="#2dd4bf" stroke-opacity="0.16"/>
+  <path d="M16 18h32M16 32h32M16 46h32M18 16v32M32 16v32M46 16v32" stroke="url(#lg)" stroke-width="3" stroke-linecap="round"/>
+  <circle cx="18" cy="18" r="4" fill="#e9eef5"/>
+  <circle cx="46" cy="18" r="4" fill="#e9eef5"/>
+  <circle cx="18" cy="46" r="4" fill="#e9eef5"/>
+  <circle cx="46" cy="46" r="4" fill="#e9eef5"/>
+  <circle cx="32" cy="32" r="9" fill="#2dd4bf" opacity="0.18"/>
+  <circle cx="32" cy="32" r="5.5" fill="url(#hub)"/>
 </svg>

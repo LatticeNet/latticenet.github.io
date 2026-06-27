@@ -9,6 +9,12 @@ https://github.com/LatticeNet/lattice/blob/main/docs/roadmap.md
 
 ## Recently completed
 
+- Node lifecycle: hard-delete alongside disable. A `node:admin` delete renders a
+  non-mutating preview of every dependent record it will remove, then cascades
+  across node-owned and node-referencing resources (tasks, monitors, DDNS, net
+  policy and peer rules, geo routings, proxy profiles, log sources, group
+  membership, tunnels, and live terminal sessions). The append-only audit chain
+  is preserved and a single `node.delete` event records the removed counts.
 - Docker server image published through GHCR.
 - GitHub Pages public website and docs entry point.
 - Node-agent GitHub Release workflow for Linux amd64/arm64 binaries and
