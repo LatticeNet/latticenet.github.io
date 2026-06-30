@@ -200,6 +200,19 @@ local debug logs, but the returned policy disables central collection.
 
 ## systemd service
 
+The current installer-standard Linux layout is:
+
+```txt
+/opt/lattice/lattice-agent
+/opt/lattice/lattice-agent.env
+lattice-agent.service
+```
+
+Older nodes may still use `/opt/lattice/node-agent/lattice-agent` or
+`/usr/local/bin/lattice-agent`. The server-controlled update script detects the
+running process and systemd unit before installing, so these layouts can be
+upgraded without re-enrolling the node or changing its node id.
+
 Create `/etc/systemd/system/lattice-agent.service`:
 
 ```ini
@@ -248,6 +261,24 @@ lattice-agent -version
 
 Execution is off unless you enable it. Add these only on nodes where reviewed
 host mutation is acceptable:
+
+## Server-controlled updates
+
+The dashboard's Agent update UI defaults to official-release mode:
+
+- target version: `latest` or a concrete version such as `0.2.8`
+- binary URL: empty
+- SHA-256: empty
+
+When a plan is created, the server resolves the trusted release repository,
+chooses the node's platform artifact, fetches `SHA256SUMS`, and embeds the
+concrete URL and digest in the approval plan. The node only mutates after that
+plan is approved and the agent has exec/root-exec capability.
+
+Custom artifact mode is still supported for forked or emergency binaries, but
+the URL and SHA-256 must be supplied together. Do not use custom artifacts for
+normal upgrades; they bypass the official release affordances and are harder to
+audit.
 
 ```ini
 ExecStart=/usr/local/bin/lattice-agent \

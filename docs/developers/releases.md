@@ -65,8 +65,8 @@ git tag -a v0.2.4 -m "lattice-node-agent v0.2.4"
 git push origin v0.2.4
 ```
 
-The release workflow builds both Linux artifacts, publishes SHA checksums, and
-attaches everything to the GitHub Release.
+The release workflow builds Linux and Darwin artifacts, publishes SHA checksums,
+and attaches everything to the GitHub Release.
 
 After it completes, get the digest:
 
@@ -74,15 +74,44 @@ After it completes, get the digest:
 curl -fsSL https://github.com/LatticeNet/lattice-node-agent/releases/download/v0.2.4/SHA256SUMS
 ```
 
-Use the matching row in the dashboard policy:
+The normal dashboard flow is official-release mode:
 
 ```txt
-target version: 0.2.4
-binary URL: https://github.com/LatticeNet/lattice-node-agent/releases/download/v0.2.4/lattice-agent-linux-amd64
-SHA-256: value from SHA256SUMS
-install path: /usr/local/bin/lattice-agent
+target version: latest or 0.2.4
+binary URL: empty
+SHA-256: empty
+install path: empty unless the node is intentionally non-standard
 service name: lattice-agent.service
 ```
+
+The server resolves the configured official release repo, maps the target node
+OS/arch to an artifact, reads `SHA256SUMS`, and writes the concrete version,
+URL, and digest into the approval plan. Custom binary URL + SHA-256 remains
+available for emergency or forked artifacts, but both fields must be provided
+together and the URL must be HTTPS.
+
+`latest` is an operator intent, not the immutable artifact identity. At plan
+time it is resolved to the current `v*` release and the approval carries the
+resolved version plus SHA-256. A successful update records the applied version;
+the live source of truth is still the next node heartbeat's reported
+`agent_version`.
+
+## Compatibility discipline
+
+Ordinary server, dashboard, agent, SDK, and official plugin releases must remain
+backward compatible across at least one rolling deployment window.
+
+- Server endpoints may add fields but must not remove or repurpose fields used
+  by the current dashboard or agents without a version gate.
+- Dashboard changes must tolerate older server responses and older node runtime
+  reports.
+- Agent changes must tolerate an older server until the next server deploy, and
+  server code must tolerate older agents until they report the new runtime
+  capability.
+- Plugin manifests may add interfaces/views, but existing signed interface names
+  and builtin component keys must keep working until a documented migration.
+- Breaking behavior requires a release note, a rollback path, and an explicit
+  capability/version check rather than relying on "latest".
 
 ## SDK order
 

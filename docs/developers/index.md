@@ -55,8 +55,16 @@ The release tag order is:
    release artifacts remain separate device/distribution work.
 
 Agent update policies consume release binaries by immutable URL and SHA-256
-digest. Server container deployments should use a version tag or digest in
-production.
+digest. The default operator workflow is now official-release mode: leave the
+binary URL and SHA-256 empty, choose `latest` or a concrete version, and let the
+server resolve the trusted `LatticeNet/lattice-node-agent` release into a
+plan-bound URL and digest. Server container deployments should use a version tag
+or digest in production.
+
+Compatibility rule: non-special releases must be rolling-upgrade safe across
+server, dashboard, node-agent, SDK, and official plugins. Additive fields,
+capability checks, and fallback UI are preferred. Breaking changes require a
+documented version gate and rollback path.
 
 ## Plugin development
 
