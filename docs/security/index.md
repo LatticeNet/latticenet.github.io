@@ -25,6 +25,11 @@ follows:
 plan -> review -> approve(plan_sha256) -> queue task -> result -> audit
 ```
 
+If the reviewed plan no longer matches current server state, approval fails with
+HTTP 409 and the stable `approval_stale` API error code. Re-plan, re-review the
+visible plan SHA-256, and approve the replacement instead of retrying the stale
+approval.
+
 Agent updates add artifact gates: HTTPS URL, SHA-256, and a candidate version
 that must match the policy target before install.
 
