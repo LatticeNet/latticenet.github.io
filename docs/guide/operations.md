@@ -23,6 +23,42 @@ If an operation mutates a host or changes fleet security posture, it should
 produce a plan first. Review the exact target, artifact hash, rendered config,
 or nft rules before applying.
 
+## Machine inventory
+
+Use **Fleet -> Inventory** as the billing and renewal overlay for nodes. The
+node-agent supplies host facts such as OS, CPU, memory, kernel, and architecture;
+operators add the commercial metadata that cannot be discovered reliably:
+vendor, region, price, renewal cycle, next renewal date, and support notes.
+
+Stored console and provider-detail URLs are write-only operational links. The
+dashboard shows whether a link exists, but it does not echo the saved URL back
+in list views. Leave the URL fields blank while editing to keep the existing
+stored value, or use the clear checkbox when the link should be removed.
+
+Renewal reminders are explicit. Enabling reminders on a profile does not mutate
+the node or provider account; it only lets the server emit notification events
+when the configured `remind_days_before` thresholds are reached. Use the
+selected-machine reminder action for a single profile and the page-level action
+for a fleet-wide reminder pass.
+
+## vpn-core runtime profiles
+
+The official `latticenet.vpn-core` Node Profiles page is a runtime inventory,
+not an authoring form. It combines managed proxy profiles, sing-box discovery,
+applied state, collector health, and the node capabilities reported by the
+agent. Use it to answer operational questions such as:
+
+- which nodes have a managed vpn-core profile;
+- whether the last plan has been applied on the node;
+- how many listeners are declared versus discovered at runtime;
+- whether the usage collector is healthy; and
+- which nodes are discovered-only and still need an authored profile.
+
+Treat `Managed` and `Discovered-only` as different states. A discovered-only
+node can have a local sing-box process and still lack a Lattice-authored profile.
+Apply plans from the profile authoring surfaces, then use Node Profiles to
+confirm the node heartbeat and collector state caught up.
+
 ## Fleet expression filters
 
 The dashboard's Nodes page and Task target picker include a small expression
@@ -100,3 +136,7 @@ Current server event ids include:
 
 These are roadmap items because they need stronger signing, runner isolation,
 rollback, and audit behavior.
+
+For node-agent rollout details, use [Agent Updates](/security/agent-updates).
+For release sequencing and cross-repository compatibility rules, use the
+[Release Workflow](/developers/releases).
