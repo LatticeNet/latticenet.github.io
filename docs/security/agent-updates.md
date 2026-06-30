@@ -44,7 +44,8 @@ The queued task:
 If the policy, target node state, or resolved artifact changes after planning,
 the old approval is stale. Lattice refuses to queue it and closes the stale
 pending approval as `rejected`; create a fresh plan and review its new plan
-SHA-256 before approving.
+SHA-256 before approving. API clients should key this path from the stable
+`approval_stale` error code, not from the human-readable error message.
 
 ## Auto-plan
 
