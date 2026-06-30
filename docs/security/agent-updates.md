@@ -41,8 +41,10 @@ The queued task:
 6. schedules a delayed service restart so the current agent can report the task
    result.
 
-If the policy changes after planning, the old approval is stale and must be
-re-planned.
+If the policy, target node state, or resolved artifact changes after planning,
+the old approval is stale. Lattice refuses to queue it and closes the stale
+pending approval as `rejected`; create a fresh plan and review its new plan
+SHA-256 before approving.
 
 ## Auto-plan
 
@@ -52,8 +54,10 @@ auto-plan never auto-approves. It creates a pending approval only when:
 node.agent_version != policy.target_version
 ```
 
-and no equivalent `pending` or `approved` update is already open. An operator
-still reviews the plan and approves the visible plan hash before any node task
+and no equivalent `pending` or `approved` update is already open. When auto-plan
+creates a replacement plan for the same node, older pending update approvals are
+rejected so the inbox cannot keep unsafe-looking stale approvals. An operator
+still reviews the plan and approves the visible plan SHA-256 before any node task
 is queued.
 
 ## Failure behavior
