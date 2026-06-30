@@ -55,10 +55,11 @@ curl -fsSL https://raw.githubusercontent.com/LatticeNet/lattice-node-agent/main/
 ```
 
 The install script downloads the selected Linux release artifact, verifies it
-against `SHA256SUMS`, installs `/usr/local/bin/lattice-agent`, writes
-`/etc/lattice-agent.env`, and enables `lattice-agent.service`. Automatic service
-installation currently supports Linux/systemd on `amd64` and `arm64`; other
-platforms should use the manual binary path.
+against `SHA256SUMS`, installs `/opt/lattice/lattice-agent`, writes
+`/opt/lattice/lattice-agent.env`, and enables `lattice-agent.service`. Missing
+checksum tooling or a missing `SHA256SUMS` manifest aborts before the binary is
+written. Automatic service installation currently supports Linux/systemd on
+`amd64` and `arm64`; other platforms should use the manual binary path.
 
 For a quick foreground test, use the printed command:
 
