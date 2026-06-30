@@ -79,8 +79,9 @@ nodes.
 
 The dashboard Terminal page uses outbound, agent-side PTY sessions. It is not an
 inbound SSH server and it does not require storing SSH credentials in Lattice.
-The agent keeps its no-inbound-listener model: it polls the server for pending
-sessions, receives input, and posts output back to the dashboard.
+The agent keeps its no-inbound-listener model. It polls the server for pending
+sessions, then either uses the legacy HTTP poll path or dials an outbound stream
+WebSocket for the selected session.
 
 The dashboard renders terminal sessions as a dedicated xterm workspace, not as a
 command input form. Operators can open it from Operations -> Terminal or from an
@@ -104,6 +105,20 @@ Equivalent environment variable:
 LATTICE_AGENT_ALLOW_TERMINAL=1
 ```
 
+For modern interactive use, prefer stream transport:
+
+```ini
+LATTICE_AGENT_ALLOW_TERMINAL=1
+LATTICE_TERMINAL_TRANSPORT=stream
+```
+
+Transport modes:
+
+| Mode | Use |
+| --- | --- |
+| `stream` | Preferred. Browser WebSocket -> server splice -> agent WebSocket -> PTY. Low latency, resize control frames, reconnect backoff, and bounded output replay. |
+| `poll` | Legacy compatibility. Input, resize, and output are exchanged through bounded HTTP JSON requests. Safer for old agents but noticeably slower. |
+
 Dashboard access requires the `terminal:open` scope. Initial superuser accounts
 with `*` include it. If the agent process runs as root, terminal mode is refused
 unless `-allow-root-exec=true` is also set; prefer a dedicated least-privilege
@@ -111,11 +126,11 @@ service user for nodes where browser terminal access is enabled.
 
 The server keeps live terminal I/O in bounded process memory, not as permanent
 audit transcripts. It limits each node to four active terminal sessions, expires
-unaccepted sessions after 10 minutes, expires idle sessions after four hours,
-and prunes closed transcript buffers after 30 minutes. Open and close events are
-audited separately. When an operator clicks close, the server immediately marks
-the session closed and still delivers a close input to the agent so the node-side
-PTY is torn down on the next poll.
+unaccepted sessions after 10 minutes, bounds detached stream sessions to a short
+reattach window, and prunes closed state after 30 minutes. Open, attach, close,
+and agent close events are audited separately. When an operator clicks close, the
+dashboard sends an explicit stream close frame before marking the session closed;
+poll sessions still receive a close input through the legacy queue.
 
 ## Debug mode
 

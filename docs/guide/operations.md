@@ -23,6 +23,40 @@ If an operation mutates a host or changes fleet security posture, it should
 produce a plan first. Review the exact target, artifact hash, rendered config,
 or nft rules before applying.
 
+## Fleet expression filters
+
+The dashboard's Nodes page and Task target picker include a small expression
+language for selecting nodes without writing code. It is intentionally limited:
+there is no SQL, no regex engine, and no numeric comparison syntax yet.
+
+Supported forms:
+
+```txt
+AND(exec, root, NOT(sing-box))
+AND(sing-box, NOT(vpn-lines))
+OR(linux, darwin, amd64, arm64)
+AND(tag:cd, agent:exec, NOT(vpn:recorded))
+```
+
+Useful tokens:
+
+| Token | Meaning |
+| --- | --- |
+| `exec` | Agent runtime or saved launch profile allows task execution. |
+| `root` | Agent runtime or saved launch profile allows root execution. |
+| `terminal` | Browser terminal is enabled. |
+| `stream` | Terminal transport is stream. |
+| `poll` | Terminal transport is poll. |
+| `sing-box` | Agent sing-box discovery is enabled. |
+| `vpn-lines` | The official vpn-core plugin has recorded Lines for the node. |
+
+Use `sing-box` and `vpn-lines` separately. A node can have sing-box discovery
+enabled but still have no vpn-core Lines recorded yet:
+
+```txt
+AND(sing-box, NOT(vpn-lines))
+```
+
 ## Deployment perimeter
 
 Public internet should reach only intentionally published services. Keep the
