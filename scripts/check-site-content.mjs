@@ -1,5 +1,10 @@
 import { readFileSync } from "node:fs";
 
+const SDK_BASELINE = "v0.2.14";
+const AGENT_EXAMPLE_VERSION = "v0.2.8";
+const AGENT_EXAMPLE_TARGET_VERSION = AGENT_EXAMPLE_VERSION.replace(/^v/, "");
+const NEXT_AGENT_EXAMPLE_VERSION = "v0.2.9";
+
 const checks = [
   {
     file: "docs/index.md",
@@ -17,7 +22,7 @@ const checks = [
       "lattice-agent-linux-amd64",
       "lattice-agent-linux-arm64",
       "SHA256SUMS",
-      "VERSION=v0.2.8",
+      `VERSION=${AGENT_EXAMPLE_VERSION}`,
       "curl -fsSL --proto '=https' --tlsv1.2 -O",
       "lattice-agent.service",
       "`node-token` is a per-node bearer token",
@@ -31,8 +36,8 @@ const checks = [
       "EnvironmentFile=/opt/lattice/lattice-agent.env",
       "sudo chmod 0600 /opt/lattice/lattice-agent.env",
       "Current Lattice node-agent topology is hub-and-spoke",
-      "target version: 0.2.8",
-      "releases/download/v0.2.8/lattice-agent-linux-amd64",
+      `target version: ${AGENT_EXAMPLE_TARGET_VERSION}`,
+      `releases/download/${AGENT_EXAMPLE_VERSION}/lattice-agent-linux-amd64`,
     ],
   },
   {
@@ -68,10 +73,10 @@ const checks = [
   {
     file: "docs/developers/index.md",
     patterns: [
-      "Latest published SDK tag: `github.com/LatticeNet/lattice-sdk v0.2.14`",
-      "`lattice-server` currently consumes `v0.2.14`",
+      `Latest published SDK tag: \`github.com/LatticeNet/lattice-sdk ${SDK_BASELINE}\``,
+      `\`lattice-server\` currently consumes \`${SDK_BASELINE}\``,
       "`lattice-node-agent` currently",
-      "consumes `v0.2.14`",
+      `consumes \`${SDK_BASELINE}\``,
       "[`Astra`](https://github.com/LatticeNet/Astra)",
       "release tag order",
       "runner sandbox maturity",
@@ -80,10 +85,10 @@ const checks = [
   {
     file: "docs/developers/releases.md",
     patterns: [
-      "NEXT_AGENT=v0.2.9",
-      "NEXT_SDK=v0.2.14",
+      `NEXT_AGENT=${NEXT_AGENT_EXAMPLE_VERSION}`,
+      `NEXT_SDK=${SDK_BASELINE}`,
       "releases/download/${NEXT_AGENT}/SHA256SUMS",
-      "target version: latest or 0.2.8",
+      `target version: latest or ${AGENT_EXAMPLE_TARGET_VERSION}`,
     ],
   },
   {
