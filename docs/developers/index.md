@@ -16,18 +16,13 @@ own release and security boundary.
 
 ## Contracts
 
-Latest published SDK tag: `github.com/LatticeNet/lattice-sdk v0.2.12`.
-`lattice-server` currently consumes the short-lived post-tag pseudo-version
-`v0.2.13-0.20260701135831-406dc7de575d` for the stable approval error codes
-`approval_stale` and `agent_update_noop`; `lattice-node-agent` currently
+Latest published SDK tag: `github.com/LatticeNet/lattice-sdk v0.2.13`.
+`lattice-server` currently consumes `v0.2.13`; `lattice-node-agent` currently
 consumes `v0.2.10`.
 
 When shared models change, cut the SDK tag before downstream repositories depend
-on it. If a downstream repository must temporarily pin a post-tag pseudo-version
-for an already-landed contract fix, document the exact pseudo-version and cut
-the next SDK tag before widening that dependency. CI and Docker builds may use a
-local workspace replace, but standalone server and agent builds must be able to
-resolve the documented SDK version.
+on it. CI and Docker builds may use a local workspace replace, but standalone
+server and agent builds must be able to resolve the tagged SDK.
 
 ## Local workspace
 

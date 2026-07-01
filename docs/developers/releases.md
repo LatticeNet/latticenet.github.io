@@ -122,7 +122,7 @@ clone one repository should not need an unpublished SDK tag.
 
 ```sh
 cd lattice-sdk
-NEXT_SDK=v0.2.13 # replace with the next SDK tag after the latest published baseline
+NEXT_SDK=v0.2.14 # replace with the next SDK tag after the latest published baseline
 git tag -a "$NEXT_SDK" -m "lattice-sdk $NEXT_SDK"
 git push origin main
 git push origin "$NEXT_SDK"

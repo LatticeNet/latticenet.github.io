@@ -27,11 +27,8 @@ released and secured independently.
 - Plugins: signed artifact releases plus a draft static index foundation; an
   official index requires a top-level index signature.
 - SDK contract: latest published tag is
-  `github.com/LatticeNet/lattice-sdk v0.2.12`; server currently consumes the
-  short-lived post-tag pseudo-version
-  `v0.2.13-0.20260701135831-406dc7de575d` for the stable approval error codes
-  `approval_stale` and `agent_update_noop`, and node-agent currently consumes
-  `v0.2.10`.
+  `github.com/LatticeNet/lattice-sdk v0.2.13`; server currently consumes
+  `v0.2.13`, and node-agent currently consumes `v0.2.10`.
 - Astra iOS companion: source repository with v2 Overview, Nodes, Monitors,
   Inventory, More, and Network & security read views backed by a typed Swift
   API client. Mobile approval sends the reviewed plan's SHA-256; TestFlight and

@@ -68,9 +68,8 @@ const checks = [
   {
     file: "docs/developers/index.md",
     patterns: [
-      "Latest published SDK tag: `github.com/LatticeNet/lattice-sdk v0.2.12`",
-      "v0.2.13-0.20260701135831-406dc7de575d",
-      "agent_update_noop",
+      "Latest published SDK tag: `github.com/LatticeNet/lattice-sdk v0.2.13`",
+      "`lattice-server` currently consumes `v0.2.13`",
       "[`Astra`](https://github.com/LatticeNet/Astra)",
       "release tag order",
       "runner sandbox maturity",
@@ -80,6 +79,7 @@ const checks = [
     file: "docs/developers/releases.md",
     patterns: [
       "NEXT_AGENT=v0.2.9",
+      "NEXT_SDK=v0.2.14",
       "releases/download/${NEXT_AGENT}/SHA256SUMS",
       "target version: latest or 0.2.8",
     ],
