@@ -30,6 +30,10 @@ HTTP 409 and the stable `approval_stale` API error code. Re-plan, re-review the
 visible plan SHA-256, and approve the replacement instead of retrying the stale
 approval.
 
+Operators with `network:apply` can reject a pending approval to close it without
+queuing any task. Rejecting a plan is audited and does not weaken the
+`approve(plan_sha256)` execution gate.
+
 Agent updates add artifact gates: HTTPS URL, SHA-256, and a candidate version
 that must match the policy target before install.
 

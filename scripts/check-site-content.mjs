@@ -39,6 +39,7 @@ const checks = [
       "The password login endpoint receives username and password as JSON over HTTPS",
       "front-end encryption cannot replace TLS",
       "LATTICE_SECURE_COOKIES=1",
+      "reject a pending approval to close it without",
     ],
   },
   {
@@ -81,6 +82,13 @@ const checks = [
       "pre-creates local users",
       "verified IdP email",
       "Lattice still issues its own `lattice_session` cookie",
+    ],
+  },
+  {
+    file: "docs/guide/operations.md",
+    patterns: [
+      "Pending approvals can also be rejected",
+      "without queuing an agent task",
     ],
   },
   {

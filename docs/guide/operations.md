@@ -23,6 +23,10 @@ If an operation mutates a host or changes fleet security posture, it should
 produce a plan first. Review the exact target, artifact hash, rendered config,
 or nft rules before applying.
 
+Pending approvals can also be rejected from **Operations -> Approvals**. Reject
+closes the reviewed plan without queuing an agent task; use it for stale plans,
+superseded auto-plans, or proposals the operator does not want to apply.
+
 ## Machine inventory
 
 Use **Fleet -> Inventory** as the billing and renewal overlay for nodes. The
