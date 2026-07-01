@@ -27,6 +27,11 @@ Pending approvals can also be rejected from **Operations -> Approvals**. Reject
 closes the reviewed plan without queuing an agent task; use it for stale plans,
 superseded auto-plans, or proposals the operator does not want to apply.
 
+Stale node-agent update approvals are closed as `rejected`, not retried. The
+Approvals page labels them stale and, for operators with planning rights, offers
+**Create fresh plan**. That action creates a new pending approval for review; it
+does not approve the old plan or queue an update task.
+
 ## Machine inventory
 
 Use **Fleet -> Inventory** as the billing and renewal overlay for nodes. The

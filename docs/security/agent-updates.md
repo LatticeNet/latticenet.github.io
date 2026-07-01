@@ -47,6 +47,17 @@ pending approval as `rejected`; create a fresh plan and review its new plan
 SHA-256 before approving. API clients should key this path from the stable
 `approval_stale` error code, not from the human-readable error message.
 
+The dashboard exposes the same recovery path in two places:
+
+- **Operations -> Approvals** marks stale `agentupdate` approvals and offers
+  **Create fresh plan** when the operator has `node:admin` and `network:plan`.
+  This creates a replacement pending approval only; approval and execution still
+  use the normal plan-hash gate.
+- **Fleet -> Nodes -> Agent & updates** and **Platform -> Agent Updates** show
+  a **Force plan** prompt when a node already reports the target version. Use it
+  only to re-roll a pinned binary or replace a stale approval; it does not approve
+  or queue execution.
+
 ## Auto-plan
 
 auto-plan never auto-approves. It creates a pending approval only when:

@@ -22,6 +22,8 @@ const checks = [
       "`node-token` is a per-node bearer token",
       "curl -fsSL --proto '=https' --tlsv1.2 'https://raw.githubusercontent.com/LatticeNet/lattice-node-agent/main/scripts/install.sh'",
       "The install script downloads the selected Linux release artifact",
+      "Create fresh plan",
+      "does not approve or apply",
       "Script mode is high-trust host code",
       "LATTICE_AGENT_DEBUG=1",
       "EnvironmentFile=/opt/lattice/lattice-agent.env",
@@ -35,6 +37,8 @@ const checks = [
       "candidate's `-version` output must equal `target_version`",
       "SHA256SUMS",
       "auto-plan never auto-approves",
+      "Create fresh plan",
+      "Force plan",
     ],
   },
   {
@@ -93,6 +97,7 @@ const checks = [
     patterns: [
       "Pending approvals can also be rejected",
       "without queuing an agent task",
+      "Stale node-agent update approvals are closed as `rejected`",
     ],
   },
   {
