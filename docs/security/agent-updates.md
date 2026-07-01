@@ -52,7 +52,9 @@ The dashboard exposes the same recovery path in two places:
 - **Operations -> Approvals** marks stale `agentupdate` approvals and offers
   **Create fresh plan** when the operator has `node:admin` and `network:plan`.
   This creates a replacement pending approval only; approval and execution still
-  use the normal plan-hash gate.
+  use the normal plan-hash gate. If the node already reports the target version,
+  the same stale-recovery flow asks before **Force fresh plan** creates a new
+  pending approval.
 - **Fleet -> Nodes -> Agent & updates** and **Platform -> Agent Updates** show
   a **Force plan** prompt when a node already reports the target version. Use it
   only to re-roll a pinned binary or replace a stale approval; it does not approve

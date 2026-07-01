@@ -30,7 +30,9 @@ superseded auto-plans, or proposals the operator does not want to apply.
 Stale node-agent update approvals are closed as `rejected`, not retried. The
 Approvals page labels them stale and, for operators with planning rights, offers
 **Create fresh plan**. That action creates a new pending approval for review; it
-does not approve the old plan or queue an update task.
+does not approve the old plan or queue an update task. If the node already
+reports the target version, Approvals asks before **Force fresh plan** creates a
+replacement pending approval; forced planning still does not approve or apply.
 
 ## Machine inventory
 

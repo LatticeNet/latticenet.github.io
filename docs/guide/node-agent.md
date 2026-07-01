@@ -277,8 +277,9 @@ plan is approved and the agent has exec/root-exec capability.
 
 If an update approval becomes stale, do not approve it. In **Operations ->
 Approvals**, stale `agentupdate` approvals show a stale marker and a **Create fresh plan** action for operators with planning rights. If the node already
-reports the requested version, **Fleet -> Nodes -> Agent & updates** and
-**Platform -> Agent Updates** will ask before forcing a replacement plan. A forced
+reports the requested version, Approvals asks before **Force fresh plan** creates
+a replacement pending approval. **Fleet -> Nodes -> Agent & updates** and
+**Platform -> Agent Updates** expose the same safety as **Force plan**. A forced
 plan still creates only a pending approval; it does not approve or apply.
 
 Custom artifact mode is still supported for forked or emergency binaries, but
