@@ -46,6 +46,10 @@ the old approval is stale. Lattice refuses to queue it and closes the stale
 pending approval as `rejected`; create a fresh plan and review its new plan
 SHA-256 before approving. API clients should key this path from the stable
 `approval_stale` error code, not from the human-readable error message.
+When clients render `/api/network/approvals`, stale agent-update approvals are
+also marked with `stale: true` and
+`stale_code: "agent_update_policy_changed"`; keep the plain `reason` for
+operator copy, not as the primary state machine input.
 When planning itself finds that the node already reports the target version,
 the server returns HTTP 409 with `agent_update_noop`; clients should use that
 code to offer an explicit force-plan prompt instead of treating every 409 as a

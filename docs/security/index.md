@@ -29,6 +29,9 @@ If the reviewed plan no longer matches current server state, approval fails with
 HTTP 409 and the stable `approval_stale` API error code. Re-plan, re-review the
 visible plan SHA-256, and approve the replacement instead of retrying the stale
 approval.
+For rendered approval lists, stale agent-update approvals also carry
+`stale: true` and `stale_code: "agent_update_policy_changed"` so clients do not
+need to infer stale state from human-readable rejection text.
 Agent update planning uses a separate HTTP 409 code, `agent_update_noop`, when
 the node already reports the target version. UI and API clients should branch on
 that code before offering any force-plan recovery.
