@@ -69,6 +69,8 @@ const checks = [
     file: "docs/developers/index.md",
     patterns: [
       "Latest published SDK tag: `github.com/LatticeNet/lattice-sdk v0.2.12`",
+      "v0.2.13-0.20260701135831-406dc7de575d",
+      "agent_update_noop",
       "[`Astra`](https://github.com/LatticeNet/Astra)",
       "release tag order",
       "runner sandbox maturity",
