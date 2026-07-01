@@ -28,7 +28,7 @@ released and secured independently.
   official index requires a top-level index signature.
 - SDK contract: latest published tag is
   `github.com/LatticeNet/lattice-sdk v0.2.13`; server currently consumes
-  `v0.2.13`, and node-agent currently consumes `v0.2.10`.
+  `v0.2.13`, and node-agent currently consumes `v0.2.13`.
 - Astra iOS companion: source repository with v2 Overview, Nodes, Monitors,
   Inventory, More, and Network & security read views backed by a typed Swift
   API client. Mobile approval sends the reviewed plan's SHA-256; TestFlight and

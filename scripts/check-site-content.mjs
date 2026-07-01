@@ -70,6 +70,8 @@ const checks = [
     patterns: [
       "Latest published SDK tag: `github.com/LatticeNet/lattice-sdk v0.2.13`",
       "`lattice-server` currently consumes `v0.2.13`",
+      "`lattice-node-agent` currently",
+      "consumes `v0.2.13`",
       "[`Astra`](https://github.com/LatticeNet/Astra)",
       "release tag order",
       "runner sandbox maturity",
