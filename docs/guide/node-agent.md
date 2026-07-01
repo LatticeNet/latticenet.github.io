@@ -21,8 +21,8 @@ Install the matching architecture:
 ```sh
 VERSION=v0.2.4
 ARCH=amd64
-curl -fsSLO "https://github.com/LatticeNet/lattice-node-agent/releases/download/${VERSION}/lattice-agent-linux-${ARCH}"
-curl -fsSLO "https://github.com/LatticeNet/lattice-node-agent/releases/download/${VERSION}/SHA256SUMS"
+curl -fsSL --proto '=https' --tlsv1.2 -O "https://github.com/LatticeNet/lattice-node-agent/releases/download/${VERSION}/lattice-agent-linux-${ARCH}"
+curl -fsSL --proto '=https' --tlsv1.2 -O "https://github.com/LatticeNet/lattice-node-agent/releases/download/${VERSION}/SHA256SUMS"
 grep "lattice-agent-linux-${ARCH}$" SHA256SUMS | sha256sum -c -
 sudo install -d -m 0755 /opt/lattice
 sudo install -m 0755 "lattice-agent-linux-${ARCH}" /opt/lattice/lattice-agent
@@ -50,7 +50,7 @@ on that host.
 The dashboard Linux service command is intentionally one-line and Nezha-like:
 
 ```sh
-curl -fsSL https://raw.githubusercontent.com/LatticeNet/lattice-node-agent/main/scripts/install.sh -o lattice-agent-install.sh \
+curl -fsSL --proto '=https' --tlsv1.2 'https://raw.githubusercontent.com/LatticeNet/lattice-node-agent/main/scripts/install.sh' -o lattice-agent-install.sh \
   && chmod +x lattice-agent-install.sh \
   && env LATTICE_SERVER='https://lattice.example.com' LATTICE_NODE_ID='gmami-jp1' LATTICE_NODE_TOKEN='<node-token>' ./lattice-agent-install.sh
 ```

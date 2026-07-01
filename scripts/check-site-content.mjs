@@ -17,8 +17,10 @@ const checks = [
       "lattice-agent-linux-amd64",
       "lattice-agent-linux-arm64",
       "SHA256SUMS",
+      "curl -fsSL --proto '=https' --tlsv1.2 -O",
       "lattice-agent.service",
       "`node-token` is a per-node bearer token",
+      "curl -fsSL --proto '=https' --tlsv1.2 'https://raw.githubusercontent.com/LatticeNet/lattice-node-agent/main/scripts/install.sh'",
       "The install script downloads the selected Linux release artifact",
       "Script mode is high-trust host code",
       "LATTICE_AGENT_DEBUG=1",
@@ -122,6 +124,8 @@ const forbidden = [
     file: "docs/guide/node-agent.md",
     patterns: [
       "LATTICE_SERVER_URL",
+      "curl -fsSLO \"https://github.com/LatticeNet/lattice-node-agent",
+      "curl -fsSL https://raw.githubusercontent.com/LatticeNet/lattice-node-agent",
     ],
   },
 ];

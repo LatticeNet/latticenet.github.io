@@ -71,7 +71,7 @@ and attaches everything to the GitHub Release.
 After it completes, get the digest:
 
 ```sh
-curl -fsSL https://github.com/LatticeNet/lattice-node-agent/releases/download/v0.2.4/SHA256SUMS
+curl -fsSL --proto '=https' --tlsv1.2 https://github.com/LatticeNet/lattice-node-agent/releases/download/v0.2.4/SHA256SUMS
 ```
 
 The normal dashboard flow is official-release mode:
