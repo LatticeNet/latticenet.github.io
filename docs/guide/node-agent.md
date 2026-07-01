@@ -225,12 +225,8 @@ Wants=network-online.target
 
 [Service]
 Type=simple
-EnvironmentFile=-/opt/lattice/lattice-agent.env
-ExecStart=/opt/lattice/lattice-agent \
-  -server ${LATTICE_SERVER_URL} \
-  -node-id ${LATTICE_NODE_ID} \
-  -token ${LATTICE_NODE_TOKEN} \
-  -log-state-dir /var/lib/lattice-agent/logtail
+EnvironmentFile=/opt/lattice/lattice-agent.env
+ExecStart=/opt/lattice/lattice-agent
 Restart=always
 RestartSec=5s
 
@@ -241,9 +237,10 @@ WantedBy=multi-user.target
 Create `/opt/lattice/lattice-agent.env`:
 
 ```sh
-LATTICE_SERVER_URL=https://lattice.example.com
+LATTICE_SERVER=https://lattice.example.com
 LATTICE_NODE_ID=gmami-jp1
 LATTICE_NODE_TOKEN=replace-with-node-token
+LATTICE_LOG_STATE_DIR=/var/lib/lattice-agent/logtail
 # Optional, for short-lived troubleshooting only:
 # LATTICE_AGENT_DEBUG=1
 # Optional, high risk: enables dashboard Terminal PTY sessions.
@@ -254,6 +251,7 @@ Enable it:
 
 ```sh
 sudo mkdir -p /opt/lattice /var/lib/lattice-agent/logtail
+sudo chmod 0600 /opt/lattice/lattice-agent.env
 sudo systemctl daemon-reload
 sudo systemctl enable --now lattice-agent.service
 /opt/lattice/lattice-agent -version
@@ -283,13 +281,8 @@ normal upgrades; they bypass the official release affordances and are harder to
 audit.
 
 ```ini
-ExecStart=/opt/lattice/lattice-agent \
-  -server ${LATTICE_SERVER_URL} \
-  -node-id ${LATTICE_NODE_ID} \
-  -token ${LATTICE_NODE_TOKEN} \
-  -log-state-dir /var/lib/lattice-agent/logtail \
-  -allow-exec=true \
-  -allow-root-exec=true
+LATTICE_AGENT_ALLOW_EXEC=1
+LATTICE_AGENT_ALLOW_ROOT_EXEC=1
 ```
 
 `LATTICE_NO_EXEC=1` is a kill switch and wins over the enable flags.
@@ -345,7 +338,7 @@ each node-agent -> primary lattice-server
 ```
 
 Every node should point at the primary server URL in `-server` /
-`LATTICE_SERVER_URL`. There is no production group-leader or relay-agent mode in
+`LATTICE_SERVER`. There is no production group-leader or relay-agent mode in
 the current protocol. The dashboard `role` and `tags` fields are organizational
 metadata for filtering, planning, and display; they do not make one node forward
 metrics, tasks, logs, or approvals for other nodes.

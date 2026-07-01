@@ -22,6 +22,8 @@ const checks = [
       "The install script downloads the selected Linux release artifact",
       "Script mode is high-trust host code",
       "LATTICE_AGENT_DEBUG=1",
+      "EnvironmentFile=/opt/lattice/lattice-agent.env",
+      "sudo chmod 0600 /opt/lattice/lattice-agent.env",
       "Current Lattice node-agent topology is hub-and-spoke",
     ],
   },
@@ -115,6 +117,15 @@ const checks = [
   },
 ];
 
+const forbidden = [
+  {
+    file: "docs/guide/node-agent.md",
+    patterns: [
+      "LATTICE_SERVER_URL",
+    ],
+  },
+];
+
 let failed = false;
 
 for (const check of checks) {
@@ -130,6 +141,24 @@ for (const check of checks) {
   for (const pattern of check.patterns) {
     if (!text.includes(pattern)) {
       console.error(`${check.file} missing required content: ${pattern}`);
+      failed = true;
+    }
+  }
+}
+
+for (const check of forbidden) {
+  let text = "";
+  try {
+    text = readFileSync(check.file, "utf8");
+  } catch (error) {
+    console.error(`missing ${check.file}: ${error.message}`);
+    failed = true;
+    continue;
+  }
+
+  for (const pattern of check.patterns) {
+    if (text.includes(pattern)) {
+      console.error(`${check.file} contains forbidden content: ${pattern}`);
       failed = true;
     }
   }
