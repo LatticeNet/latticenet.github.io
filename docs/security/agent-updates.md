@@ -60,8 +60,11 @@ creates a replacement plan for the same node, older pending update approvals are
 rejected so the inbox cannot keep unsafe-looking stale approvals. Editing or
 deleting the update policy also rejects pending update approvals for that node,
 and if the node already reports the current target before apply, the scheduler
-closes the no-op approval as rejected. An operator still reviews the plan and
-approves the visible plan SHA-256 before any node task is queued.
+closes the no-op approval as rejected. The approvals inbox performs the same
+local cleanup for historical stale `agentupdate` approvals before rendering, so
+an old pending plan may become `rejected` after a refresh. An operator still
+reviews the plan and approves the visible plan SHA-256 before any node task is
+queued.
 
 ## Failure behavior
 
