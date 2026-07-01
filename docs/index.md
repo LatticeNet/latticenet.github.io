@@ -4,7 +4,7 @@ layout: home
 hero:
   name: LatticeNet
   text: Reviewed control plane for self-hosted fleets.
-  tagline: Monitor nodes, plan privileged changes, deploy DNS and proxy-core config, publish signed plugins, and keep every host mutation behind an approval trail.
+  tagline: Monitor nodes, plan privileged changes, deploy DNS and proxy-core config, publish signed plugin releases, and keep every host mutation behind an approval trail.
   actions:
     - theme: brand
       text: Start with Docker
@@ -112,11 +112,11 @@ operators inspect the rendered intent, approve the visible plan hash, and the no
 </article>
 <article class="capability-card">
 <h3>Public ecosystem</h3>
-<p>GHCR server image, GitHub Release binaries for the agent, GitHub Pages docs, and a Signed plugin index roadmap.</p>
+<p>GHCR server image, GitHub Release binaries for the agent, GitHub Pages docs, and a Draft plugin index roadmap.</p>
 </article>
 </div>
 <div class="status-band">
-Lattice is early and usable for private fleets with careful perimeter hardening. Community plugin execution is not enabled by default; marketplace work starts with a read-only signed index.
+Lattice is early and usable for private fleets with careful perimeter hardening. Community plugin execution is not enabled by default; marketplace work starts with a read-only draft index and signed release manifests.
 </div>
 </div>
 </section>

@@ -134,7 +134,8 @@ GOPROXY=direct GOSUMDB=off GOWORK=off go get github.com/LatticeNet/lattice-sdk@v
 
 ## Plugin index
 
-The plugin index is static and signed. Updating it should not imply remote
-install or runner activation. Marketplace install remains blocked until
+The plugin index is static, but the current public catalog remains `draft`
+until the top-level index signature is populated. Updating it should not imply
+remote install or runner activation. Marketplace install remains blocked until
 verification, lifecycle registration, and runner sandbox maturity are all in
 place.

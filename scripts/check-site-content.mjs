@@ -8,7 +8,7 @@ const checks = [
       "systemd node-agent",
       "GHCR image",
       "GitHub Release binaries",
-      "Signed plugin index",
+      "Draft plugin index",
     ],
   },
   {

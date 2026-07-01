@@ -11,7 +11,7 @@ released and secured independently.
 | [`lattice-dashboard`](https://github.com/LatticeNet/lattice-dashboard) | Vue static operator console | Bundled into server image |
 | [`lattice-sdk`](https://github.com/LatticeNet/lattice-sdk) | Shared Go model/contracts | Semver Git tags |
 | [`lattice-plugin-template`](https://github.com/LatticeNet/lattice-plugin-template) | Plugin author kit | Template repo |
-| [`lattice-plugin-index`](https://github.com/LatticeNet/lattice-plugin-index) | Signed plugin marketplace index | Static signed JSON |
+| [`lattice-plugin-index`](https://github.com/LatticeNet/lattice-plugin-index) | Draft plugin marketplace index | Static JSON plus signing rules |
 | [`latticenet.github.io`](https://github.com/LatticeNet/latticenet.github.io) | Public website | GitHub Pages |
 | [`Astra`](https://github.com/LatticeNet/Astra) | iOS companion app for phone-first fleet operations | GitHub repo source + CI |
 
@@ -24,7 +24,8 @@ released and secured independently.
 - Agent binaries: `lattice-agent-linux-amd64`, `lattice-agent-linux-arm64`, and
   `SHA256SUMS` on GitHub Releases.
 - Docs/site: GitHub Pages.
-- Plugins: signed artifact releases plus static signed index foundation.
+- Plugins: signed artifact releases plus a draft static index foundation; an
+  official index requires a top-level index signature.
 - SDK contract: `github.com/LatticeNet/lattice-sdk v0.2.3`.
 - Astra iOS companion: source repository with v2 Overview, Nodes, Monitors,
   Inventory, More, and Network & security read views backed by a typed Swift
