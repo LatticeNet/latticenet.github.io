@@ -17,6 +17,7 @@ const checks = [
       "lattice-agent-linux-amd64",
       "lattice-agent-linux-arm64",
       "SHA256SUMS",
+      "VERSION=v0.2.8",
       "curl -fsSL --proto '=https' --tlsv1.2 -O",
       "lattice-agent.service",
       "`node-token` is a per-node bearer token",
@@ -30,6 +31,8 @@ const checks = [
       "EnvironmentFile=/opt/lattice/lattice-agent.env",
       "sudo chmod 0600 /opt/lattice/lattice-agent.env",
       "Current Lattice node-agent topology is hub-and-spoke",
+      "target version: 0.2.8",
+      "releases/download/v0.2.8/lattice-agent-linux-amd64",
     ],
   },
   {
@@ -69,6 +72,14 @@ const checks = [
       "[`Astra`](https://github.com/LatticeNet/Astra)",
       "release tag order",
       "runner sandbox maturity",
+    ],
+  },
+  {
+    file: "docs/developers/releases.md",
+    patterns: [
+      "NEXT_AGENT=v0.2.9",
+      "releases/download/${NEXT_AGENT}/SHA256SUMS",
+      "target version: latest or 0.2.8",
     ],
   },
   {

@@ -61,8 +61,9 @@ lattice-agent -version
 
 ```sh
 cd lattice-node-agent
-git tag -a v0.2.4 -m "lattice-node-agent v0.2.4"
-git push origin v0.2.4
+NEXT_AGENT=v0.2.9
+git tag -a "$NEXT_AGENT" -m "lattice-node-agent $NEXT_AGENT"
+git push origin "$NEXT_AGENT"
 ```
 
 The release workflow builds Linux and Darwin artifacts, publishes SHA checksums,
@@ -71,13 +72,13 @@ and attaches everything to the GitHub Release.
 After it completes, get the digest:
 
 ```sh
-curl -fsSL --proto '=https' --tlsv1.2 https://github.com/LatticeNet/lattice-node-agent/releases/download/v0.2.4/SHA256SUMS
+curl -fsSL --proto '=https' --tlsv1.2 "https://github.com/LatticeNet/lattice-node-agent/releases/download/${NEXT_AGENT}/SHA256SUMS"
 ```
 
 The normal dashboard flow is official-release mode:
 
 ```txt
-target version: latest or 0.2.4
+target version: latest or 0.2.8
 binary URL: empty
 SHA-256: empty
 install path: empty unless the node is intentionally non-standard
