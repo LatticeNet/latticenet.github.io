@@ -16,7 +16,9 @@ own release and security boundary.
 
 ## Contracts
 
-SDK contract: `github.com/LatticeNet/lattice-sdk v0.2.6`.
+Latest published SDK tag: `github.com/LatticeNet/lattice-sdk v0.2.12`.
+`lattice-server` currently consumes `v0.2.12`; `lattice-node-agent` currently
+consumes `v0.2.10`.
 
 When shared models change, cut the SDK tag before downstream repositories depend
 on it. CI and Docker builds may use a local workspace replace, but standalone

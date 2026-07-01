@@ -121,15 +121,16 @@ clone one repository should not need an unpublished SDK tag.
 
 ```sh
 cd lattice-sdk
-git tag -a v0.2.6 -m "lattice-sdk v0.2.6"
+NEXT_SDK=v0.2.13 # replace with the next SDK tag after the latest published baseline
+git tag -a "$NEXT_SDK" -m "lattice-sdk $NEXT_SDK"
 git push origin main
-git push origin v0.2.6
+git push origin "$NEXT_SDK"
 
 cd ../lattice-server
-GOPROXY=direct GOSUMDB=off GOWORK=off go get github.com/LatticeNet/lattice-sdk@v0.2.6
+GOPROXY=direct GOSUMDB=off GOWORK=off go get "github.com/LatticeNet/lattice-sdk@$NEXT_SDK"
 
 cd ../lattice-node-agent
-GOPROXY=direct GOSUMDB=off GOWORK=off go get github.com/LatticeNet/lattice-sdk@v0.2.6
+GOPROXY=direct GOSUMDB=off GOWORK=off go get "github.com/LatticeNet/lattice-sdk@$NEXT_SDK"
 ```
 
 ## Plugin index

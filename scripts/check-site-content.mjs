@@ -52,7 +52,7 @@ const checks = [
   {
     file: "docs/developers/index.md",
     patterns: [
-      "SDK contract: `github.com/LatticeNet/lattice-sdk v0.2.6`",
+      "Latest published SDK tag: `github.com/LatticeNet/lattice-sdk v0.2.12`",
       "[`Astra`](https://github.com/LatticeNet/Astra)",
       "release tag order",
       "runner sandbox maturity",
