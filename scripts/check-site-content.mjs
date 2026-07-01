@@ -68,10 +68,10 @@ const checks = [
   {
     file: "docs/developers/index.md",
     patterns: [
-      "Latest published SDK tag: `github.com/LatticeNet/lattice-sdk v0.2.13`",
-      "`lattice-server` currently consumes `v0.2.13`",
+      "Latest published SDK tag: `github.com/LatticeNet/lattice-sdk v0.2.14`",
+      "`lattice-server` currently consumes `v0.2.14`",
       "`lattice-node-agent` currently",
-      "consumes `v0.2.13`",
+      "consumes `v0.2.14`",
       "[`Astra`](https://github.com/LatticeNet/Astra)",
       "release tag order",
       "runner sandbox maturity",
