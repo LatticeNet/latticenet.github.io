@@ -57,9 +57,11 @@ node.agent_version != policy.target_version
 
 and no equivalent `pending` or `approved` update is already open. When auto-plan
 creates a replacement plan for the same node, older pending update approvals are
-rejected so the inbox cannot keep unsafe-looking stale approvals. An operator
-still reviews the plan and approves the visible plan SHA-256 before any node task
-is queued.
+rejected so the inbox cannot keep unsafe-looking stale approvals. Editing or
+deleting the update policy also rejects pending update approvals for that node,
+and if the node already reports the current target before apply, the scheduler
+closes the no-op approval as rejected. An operator still reviews the plan and
+approves the visible plan SHA-256 before any node task is queued.
 
 ## Failure behavior
 
