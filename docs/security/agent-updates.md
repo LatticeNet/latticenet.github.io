@@ -41,6 +41,12 @@ The queued task:
 6. schedules a delayed service restart so the current agent can report the task
    result.
 
+For default or legacy install paths, the apply script may adopt the currently
+running `lattice-agent` executable path and default systemd unit before install.
+This protects legacy/manual nodes from updating an unused path. The reviewed
+plan includes this effective-target rule so operators know when the runtime path
+can differ from the policy default.
+
 If the policy, target node state, or resolved artifact changes after planning,
 the old approval is stale. Lattice refuses to queue it and closes the stale
 pending approval as `rejected`; create a fresh plan and review its new plan
