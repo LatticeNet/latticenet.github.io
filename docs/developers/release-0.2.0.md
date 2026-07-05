@@ -23,6 +23,7 @@ Lattice 0.2.0 is the first coordinated release where the server image, embedded 
 - Cloudflare-inspired sidebar: the dashboard sidebar gained pinned shortcuts, recents, collapsible sections, active-section auto-open, and quick search while staying on Lattice design tokens.
 - Versioned images: server images are named by release/channel (`0.2.0`, `0.2`, `latest`, `alpha`, future `beta`) instead of opaque hash strings.
 - Release hygiene: server and agent now consume `lattice-sdk v0.2.15` instead of release-time pseudo-versions.
+- Agent release resolver hardening: official agent update planning resolves `latest` through GitHub's release redirect instead of the REST releases API, and caches release metadata successes plus short-lived failures so multi-node policy evaluation does not exhaust anonymous GitHub API rate limits.
 
 ## Operational notes
 
@@ -31,6 +32,7 @@ Lattice 0.2.0 is the first coordinated release where the server image, embedded 
 - Reverse proxies must pass WebSocket upgrade headers for `/api/terminal/sessions/:id/attach`, `/api/agent/terminal/stream`, and `/api/agent/control/stream`.
 - Passkeys require the browser origin and WebAuthn RP ID to match the public HTTPS dashboard origin. No Apple developer account or associated domains file is required for the web dashboard path.
 - The `alpha` channel is intentionally aligned to `0.2.0` at release time. Future testing should use `alpha` and `beta` moving tags instead of ad hoc hash-like image names.
+- Official agent update metadata is shared server-side for a short TTL. A temporary upstream GitHub failure should not produce one upstream request per node in the same policy evaluation window.
 
 ## Third-party tools and acknowledgements
 

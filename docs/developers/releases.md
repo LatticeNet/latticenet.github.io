@@ -94,6 +94,13 @@ resolved version plus SHA-256. A successful update records the applied version;
 the live source of truth is still the next node heartbeat's reported
 `agent_version`.
 
+Server `0.2.0` resolves `latest` through GitHub's `/releases/latest` redirect
+rather than the REST `releases/latest` endpoint, then caches latest-tag and
+`SHA256SUMS` metadata. This keeps default deployments independent of GitHub API
+tokens and prevents one auto-plan scheduler pass from spending anonymous API
+quota once per node. Authenticated GitHub access can still be useful for other
+operator automation, but it is not required for the official agent update flow.
+
 ## Compatibility discipline
 
 Ordinary server, dashboard, agent, SDK, and official plugin releases must remain
