@@ -1,9 +1,9 @@
 import { readFileSync } from "node:fs";
 
-const SDK_BASELINE = "v0.2.14";
-const AGENT_EXAMPLE_VERSION = "v0.2.8";
+const SDK_BASELINE = "v0.2.15";
+const AGENT_EXAMPLE_VERSION = "v0.3.0";
 const AGENT_EXAMPLE_TARGET_VERSION = AGENT_EXAMPLE_VERSION.replace(/^v/, "");
-const NEXT_AGENT_EXAMPLE_VERSION = "v0.2.9";
+const NEXT_AGENT_EXAMPLE_VERSION = "v0.3.1";
 
 const checks = [
   {
@@ -103,6 +103,7 @@ const checks = [
       "conflicting server name",
       "Full (strict)",
       "Bypass cache",
+      "WebSocket upgrade locations",
       "Cache-Control: no-cache",
       "Cache-Control: public, max-age=31536000, immutable",
     ],
@@ -144,6 +145,29 @@ const checks = [
       "Astra iOS companion v2 source publication",
       "Optional group-leader / relay topology",
       "authorization, audit events",
+    ],
+  },
+  {
+    file: "docs/developers/release-0.2.0.md",
+    patterns: [
+      "lattice-server v0.2.0",
+      "lattice-dashboard v0.2.0",
+      "lattice-node-agent v0.3.0",
+      "server-side node-token auth cache",
+      "outbound control WebSocket",
+      "native passkeys",
+      "Cloudflare-inspired sidebar",
+      "sing-box",
+    ],
+  },
+  {
+    file: "docs/ecosystem/sing-box.md",
+    patterns: [
+      "lr00rl/sing-box",
+      "b4707b2e02ff54dfaf0ea4dbf70f29c7ab381c4a",
+      "structured user mutation errors",
+      "sb --json",
+      "third-party dependency",
     ],
   },
 ];

@@ -19,7 +19,7 @@ SHA256SUMS
 Install the matching architecture:
 
 ```sh
-VERSION=v0.2.8
+VERSION=v0.3.0
 ARCH=amd64
 curl -fsSL --proto '=https' --tlsv1.2 -O "https://github.com/LatticeNet/lattice-node-agent/releases/download/${VERSION}/lattice-agent-linux-${ARCH}"
 curl -fsSL --proto '=https' --tlsv1.2 -O "https://github.com/LatticeNet/lattice-node-agent/releases/download/${VERSION}/SHA256SUMS"
@@ -81,16 +81,14 @@ nodes.
 
 The dashboard Terminal page uses outbound, agent-side PTY sessions. It is not an
 inbound SSH server and it does not require storing SSH credentials in Lattice.
-The agent keeps its no-inbound-listener model. It polls the server for pending
-sessions, then either uses the legacy HTTP poll path or dials an outbound stream
-WebSocket for the selected session.
+The agent keeps its no-inbound-listener model. In `lattice-node-agent v0.3.0+`, it keeps an outbound control WebSocket to the server. When an operator opens a terminal, the server pushes a `terminal.open` control message and the agent dials the terminal stream on demand. If the control socket is unavailable, the agent falls back to low-frequency HTTP discovery polling.
 
 The dashboard renders terminal sessions as a dedicated xterm workspace, not as a
 command input form. Operators can open it from Operations -> Terminal or from an
 individual node in the Nodes page; the node entry opens `/terminal?node_id=...`
 in a new browser tab and starts or resumes that node's latest live session.
 
-Terminal mode requires `lattice-agent 0.2.2+` and is off by default. Enable it
+Terminal mode requires `lattice-agent 0.2.2+` and is off by default. The low-CPU on-demand control channel requires `lattice-agent 0.3.0+`. Enable it
 only on nodes where interactive shell access through Lattice is acceptable:
 
 ```sh
@@ -118,7 +116,7 @@ Transport modes:
 
 | Mode | Use |
 | --- | --- |
-| `stream` | Preferred. Browser WebSocket -> server splice -> agent WebSocket -> PTY. Low latency, resize control frames, reconnect backoff, and bounded output replay. |
+| `stream` | Preferred. Browser WebSocket -> server splice -> agent WebSocket -> PTY. Low latency, resize control frames, reconnect backoff, bounded output replay, and v0.3.0 control-socket wakeups. |
 | `poll` | Legacy compatibility. Input, resize, and output are exchanged through bounded HTTP JSON requests. Safer for old agents but noticeably slower. |
 
 Dashboard access requires the `terminal:open` scope. Initial superuser accounts
@@ -266,7 +264,7 @@ host mutation is acceptable:
 
 The dashboard's Agent update UI defaults to official-release mode:
 
-- target version: `latest` or a concrete version such as `0.2.8`
+- target version: `latest` or a concrete version such as `0.3.0`
 - binary URL: empty
 - SHA-256: empty
 
@@ -367,8 +365,8 @@ target version + HTTPS binary URL + SHA-256 + install path + service name
 For the default service above:
 
 ```txt
-target version: 0.2.8
-binary URL: https://github.com/LatticeNet/lattice-node-agent/releases/download/v0.2.8/lattice-agent-linux-amd64
+target version: 0.3.0
+binary URL: https://github.com/LatticeNet/lattice-node-agent/releases/download/v0.3.0/lattice-agent-linux-amd64
 SHA-256: value from SHA256SUMS
 install path: /opt/lattice/lattice-agent
 service name: lattice-agent.service

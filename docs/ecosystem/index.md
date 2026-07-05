@@ -14,21 +14,17 @@ released and secured independently.
 | [`lattice-plugin-index`](https://github.com/LatticeNet/lattice-plugin-index) | Draft plugin marketplace index | Static JSON plus signing rules |
 | [`latticenet.github.io`](https://github.com/LatticeNet/latticenet.github.io) | Public website | GitHub Pages |
 | [`Astra`](https://github.com/LatticeNet/Astra) | iOS companion app for phone-first fleet operations | GitHub repo source + CI |
+| [`sing-box`](https://github.com/lr00rl/sing-box) | Third-party proxy core dependency used by vpn-core workflows | External fork, documented baseline |
 
 ## Current release shape
 
-- Server image: `ghcr.io/latticenet/lattice-server`.
-- Dashboard: canonical Vue console embedded in the server image, currently
-  covering Login, Overview, Security & 2FA, Nodes, Fleet Map, Approvals, Tasks,
-  and Audit.
-- Agent binaries: `lattice-agent-linux-amd64`, `lattice-agent-linux-arm64`, and
-  `SHA256SUMS` on GitHub Releases.
+- Server image: `ghcr.io/latticenet/lattice-server:0.2.0`, with moving `:latest`, `:alpha`, and `:beta` channels.
+- Dashboard: `lattice-dashboard v0.2.0`, embedded in `lattice-server v0.2.0`, covering Login, Overview, Security & 2FA/passkeys, Nodes, Fleet Map, Approvals, Tasks, Terminal, and Audit.
+- Agent binaries: `lattice-node-agent v0.3.0` publishes Linux and Darwin artifacts plus `SHA256SUMS` on GitHub Releases.
 - Docs/site: GitHub Pages.
 - Plugins: signed artifact releases plus a draft static index foundation; an
   official index requires a top-level index signature.
-- SDK contract: latest published tag is
-  `github.com/LatticeNet/lattice-sdk v0.2.14`; server currently consumes
-  `v0.2.14`, and node-agent currently consumes `v0.2.14`.
+- SDK contract: latest published tag is `github.com/LatticeNet/lattice-sdk v0.2.15`; server and node-agent consume that public tag, not pseudo-versions.
 - Astra iOS companion: source repository with v2 Overview, Nodes, Monitors,
   Inventory, More, and Network & security read views backed by a typed Swift
   API client. Mobile approval sends the reviewed plan's SHA-256; TestFlight and

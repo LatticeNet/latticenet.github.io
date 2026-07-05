@@ -31,6 +31,7 @@ export default defineConfig({
       { text: "Plugins", link: "/plugins/" },
       { text: "Developers", link: "/developers/" },
       { text: "Roadmap", link: "/ecosystem/roadmap" },
+      { text: "Release 0.2.0", link: "/developers/release-0.2.0" },
       { text: "GitHub", link: "https://github.com/LatticeNet" },
     ],
     sidebar: {
@@ -82,6 +83,7 @@ export default defineConfig({
           items: [
             { text: "Repositories", link: "/ecosystem/" },
             { text: "Roadmap", link: "/ecosystem/roadmap" },
+            { text: "sing-box", link: "/ecosystem/sing-box" },
           ],
         },
       ],

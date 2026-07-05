@@ -11,11 +11,10 @@ contract, docs, and plugin index.
 ghcr.io/latticenet/lattice-server:latest
 ghcr.io/latticenet/lattice-server:alpha
 ghcr.io/latticenet/lattice-server:<version>
+ghcr.io/latticenet/lattice-server:beta
 ```
 
-Image publication is tag-driven. The moving `latest` git tag publishes
-`:latest`, the moving `alpha` git tag publishes `:alpha`, and stable `v*` tags
-publish immutable version tags. There is no `main` image channel. Use a version
+Image publication is tag-driven. The moving `latest` git tag publishes `:latest`, the moving `alpha` git tag publishes `:alpha`, the moving `beta` git tag publishes `:beta`, and stable `v*` tags publish immutable version tags. There is no `main`, branch, sha, or hash-string image channel. Use a version
 tag or digest for unattended production deployments when you do not want a
 moving channel.
 
@@ -23,9 +22,7 @@ GitHub Container Registry lists package versions by digest. A tagged manifest
 appears with tags such as `latest` or `alpha`; historical untagged digests cannot
 be renamed after the fact. The server repository disables buildx provenance/SBOM
 attestation manifests for the image workflow and runs `package cleanup` to prune
-old `tags: []` container versions. Cleanup protects the architecture child
-digests referenced by the active `latest` and `alpha` manifest lists, then
-removes stale untagged versions.
+old `tags: []` container versions. Cleanup protects the architecture child digests referenced by the active `latest`, `alpha`, and `beta` manifest lists, then removes stale untagged versions.
 
 Every server image exposes its build metadata through:
 
@@ -61,7 +58,7 @@ lattice-agent -version
 
 ```sh
 cd lattice-node-agent
-NEXT_AGENT=v0.2.9
+NEXT_AGENT=v0.3.1
 git tag -a "$NEXT_AGENT" -m "lattice-node-agent $NEXT_AGENT"
 git push origin "$NEXT_AGENT"
 ```
@@ -78,7 +75,7 @@ curl -fsSL --proto '=https' --tlsv1.2 "https://github.com/LatticeNet/lattice-nod
 The normal dashboard flow is official-release mode:
 
 ```txt
-target version: latest or 0.2.8
+target version: latest or 0.3.0
 binary URL: empty
 SHA-256: empty
 install path: empty unless the node is intentionally non-standard
@@ -122,7 +119,7 @@ clone one repository should not need an unpublished SDK tag.
 
 ```sh
 cd lattice-sdk
-NEXT_SDK=v0.2.14 # replace with the next SDK tag after the latest published baseline
+NEXT_SDK=v0.2.15 # replace with the next SDK tag after the latest published baseline
 git tag -a "$NEXT_SDK" -m "lattice-sdk $NEXT_SDK"
 git push origin main
 git push origin "$NEXT_SDK"

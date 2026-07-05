@@ -8,10 +8,7 @@ The public image is:
 ghcr.io/latticenet/lattice-server
 ```
 
-Use `:latest` for the current stable image, published by the moving `latest`
-git tag. Use `:alpha` for the moving alpha test channel, and a version tag or
-digest for unattended production deployments that must not move. There is
-intentionally no `main` image channel.
+Use `:0.2.0` for the immutable 0.2.0 release image. Use `:latest` for the current stable image, published by the moving `latest` git tag. Use `:alpha` for the moving alpha test channel and `:beta` for the moving beta test channel, and a version tag or digest for unattended production deployments that must not move. There is intentionally no `main` image channel, branch channel, sha channel, or hash-string image channel.
 
 ## Compose
 
@@ -54,6 +51,18 @@ The version endpoint returns build metadata used by the dashboard About page:
 ```sh
 curl -fsS http://127.0.0.1:8088/api/version
 ```
+
+## WebSocket upgrade locations
+
+Lattice 0.2.0 uses WebSockets for browser terminal attach, agent terminal stream, and the agent control channel that wakes terminal sessions on demand. Reverse proxies must preserve `Upgrade` and `Connection` on these API paths:
+
+```txt
+/api/terminal/sessions/:id/attach
+/api/agent/terminal/stream
+/api/agent/control/stream
+```
+
+For NGINX, add exact or prefix locations for those paths with `proxy_http_version 1.1`, `proxy_set_header Upgrade $http_upgrade`, `proxy_set_header Connection $connection_upgrade`, and long read/send timeouts. Keep normal API caching disabled for `/api/*`.
 
 ## HTTPS reverse proxy
 
