@@ -16,9 +16,9 @@ own release and security boundary.
 
 ## Contracts
 
-Latest published SDK tag: `github.com/LatticeNet/lattice-sdk v0.2.15`.
-`lattice-server` currently consumes `v0.2.15`; `lattice-node-agent` currently
-consumes `v0.2.15`.
+Latest published SDK tag: `github.com/LatticeNet/lattice-sdk v0.2.17`.
+`lattice-server` currently consumes `v0.2.17`; `lattice-node-agent` currently
+consumes `v0.2.17`.
 
 When shared models change, cut the SDK tag before downstream repositories depend
 on it. CI and Docker builds may use a local workspace replace, but standalone
@@ -50,10 +50,11 @@ GOWORK=../lattice/go.work go test -race -cover ./...
 The release tag order is:
 
 1. `lattice-sdk` when model contracts change.
-2. `lattice-server` image through GHCR.
-3. `lattice-node-agent` binaries through GitHub Releases.
-4. Public docs and plugin index updates.
-5. Astra iOS source publication through its repository. TestFlight and signed
+2. `lattice-dashboard`, then pin its exact commit in `lattice-server/dashboard.ref`.
+3. `lattice-server` image through GHCR.
+4. `lattice-node-agent` binaries after the required server/dashboard compatibility floor is published.
+5. Public docs and plugin index updates.
+6. Astra iOS source publication through its repository. TestFlight and signed
    release artifacts remain separate device/distribution work.
 
 Agent update policies consume release binaries by immutable URL and SHA-256

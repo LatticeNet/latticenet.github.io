@@ -58,7 +58,7 @@ lattice-agent -version
 
 ```sh
 cd lattice-node-agent
-NEXT_AGENT=v0.3.1
+NEXT_AGENT=v0.2.10-alpha.1
 git tag -a "$NEXT_AGENT" -m "lattice-node-agent $NEXT_AGENT"
 git push origin "$NEXT_AGENT"
 ```
@@ -75,7 +75,7 @@ curl -fsSL --proto '=https' --tlsv1.2 "https://github.com/LatticeNet/lattice-nod
 The normal dashboard flow is official-release mode:
 
 ```txt
-target version: latest or 0.3.0
+target version: latest or 0.2.9
 binary URL: empty
 SHA-256: empty
 install path: empty unless the node is intentionally non-standard
@@ -94,12 +94,18 @@ resolved version plus SHA-256. A successful update records the applied version;
 the live source of truth is still the next node heartbeat's reported
 `agent_version`.
 
-Server `0.2.0` resolves `latest` through GitHub's `/releases/latest` redirect
-rather than the REST `releases/latest` endpoint, then caches latest-tag and
-`SHA256SUMS` metadata. This keeps default deployments independent of GitHub API
-tokens and prevents one auto-plan scheduler pass from spending anonymous API
-quota once per node. Authenticated GitHub access can still be useful for other
-operator automation, but it is not required for the official agent update flow.
+Server `0.2.1` resolves `latest` from GitHub's release list, skips drafts and
+prereleases, and caches release-list and `SHA256SUMS` metadata. This keeps the
+stable update path on `v0.2.9` even though historical `v0.3.0` through `v0.3.3`
+releases remain available as prereleases. Explicit update plans become immutable
+after the release URL and digest are resolved. Authenticated GitHub access can
+still be useful for operator automation, but it is not required for the official
+agent update flow.
+
+The resolver selecting `v0.2.9` does not imply that nodes already running a
+`0.3.x` prerelease will be downgraded. Agent update planning rejects version
+downgrades; moving a node back to the stable lane must be an explicit operator
+decision with a reviewed artifact and rollback plan.
 
 ## Compatibility discipline
 
@@ -126,7 +132,7 @@ clone one repository should not need an unpublished SDK tag.
 
 ```sh
 cd lattice-sdk
-NEXT_SDK=v0.2.15 # replace with the next SDK tag after the latest published baseline
+NEXT_SDK=v0.2.17 # replace with the next SDK tag after the latest published baseline
 git tag -a "$NEXT_SDK" -m "lattice-sdk $NEXT_SDK"
 git push origin main
 git push origin "$NEXT_SDK"

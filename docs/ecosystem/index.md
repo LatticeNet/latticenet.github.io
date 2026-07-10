@@ -18,13 +18,12 @@ released and secured independently.
 
 ## Current release shape
 
-- Server image: `ghcr.io/latticenet/lattice-server:0.2.0`, with moving `:latest`, `:alpha`, and `:beta` channels.
-- Dashboard: `lattice-dashboard v0.2.0`, embedded in `lattice-server v0.2.0`, covering Login, Overview, Security & 2FA/passkeys, Nodes, Fleet Map, Approvals, Tasks, Terminal, and Audit.
-- Agent binaries: `lattice-node-agent v0.3.0` publishes Linux and Darwin artifacts plus `SHA256SUMS` on GitHub Releases.
-- Docs/site: GitHub Pages.
-- Plugins: signed artifact releases plus a draft static index foundation; an
-  official index requires a top-level index signature.
-- SDK contract: latest published tag is `github.com/LatticeNet/lattice-sdk v0.2.15`; server and node-agent consume that public tag, not pseudo-versions.
+- Server image: `ghcr.io/latticenet/lattice-server:0.2.1`, with moving `:latest`, `:alpha`, and `:beta` channels.
+- Dashboard: `lattice-dashboard v0.2.1`, embedded in `lattice-server v0.2.1`, including isolated, active-only plugin navigation and lifecycle controls.
+- Agent binaries: stable `lattice-node-agent v0.2.9` publishes Linux and Darwin artifacts plus `SHA256SUMS`; historical `v0.3.0` through `v0.3.3` remain prereleases and are not selected by `latest`.
+- Docs/site: package `0.2.1` on GitHub Pages.
+- Plugin platform: umbrella `lattice v0.2.0`, index `v0.2.0`, and author template `v0.2.0`. NetGuard and WireGuard remain deliberately prerelease at `v0.1.0-alpha.5`; vpn-core `v0.7.2` and Sub-Store `v0.3.1` are unchanged.
+- SDK contract: latest published tag is `github.com/LatticeNet/lattice-sdk v0.2.17`; server and node-agent consume that public tag, not pseudo-versions.
 - Astra iOS companion: source repository with v2 Overview, Nodes, Monitors,
   Inventory, More, and Network & security read views backed by a typed Swift
   API client. Mobile approval sends the reviewed plan's SHA-256; TestFlight and
@@ -33,5 +32,7 @@ released and secured independently.
 ## Stability note
 
 Lattice is early. The control plane is usable for private fleets with careful
-perimeter hardening, backups, and reviewed node privileges. Marketplace install
-and real plugin runners are deliberately staged behind more security work.
+perimeter hardening, backups, and reviewed node privileges. Verified system
+plugins can be installed and activated, but activation only exposes their
+declared capability and UI surfaces; host changes still require a separate,
+reviewed plan/apply operation.

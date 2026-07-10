@@ -1,9 +1,9 @@
 import { readFileSync } from "node:fs";
 
-const SDK_BASELINE = "v0.2.15";
-const AGENT_EXAMPLE_VERSION = "v0.3.0";
+const SDK_BASELINE = "v0.2.17";
+const AGENT_EXAMPLE_VERSION = "v0.2.9";
 const AGENT_EXAMPLE_TARGET_VERSION = AGENT_EXAMPLE_VERSION.replace(/^v/, "");
-const NEXT_AGENT_EXAMPLE_VERSION = "v0.3.1";
+const NEXT_AGENT_EXAMPLE_VERSION = "v0.2.10-alpha.1";
 
 const checks = [
   {
@@ -192,6 +192,18 @@ const checks = [
       "native passkeys",
       "Cloudflare-inspired sidebar",
       "sing-box",
+    ],
+  },
+  {
+    file: "docs/developers/release-0.2.1.md",
+    patterns: [
+      "lattice-server v0.2.1",
+      "lattice-dashboard v0.2.1",
+      "lattice-node-agent v0.2.9",
+      "lattice-sdk v0.2.17",
+      "lattice-plugin-index v0.2.0",
+      "lattice-plugin-template v0.2.0",
+      "Activation is not host apply",
     ],
   },
   {
