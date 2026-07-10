@@ -16,8 +16,10 @@ Every plugin declares capabilities. Unknown capabilities are rejected. Host-risk
 capabilities require trusted publisher signatures unless the operator explicitly
 opts into local development risk.
 
-Current authoring target: a verifiable local bundle. Remote marketplace install
-and runtime activation are separate future workflows.
+Current authoring target: a verifiable local bundle with the minimum capability
+set and a documented runtime contract. Remote marketplace install remains a
+future workflow. Trusted local system plugins may use the bounded system runner
+only after explicit lifecycle activation.
 
 ## Author Checklist
 
@@ -29,6 +31,8 @@ and runtime activation are separate future workflows.
 - Use plan/review/apply for host mutation.
 - Treat the marketplace index as metadata until install and runner gates are
   implemented.
+- Treat signing and activation as separate ceremonies: the publisher signs;
+  an operator with `plugin:admin` activates.
 
 ## Good First Official Plugins
 
@@ -40,3 +44,6 @@ and runtime activation are separate future workflows.
 
 Avoid community host mutation plugins until runner sandboxing, limits, audit,
 and rollback behavior have matured.
+
+See [Plugin Lifecycle](/plugins/lifecycle) and
+[Plugin Trust](/security/plugin-trust) before publishing a host-risk bundle.

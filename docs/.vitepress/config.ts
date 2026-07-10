@@ -55,6 +55,7 @@ export default defineConfig({
             { text: "Overview", link: "/security/" },
             { text: "Agent Updates", link: "/security/agent-updates" },
             { text: "Plugin Trust", link: "/security/plugin-trust" },
+            { text: "PAT Authorization", link: "/security/pat-authorization" },
           ],
         },
       ],
@@ -63,6 +64,7 @@ export default defineConfig({
           text: "Plugins",
           items: [
             { text: "Marketplace", link: "/plugins/" },
+            { text: "Lifecycle", link: "/plugins/lifecycle" },
             { text: "Authoring", link: "/plugins/authoring" },
             { text: "Index Format", link: "/plugins/index-format" },
           ],

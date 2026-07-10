@@ -13,16 +13,18 @@ Implemented in Lattice:
 - trusted publisher policy;
 - lifecycle registry/API/UI;
 - capability broker;
-- noop runtime manager.
+- active-only declarative UI contributions; and
+- bounded system runner for trusted first-party/operator-audited plugins.
 
-Plugin artifact execution is still disabled by default. The dashboard may show
-marketplace metadata, but it does not install or execute remote community bundles automatically.
+The dashboard may show marketplace metadata, but it does not install or execute remote community bundles automatically. Trusted local `system` plugins can run
+only after verification and explicit `verified -> installed -> active`
+transitions.
 
 Not implemented yet:
 
 - remote index install workflow;
-- plugin artifact execution;
-- system/worker/wasm runner isolation;
+- remote bundle installation;
+- worker/wasm runner isolation;
 - community plugin publishing flow.
 
 ## Planned sources
@@ -69,3 +71,7 @@ gate.
 Marketplace install must remain separate from runner activation. Real community
 plugin execution depends on runner sandbox maturity, limits, audit, and rollback
 behavior.
+
+Learn how publisher verification, operator authorization, active-only UI, and
+host apply remain separate in [Plugin Lifecycle](/plugins/lifecycle). For key
+material and trust roots, see [Plugin Trust](/security/plugin-trust).

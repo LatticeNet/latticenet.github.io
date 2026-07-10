@@ -108,7 +108,7 @@ operators inspect the rendered intent, approve the visible plan hash, and the no
 </article>
 <article class="capability-card">
 <h3>Plugin trust</h3>
-<p>Signed manifests, digest pinning, trusted publisher policy, capability broker, lifecycle registry, and noop runtime foundation.</p>
+<p>Signed manifests, digest pinning, trusted publisher policy, validated lifecycle, active-only UI contributions, and a bounded runner for trusted system plugins.</p>
 </article>
 <article class="capability-card">
 <h3>Public ecosystem</h3>
@@ -116,7 +116,7 @@ operators inspect the rendered intent, approve the visible plan hash, and the no
 </article>
 </div>
 <div class="status-band">
-Lattice is early and usable for private fleets with careful perimeter hardening. Community plugin execution is not enabled by default; marketplace work starts with a read-only draft index and signed release manifests.
+Lattice is early and usable for private fleets with careful perimeter hardening. Arbitrary community plugin execution is not enabled; marketplace work starts with a read-only draft index and signed release manifests.
 </div>
 </div>
 </section>
@@ -138,8 +138,8 @@ Lattice is early and usable for private fleets with careful perimeter hardening.
 </article>
 <article class="repo-card">
 <h3>Plugin authors</h3>
-<p>Start with local bundles and signed manifests. Remote install and runner activation remain separate safety gates.</p>
-<a href="/plugins/authoring">Author plugins</a>
+<p>Start with local bundles and signed manifests. Publisher verification, operator activation, and node apply remain separate safety gates.</p>
+<a href="/plugins/lifecycle">Understand plugin lifecycle</a>
 </article>
 <article class="repo-card">
 <h3>Contributors</h3>
@@ -153,7 +153,7 @@ Lattice is early and usable for private fleets with careful perimeter hardening.
 </article>
 <article class="repo-card">
 <h3>Roadmap readers</h3>
-<p>Track what is implemented, what is intentionally blocked, and what must mature before marketplace install or real runners.</p>
+<p>Track what is implemented, what is intentionally blocked, and what must mature before remote marketplace install or community runners.</p>
 <a href="/ecosystem/roadmap">Roadmap</a>
 </article>
 </div>

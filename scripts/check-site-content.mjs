@@ -67,7 +67,41 @@ const checks = [
     patterns: [
       "read-only signed index",
       "does not install or execute remote community bundles automatically",
-      "Plugin artifact execution is still disabled by default",
+      "verified -> installed -> active",
+      "bounded system runner",
+    ],
+  },
+  {
+    file: "docs/plugins/lifecycle.md",
+    patterns: [
+      "Publish",
+      "Verify",
+      "Activate",
+      "Apply",
+      "verified -> installed -> active",
+      "Activation is not host apply",
+      "scope: plugin:admin",
+      "Active-only UI contributions",
+    ],
+  },
+  {
+    file: "docs/security/plugin-trust.md",
+    patterns: [
+      "publisher signature",
+      "operator identity",
+      "allow_unsigned_host_risk",
+      "LATTICE_PLUGIN_TRUST",
+      "Ed25519 seed/private key",
+    ],
+  },
+  {
+    file: "docs/security/pat-authorization.md",
+    patterns: [
+      "Credential types are not interchangeable",
+      "plugin:admin",
+      "Authorization: Bearer",
+      "Settings -> Access Tokens",
+      "server-side revocation",
     ],
   },
   {

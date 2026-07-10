@@ -15,7 +15,8 @@ Lattice groups high-risk operations under a reviewable approval flow.
 - Notification channels plus routing rules for monitor, SSH-login, and proxy
   quota/expiry events.
 - Node-agent update policies with manual plan and auto-plan pending approvals.
-- Plugin lifecycle registry and noop runtime foundation.
+- Plugin lifecycle registry, active-only UI contributions, and bounded system
+  runner for trusted first-party/operator-audited plugins.
 
 ## Operator rule
 
@@ -141,12 +142,16 @@ Current server event ids include:
 ## Do not automate yet
 
 - Community plugin installation.
-- Plugin artifact execution.
+- Arbitrary community plugin execution or host mutation.
 - Agent auto-plan before release URL and SHA are final.
 - Any release channel resolver that points nodes at mutable `latest` metadata.
 
 These are roadmap items because they need stronger signing, runner isolation,
 rollback, and audit behavior.
+
+Official local system plugins still require publisher verification and explicit
+operator activation. Activation does not approve or apply a node plan. See
+[Plugin Lifecycle](/plugins/lifecycle).
 
 For node-agent rollout details, use [Agent Updates](/security/agent-updates).
 For release sequencing and cross-repository compatibility rules, use the

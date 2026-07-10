@@ -49,9 +49,15 @@ Plugins are capability-scoped. Host-risk plugins require signed manifests from
 trusted publishers unless the operator explicitly accepts local development
 risk.
 
-Plugin artifact execution is not enabled by default. The current runtime
-foundation can register lifecycle state and broker capabilities, but real
-system, worker, and wasm runners remain gated by sandbox maturity.
+Publisher verification and operator authorization are separate: signatures
+prove release identity, while an authenticated principal with `plugin:admin`
+controls `verified -> installed -> active` lifecycle transitions. The trusted
+system-plugin runner is available for reviewed first-party bundles; worker,
+wasm, remote community install, and community host mutation remain gated by
+sandbox maturity.
+
+Read [Plugin Trust](/security/plugin-trust), [PAT Authorization](/security/pat-authorization),
+and [Plugin Lifecycle](/plugins/lifecycle) together.
 
 ## Network
 

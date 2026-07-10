@@ -349,9 +349,10 @@ Losing `master.key` makes encrypted secrets unrecoverable.
 
 ## Plugin directory
 
-Marketplace entries are metadata until install and runner workflows mature.
-Local plugin bundles live under `LATTICE_PLUGIN_DIR`. The recommended server
-mount is read-only:
+Marketplace entries are metadata until remote install workflows mature. Local
+verified system-plugin bundles may use the bounded runner after explicit
+lifecycle activation. Local bundles live under `LATTICE_PLUGIN_DIR`. The
+recommended server mount is read-only:
 
 ```txt
 ./plugins -> /plugins:ro

@@ -79,7 +79,8 @@ https://github.com/LatticeNet/lattice/blob/main/docs/roadmap.md
 
 - Marketplace install must not bypass manifest verification or capability
   review.
-- Marketplace activation must wait for runner sandbox maturity.
+- Marketplace activation must match runner-tier sandbox maturity; the trusted
+  system runner is not permission to execute arbitrary community bundles.
 - Agent update channels must resolve to immutable URL + SHA + version tuples.
 - Community host-risk plugins stay blocked by default.
 - Terminal already ships with scoped authorization, audit events, opt-in agent
