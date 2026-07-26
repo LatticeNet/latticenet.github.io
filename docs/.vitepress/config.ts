@@ -66,6 +66,7 @@ export default defineConfig({
             { text: "Marketplace", link: "/plugins/" },
             { text: "Lifecycle", link: "/plugins/lifecycle" },
             { text: "Authoring", link: "/plugins/authoring" },
+            { text: "UI Bridge", link: "/plugins/bridge" },
             { text: "Index Format", link: "/plugins/index-format" },
           ],
         },
