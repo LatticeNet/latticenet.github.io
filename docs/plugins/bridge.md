@@ -73,6 +73,8 @@ changes, not package refactors.
 
 ## Releases
 
-Prerelease lane `0.x-alpha.N`, published to GitHub Packages from the
+Prerelease lane `0.x-alpha.N`, published to GitHub Packages by the
 `lattice-plugin-bridge` repository's tag-triggered CI. Consumers pin exact
-versions; a prerelease never becomes the registry's `latest`.
+versions; a prerelease never becomes the registry's `latest`. First published
+version: `0.1.0-alpha.1`. GitHub Packages requires an authenticated token for
+installs — see the package README's Consuming section for the `.npmrc` shape.
