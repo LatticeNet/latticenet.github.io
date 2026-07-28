@@ -26,8 +26,8 @@ released and secured independently.
 - Dashboard: `lattice-dashboard v0.2.1`, embedded in `lattice-server v0.2.1`, including isolated, active-only plugin navigation and lifecycle controls.
 - Agent binaries: stable `lattice-node-agent v0.2.9` publishes Linux and Darwin artifacts plus `SHA256SUMS`; historical `v0.3.0` through `v0.3.3` remain prereleases and are not selected by `latest`.
 - Docs/site: package `0.2.1` on GitHub Pages.
-- Plugin platform: umbrella `lattice v0.2.0`, index `v0.2.0`, and author template `v0.2.0` are the current stable tags. NetGuard and WireGuard remain deliberately prerelease with no stable release yet (`v0.1.0-alpha.7` at the time of writing); vpn-core `v0.7.2` and Sub-Store `v0.3.1` are the current stable plugin releases, each with a newer prerelease line in flight.
-- SDK contract: latest published tag is `github.com/LatticeNet/lattice-sdk v0.2.17`. Between milestones the server and node-agent pin a Go **pseudo-version** of the SDK commit they were built against rather than the published tag, so their `go.mod` may name a version that has not been tagged yet; the tag is what downstream consumers depend on.
+- Plugin platform: umbrella `lattice v0.2.0`, index `v0.2.0`, and author template `v0.2.0` are the current stable tags. NetGuard and WireGuard remain deliberately prerelease with no stable release yet (`v0.1.0-alpha.9` at the time of writing); vpn-core `v0.7.2` and Sub-Store `v0.3.1` are the current stable plugin releases, each with a newer prerelease line in flight.
+- SDK contract: latest published tag is `github.com/LatticeNet/lattice-sdk v0.2.18`. Between milestones the server and node-agent pin a Go **pseudo-version** of the SDK commit they were built against rather than the published tag, so their `go.mod` may name a version that has not been tagged yet; the tag is what downstream consumers depend on.
 - Astra iOS companion: source repository with v2 Overview, Nodes, Monitors,
   Inventory, More, and Network & security read views backed by a typed Swift
   API client. Mobile approval sends the reviewed plan's SHA-256; TestFlight and
