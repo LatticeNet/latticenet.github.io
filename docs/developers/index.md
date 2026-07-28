@@ -16,9 +16,13 @@ own release and security boundary.
 
 ## Contracts
 
-Latest published SDK tag: `github.com/LatticeNet/lattice-sdk v0.2.17`.
-`lattice-server` currently consumes `v0.2.17`; `lattice-node-agent` currently
-consumes `v0.2.17`.
+Latest published SDK tag: `github.com/LatticeNet/lattice-sdk v0.2.18`.
+
+Between milestones `lattice-server` and `lattice-node-agent` pin a Go
+**pseudo-version** of the SDK commit they were built against, so their `go.mod`
+may name a version that has not been tagged yet. The published tag is what
+downstream consumers depend on; each repository's `go.mod` is authoritative for
+what it actually builds against.
 
 When shared models change, cut the SDK tag before downstream repositories depend
 on it. CI and Docker builds may use a local workspace replace, but standalone

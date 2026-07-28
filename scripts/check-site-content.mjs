@@ -1,6 +1,6 @@
 import { readFileSync } from "node:fs";
 
-const SDK_BASELINE = "v0.2.17";
+const SDK_BASELINE = "v0.2.18";
 const AGENT_EXAMPLE_VERSION = "v0.2.9";
 const AGENT_EXAMPLE_TARGET_VERSION = AGENT_EXAMPLE_VERSION.replace(/^v/, "");
 const NEXT_AGENT_EXAMPLE_VERSION = "v0.2.10-alpha.1";
@@ -108,9 +108,12 @@ const checks = [
     file: "docs/developers/index.md",
     patterns: [
       `Latest published SDK tag: \`github.com/LatticeNet/lattice-sdk ${SDK_BASELINE}\``,
-      `\`lattice-server\` currently consumes \`${SDK_BASELINE}\``,
-      "`lattice-node-agent` currently",
-      `consumes \`${SDK_BASELINE}\``,
+      // The consumption sentence used to assert that both binaries consume the
+      // published tag. They do not - both pin a pseudo-version - and pinning the
+      // false sentence here made correcting the page fail this check. Pin the
+      // shape of the honest explanation instead of a value it never had.
+      "pseudo-version",
+      "`go.mod` is authoritative",
       "[`Astra`](https://github.com/LatticeNet/Astra)",
       "release tag order",
       "runner sandbox maturity",
