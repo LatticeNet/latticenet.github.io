@@ -1,0 +1,39 @@
+name: release-pins
+
+# Why this is NOT a step in pages.yml, which was the other option on the table:
+#
+# The drift this catches is caused by an event in a DIFFERENT repository — a stable
+# release being cut in lattice-node-agent. This repo gets no push when that happens,
+# so a push-triggered check can never see the failure it exists for. Only the schedule
+# can. That makes the schedule the point, not a belt-and-braces extra.
+#
+# Putting it in the deploy would also (a) let a GitHub API hiccup block publishing
+# documentation, and (b) deliver the failure at the worst possible moment — while
+# someone is trying to ship an unrelated page. A docs deploy should not depend on a
+# moving external fact; a scheduled check should.
+on:
+  schedule:
+    - cron: "17 6 * * *"
+  push:
+    paths:
+      - "docs/guide/**"
+      - "scripts/check-release-pins.mjs"
+      - ".github/workflows/release-pins.yml"
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  pins:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+      - name: Documented install versions match their releases
+        env:
+          # Raises the releases-API rate limit; the script works unauthenticated too.
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: node scripts/check-release-pins.mjs
