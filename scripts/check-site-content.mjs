@@ -1,9 +1,17 @@
 import { readFileSync } from "node:fs";
 
 const SDK_BASELINE = "v0.2.18";
-const AGENT_EXAMPLE_VERSION = "v0.2.9";
-const AGENT_EXAMPLE_TARGET_VERSION = AGENT_EXAMPLE_VERSION.replace(/^v/, "");
 const NEXT_AGENT_EXAMPLE_VERSION = "v0.2.10-alpha.1";
+
+// The agent version a reader pastes is asserted by SHAPE here and by VALUE in
+// check-release-pins.mjs, which compares it against the actual latest stable
+// release. Pinning the literal in this file instead produced the failure mode
+// rules/04 names: the guard stayed green while the sentence went stale, because
+// it was only ever checking that someone had typed the same constant twice.
+const AGENT_VERSION_SHAPE = /VERSION=v\d+\.\d+\.\d+\b/;
+const AGENT_TARGET_VERSION_SHAPE = /target version: \d+\.\d+\.\d+\b/;
+const AGENT_DOWNLOAD_URL_SHAPE = /releases\/download\/v\d+\.\d+\.\d+\/lattice-agent-linux-amd64/;
+const AGENT_TARGET_LATEST_SHAPE = /target version: latest or \d+\.\d+\.\d+\b/;
 
 const checks = [
   {
@@ -22,7 +30,7 @@ const checks = [
       "lattice-agent-linux-amd64",
       "lattice-agent-linux-arm64",
       "SHA256SUMS",
-      `VERSION=${AGENT_EXAMPLE_VERSION}`,
+      AGENT_VERSION_SHAPE,
       "curl -fsSL --proto '=https' --tlsv1.2 -O",
       "lattice-agent.service",
       "`node-token` is a per-node bearer token",
@@ -36,8 +44,8 @@ const checks = [
       "EnvironmentFile=/opt/lattice/lattice-agent.env",
       "sudo chmod 0600 /opt/lattice/lattice-agent.env",
       "Current Lattice node-agent topology is hub-and-spoke",
-      `target version: ${AGENT_EXAMPLE_TARGET_VERSION}`,
-      `releases/download/${AGENT_EXAMPLE_VERSION}/lattice-agent-linux-amd64`,
+      AGENT_TARGET_VERSION_SHAPE,
+      AGENT_DOWNLOAD_URL_SHAPE,
     ],
   },
   {
@@ -125,7 +133,7 @@ const checks = [
       `NEXT_AGENT=${NEXT_AGENT_EXAMPLE_VERSION}`,
       `NEXT_SDK=${SDK_BASELINE}`,
       "releases/download/${NEXT_AGENT}/SHA256SUMS",
-      `target version: latest or ${AGENT_EXAMPLE_TARGET_VERSION}`,
+      AGENT_TARGET_LATEST_SHAPE,
     ],
   },
   {
@@ -234,6 +242,12 @@ const forbidden = [
 
 let failed = false;
 
+// A pattern is either a literal string (assert this exact text is present) or a
+// RegExp (assert the shape is present, whatever the current value happens to be).
+function present(text, pattern) {
+  return pattern instanceof RegExp ? pattern.test(text) : text.includes(pattern);
+}
+
 for (const check of checks) {
   let text = "";
   try {
@@ -245,7 +259,7 @@ for (const check of checks) {
   }
 
   for (const pattern of check.patterns) {
-    if (!text.includes(pattern)) {
+    if (!present(text, pattern)) {
       console.error(`${check.file} missing required content: ${pattern}`);
       failed = true;
     }
@@ -263,7 +277,7 @@ for (const check of forbidden) {
   }
 
   for (const pattern of check.patterns) {
-    if (text.includes(pattern)) {
+    if (present(text, pattern)) {
       console.error(`${check.file} contains forbidden content: ${pattern}`);
       failed = true;
     }

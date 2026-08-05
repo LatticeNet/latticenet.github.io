@@ -18,13 +18,13 @@ released and secured independently.
 
 ## Current release shape
 
-> Snapshot as of 2026-07-28, describing **published** releases only. Prerelease lines
+> Snapshot as of 2026-08-05, describing **published** releases only. Prerelease lines
 > move continuously and are not selected by `latest`; each repository's releases page is
 > authoritative over this table.
 
 - Server image: `ghcr.io/latticenet/lattice-server:0.2.1`, with moving `:latest`, `:alpha`, and `:beta` channels.
 - Dashboard: `lattice-dashboard v0.2.1`, embedded in `lattice-server v0.2.1`, including isolated, active-only plugin navigation and lifecycle controls.
-- Agent binaries: stable `lattice-node-agent v0.2.9` publishes Linux and Darwin artifacts plus `SHA256SUMS`; historical `v0.3.0` through `v0.3.3` remain prereleases and are not selected by `latest`.
+- Agent binaries: stable `lattice-node-agent v0.3.3` publishes Linux and Darwin artifacts plus `SHA256SUMS`, and is what `latest` selects. It is the first stable release of the 0.3 line: `v0.3.0`, `v0.3.1` and `v0.3.2` were never tagged or released at all — 0.3.0 was prepared, the stable lane was then rewound to `v0.2.9`, and the 0.3 line continued only as `v0.3.3-alpha.N`, which remain prereleases.
 - Docs/site: package `0.2.1` on GitHub Pages.
 - Plugin platform: umbrella `lattice v0.2.0`, index `v0.2.0`, and author template `v0.2.0` are the current stable tags. NetGuard and WireGuard remain deliberately prerelease with no stable release yet (`v0.1.0-alpha.9` at the time of writing); vpn-core `v0.7.2` and Sub-Store `v0.3.1` are the current stable plugin releases, each with a newer prerelease line in flight.
 - SDK contract: latest published tag is `github.com/LatticeNet/lattice-sdk v0.2.18`. Between milestones the server and node-agent pin a Go **pseudo-version** of the SDK commit they were built against rather than the published tag, so their `go.mod` may name a version that has not been tagged yet; the tag is what downstream consumers depend on.

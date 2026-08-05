@@ -75,7 +75,7 @@ curl -fsSL --proto '=https' --tlsv1.2 "https://github.com/LatticeNet/lattice-nod
 The normal dashboard flow is official-release mode:
 
 ```txt
-target version: latest or 0.2.9
+target version: latest or 0.3.3
 binary URL: empty
 SHA-256: empty
 install path: empty unless the node is intentionally non-standard
@@ -94,18 +94,19 @@ resolved version plus SHA-256. A successful update records the applied version;
 the live source of truth is still the next node heartbeat's reported
 `agent_version`.
 
-Server `0.2.1` resolves `latest` from GitHub's release list, skips drafts and
-prereleases, and caches release-list and `SHA256SUMS` metadata. This keeps the
-stable update path on `v0.2.9` even though historical `v0.3.0` through `v0.3.3`
-releases remain available as prereleases. Explicit update plans become immutable
-after the release URL and digest are resolved. Authenticated GitHub access can
-still be useful for operator automation, but it is not required for the official
-agent update flow.
+The server resolves `latest` from GitHub's release list, skips drafts and
+prereleases, and caches release-list and `SHA256SUMS` metadata. Explicit update
+plans become immutable after the release URL and digest are resolved.
+Authenticated GitHub access can still be useful for operator automation, but it
+is not required for the official agent update flow.
 
-The resolver selecting `v0.2.9` does not imply that nodes already running a
-`0.3.x` prerelease will be downgraded. Agent update planning rejects version
-downgrades; moving a node back to the stable lane must be an explicit operator
-decision with a reviewed artifact and rollback plan.
+Because the resolver only ever selects a stable `vX.Y.Z`, a stable lane that
+lags the fleet has a visible consequence: planning refuses the resulting
+downgrade, once per node per evaluation. That refusal is the policy working, not
+a fault — but it is also the signal that the stable lane needs a cut. Agent
+update planning never downgrades a node silently; moving a node back to an older
+lane must be an explicit operator decision with a reviewed artifact and a
+rollback plan.
 
 ## Compatibility discipline
 
