@@ -25,13 +25,18 @@ export default defineConfig({
   themeConfig: {
     logo: "/logo.svg",
     siteTitle: "LatticeNet",
+    // The nav used to pin a specific release ("Release 0.2.1"), which meant it
+    // silently became wrong the moment a newer one shipped and nobody edited
+    // this file. It now points at the release index instead — a link that
+    // cannot go stale — and the versions themselves live in
+    // `docs/.vitepress/data/versions.ts`, which the release check verifies.
     nav: [
       { text: "Install", link: "/guide/docker-server" },
+      { text: "Subscriptions", link: "/guide/subscriptions" },
       { text: "Security", link: "/security/" },
       { text: "Plugins", link: "/plugins/" },
       { text: "Developers", link: "/developers/" },
-      { text: "Roadmap", link: "/ecosystem/roadmap" },
-      { text: "Release 0.2.1", link: "/developers/release-0.2.1" },
+      { text: "Releases", link: "/developers/releases" },
       { text: "GitHub", link: "https://github.com/LatticeNet" },
     ],
     sidebar: {
@@ -42,6 +47,7 @@ export default defineConfig({
             { text: "Overview", link: "/guide/" },
             { text: "Docker Server", link: "/guide/docker-server" },
             { text: "Node Agent", link: "/guide/node-agent" },
+            { text: "Subscriptions", link: "/guide/subscriptions" },
             { text: "Storage Hosting", link: "/guide/storage-hosting" },
             { text: "Single Sign-On", link: "/guide/sso" },
             { text: "Operations", link: "/guide/operations" },
@@ -70,6 +76,15 @@ export default defineConfig({
             { text: "Index Format", link: "/plugins/index-format" },
           ],
         },
+        {
+          text: "Published plugins",
+          items: [
+            { text: "Sub-Store", link: "/plugins/sub-store" },
+            { text: "VPN Core", link: "/plugins/vpn-core" },
+            { text: "NetGuard", link: "/plugins/netguard" },
+            { text: "WireGuard", link: "/plugins/wireguard" },
+          ],
+        },
       ],
       "/developers/": [
         {
@@ -77,6 +92,7 @@ export default defineConfig({
           items: [
             { text: "Developer Guide", link: "/developers/" },
             { text: "Release Workflow", link: "/developers/releases" },
+            { text: "Release 0.2.2", link: "/developers/release-0.2.2" },
             { text: "Release 0.2.1", link: "/developers/release-0.2.1" },
             { text: "Release 0.2.0", link: "/developers/release-0.2.0" },
           ],

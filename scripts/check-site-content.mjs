@@ -15,13 +15,74 @@ const AGENT_TARGET_LATEST_SHAPE = /target version: latest or \d+\.\d+\.\d+\b/;
 
 const checks = [
   {
+    // The home page was rebuilt around diagrams, so the old checks pinned
+    // sentences that no longer exist. What is worth guarding is not the prose —
+    // it is that the load-bearing claims and the diagrams that carry them are
+    // still on the page. A marketing sentence may be rewritten freely; the
+    // claim that nodes dial out, or the component that draws the trust chain,
+    // may not silently vanish.
     file: "docs/index.md",
     patterns: [
-      "Docker server first",
-      "systemd node-agent",
-      "GHCR image",
-      "GitHub Release binaries",
-      "Draft plugin index",
+      "<ArchDiagram />",
+      "<FlowRail />",
+      "<StatusMatrix />",
+      "<SigningChain />",
+      "Nodes dial out, never in",
+      "the approval hashes what you",
+      // The honest framing about maturity is a promise to the reader, not copy.
+      "Lattice is early",
+    ],
+  },
+  {
+    file: "docs/guide/subscriptions.md",
+    patterns: [
+      "/sub/<share-slug>/<token>",
+      "<SubscriptionPath />",
+      "subscription:serve",
+      // The three independent refusals are the whole safety argument for the
+      // empty-render case; losing any of them from the page hides a guarantee.
+      "the plugin refuses to produce\nempty content, the server refuses to serve it, and the cache refuses to store\nit",
+      "bodiless `404` with no request id",
+      "rotates_public_access: false",
+      "proxy_intercept_errors off",
+    ],
+  },
+  {
+    file: "docs/plugins/sub-store.md",
+    patterns: [
+      "subscription:serve",
+      "operator_target_fields",
+      "host-risk",
+      "Release the server first",
+    ],
+  },
+  {
+    file: "docs/plugins/wireguard.md",
+    patterns: [
+      // A documented gap is the kind of thing that quietly disappears in an
+      // edit. If rollback ever lands, this check should be updated as part of
+      // that change rather than deleted to make a build pass.
+      "**no automatic rollback**",
+    ],
+  },
+  {
+    file: "docs/plugins/netguard.md",
+    patterns: ["adopt", "rollback-protected"],
+  },
+  {
+    file: "docs/plugins/vpn-core.md",
+    patterns: ["users-admin", "does not publish subscriptions"],
+  },
+  {
+    file: "docs/developers/release-0.2.2.md",
+    patterns: [
+      "alpha-0.2.2a6",
+      "subscription:serve",
+      "`/sub/<token>` is removed",
+      "no longer an empty `200`",
+      "rotates_public_access: false",
+      "untagged 0.3.0 build",
+      "Nothing auto-upgrades",
     ],
   },
   {

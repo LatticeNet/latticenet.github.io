@@ -1,7 +1,14 @@
 /* ===========================================================================
-   LatticeNet site theme — one identity with the product: teal on cool slate,
-   dark-forward. Light mode is a cohesive cool off-white (not warm cream) so the
-   docs read as the same org as the dashboard.
+   LatticeNet site theme.
+
+   One identity with the product: teal on cool slate, dark-forward. Light mode
+   is a cohesive cool off-white (not warm cream) so the docs read as the same
+   org as the dashboard.
+
+   The layout rebuild replaced a page that was six identical card grids. The
+   rule now is that a section earns its shape from what it says: a sequence is
+   drawn as a rail, a comparison as a table, an architecture as a diagram. Card
+   grids are reserved for things that genuinely are a set of peers.
    ========================================================================== */
 
 :root {
@@ -30,12 +37,18 @@
   --vp-home-hero-name-color: transparent;
   --vp-home-hero-name-background: linear-gradient(120deg, #0d9488 10%, #0f766e 50%, #1d7a6f 90%);
 
-  /* Lattice mesh backdrop tokens (light). */
-  --mesh-line: #84b8b1;
-  --mesh-node: #aebcc5;
-  --mesh-accent: #0d9488;
-  --mesh-glow: #c4ebe4;
-  --mesh-grain: rgba(15, 22, 29, 0.05);
+  /* Wide-screen content rail. The old 1120px column left a 2400px display
+     mostly empty; diagrams in particular need the room. */
+  --lat-rail: 1360px;
+  --lat-rail-narrow: 980px;
+  --lat-gutter: clamp(20px, 4vw, 48px);
+
+  /* Hero motif tokens. */
+  --motif-line: #7fb3ad;
+  --motif-node: #9db0bd;
+  --motif-accent: #0d9488;
+  --motif-hub-fill: #ffffff;
+  --motif-veil: rgba(251, 252, 253, 0.55);
 }
 
 .dark {
@@ -44,7 +57,7 @@
   --vp-c-brand-3: #5eead4;
   --vp-c-brand-soft: rgba(45, 212, 191, 0.13);
 
-  /* Cool blue-slate surfaces (hue ~225-240), matching the dashboard. */
+  /* Cool blue-slate surfaces, matching the dashboard. */
   --vp-c-bg: #0d1117;
   --vp-c-bg-alt: #0a0e13;
   --vp-c-bg-elv: #161c26;
@@ -58,11 +71,11 @@
 
   --vp-home-hero-name-background: linear-gradient(120deg, #5eead4 5%, #2dd4bf 45%, #38bdf8 95%);
 
-  --mesh-line: #2dd4bf;
-  --mesh-node: #54657a;
-  --mesh-accent: #2dd4bf;
-  --mesh-glow: #0a5048;
-  --mesh-grain: rgba(255, 255, 255, 0.045);
+  --motif-line: #2dd4bf;
+  --motif-node: #54657a;
+  --motif-accent: #2dd4bf;
+  --motif-hub-fill: #0d1117;
+  --motif-veil: rgba(13, 17, 23, 0.5);
 }
 
 html {
@@ -91,42 +104,42 @@ body {
 .VPHomeHero {
   position: relative;
   z-index: 0;
-  isolation: isolate; /* own stacking context so mesh (z0) sits under copy (z1) */
-  min-height: clamp(600px, 76vh, 860px);
+  isolation: isolate; /* own stacking context so the motif sits under the copy */
+  min-height: clamp(620px, 82vh, 900px);
   margin-top: calc(var(--vp-nav-height) * -1);
   padding-top: var(--vp-nav-height);
   overflow: hidden;
   background:
-    radial-gradient(120% 90% at 70% 0%, color-mix(in srgb, var(--mesh-glow) 38%, transparent) 0%, transparent 60%),
-    linear-gradient(180deg, var(--vp-c-bg) 0%, var(--vp-c-bg) 62%, var(--vp-c-bg-alt) 100%);
+    radial-gradient(90% 70% at 72% 34%, color-mix(in srgb, var(--vp-c-brand-1) 14%, transparent) 0%, transparent 62%),
+    linear-gradient(180deg, var(--vp-c-bg) 0%, var(--vp-c-bg) 58%, var(--vp-c-bg-alt) 100%);
   border-bottom: 1px solid var(--vp-c-divider);
 }
 
-/* Fade the live mesh into the page toward the bottom of the hero. */
+/* Fade the motif into the page toward the bottom of the hero. */
 .VPHomeHero::after {
   content: "";
   position: absolute;
   inset: auto 0 0 0;
-  height: 220px;
+  height: 240px;
   z-index: 1;
   pointer-events: none;
   background: linear-gradient(180deg, transparent, var(--vp-c-bg-alt));
 }
 
-/* .container / .main must NOT be positioned — the backdrop's inset:0 must
-   resolve to the relative .VPHomeHero so the mesh is full-bleed. The copy is
-   lifted above the mesh via z-index on the text nodes themselves. */
+/* .container / .main must NOT be positioned — the motif's inset:0 must resolve
+   to the relative .VPHomeHero so it is full-bleed. The copy is lifted above it
+   via z-index on the text nodes themselves. */
 .VPHomeHero .container {
-  min-height: clamp(520px, 70vh, 800px);
-  align-items: center !important;
+  min-height: clamp(540px, 74vh, 820px);
+  display: flex;
+  align-items: center;
+  max-width: var(--lat-rail) !important;
+  padding: 0 var(--lat-gutter);
 }
 
 .VPHomeHero .main {
-  /* VitePress sets .main { position: relative }, which would trap the absolute
-     mesh backdrop inside the 780px copy column. Make it static so inset:0
-     resolves to .VPHomeHero and the mesh is genuinely full-bleed. */
   position: static;
-  max-width: 780px !important;
+  max-width: 760px !important;
 }
 
 .VPHomeHero .name,
@@ -134,47 +147,62 @@ body {
 .VPHomeHero .tagline,
 .VPHomeHero .actions {
   position: relative;
-  z-index: 1;
+  z-index: 2;
 }
 
 .VPHomeHero .name,
 .VPHomeHero .text {
-  max-width: 820px !important;
-  letter-spacing: -0.02em !important;
-  font-weight: 800 !important;
+  max-width: 780px !important;
+  font-size: clamp(38px, 5.2vw, 66px) !important;
+  line-height: 1.04 !important;
+  letter-spacing: -0.03em !important;
 }
 
 .VPHomeHero .text {
-  color: var(--vp-c-text-1) !important;
+  color: var(--vp-c-text-1);
 }
 
 .VPHomeHero .tagline {
-  max-width: 680px !important;
-  margin-top: 8px;
+  max-width: 620px !important;
+  margin-top: 20px;
+  font-size: clamp(16px, 1.4vw, 18.5px) !important;
+  line-height: 1.7 !important;
   color: var(--vp-c-text-2) !important;
-  line-height: 1.64 !important;
+  /* The motif runs behind the copy; a readable backdrop is not optional. */
+  text-shadow: 0 1px 18px var(--motif-veil);
 }
 
 .VPHomeHero .actions {
-  gap: 14px !important;
-  margin-top: 28px;
+  display: flex;
+  gap: 12px;
+  margin-top: 34px;
 }
 
 .VPHomeHero .action .VPButton.brand {
-  border-radius: 8px !important;
-  box-shadow: 0 6px 24px -8px color-mix(in srgb, var(--vp-c-brand-1) 60%, transparent);
-  transition: transform 0.18s ease, box-shadow 0.18s ease;
+  border-radius: 10px;
+  border: 0;
+  padding: 0 22px;
+  font-weight: 650;
+  background: linear-gradient(120deg, var(--vp-c-brand-2), var(--vp-c-brand-1));
+  color: #ffffff;
+  box-shadow: 0 10px 30px -14px color-mix(in srgb, var(--vp-c-brand-1) 90%, #000);
+}
+
+.dark .VPHomeHero .action .VPButton.brand {
+  color: #04211d;
 }
 
 .VPHomeHero .action .VPButton.brand:hover {
-  transform: translateY(-2px);
-  box-shadow: 0 12px 30px -8px color-mix(in srgb, var(--vp-c-brand-1) 70%, transparent);
+  filter: brightness(1.08);
 }
 
 .VPHomeHero .action .VPButton.alt {
-  border-radius: 8px !important;
-  background: color-mix(in srgb, var(--vp-c-bg-elv) 60%, transparent) !important;
-  backdrop-filter: blur(6px);
+  border-radius: 10px;
+  padding: 0 20px;
+  font-weight: 600;
+  background: color-mix(in srgb, var(--vp-c-bg-elv) 70%, transparent);
+  border-color: var(--vp-c-border);
+  backdrop-filter: blur(8px);
 }
 
 /* Default tiled feature grid is replaced by the custom sections below. */
@@ -183,38 +211,84 @@ body {
 }
 
 /* --- Home sections -------------------------------------------------------- */
+
+/* VitePress renders home markdown inside `.vp-doc.container`, which caps at
+   1280px and applies documentation typography. Both are wrong here: the
+   sections are full-bleed bands that manage their own rail, and `.vp-doc h2`
+   would give every section title a 48px margin, a 24px pad and a border-top —
+   which is where the stray rule above each heading came from. Neutralise the
+   container on the home page only; documentation pages still want all of it. */
+.VPHome .vp-doc.container {
+  max-width: none;
+  padding: 0;
+}
+
+/* The reset has to sit in a narrow specificity band: high enough to beat
+   `.vp-doc h2` (0-1-1), low enough that the section classes below can still
+   override it. Two classes plus a zero-weight `:where()` lands at 0-2-0, and
+   the section rules are written at 0-2-0 as well so document order decides —
+   which is why every `.home-*` rule below is scoped under `.home-section`.
+   `:is()` here would score 0-2-1 and silently win instead. */
+.VPHome .vp-doc :where(h1, h2, h3, h4) {
+  margin: 0;
+  padding: 0;
+  border: 0;
+}
+
+.VPHome .vp-doc :where(p) {
+  margin: 0;
+}
+
+/* VitePress reveals a heading anchor on hover inside .vp-doc. Section titles
+   are not link targets, so the anchor would be a dead affordance. */
+.VPHome .vp-doc :where(h1, h2, h3, h4) .header-anchor {
+  display: none;
+}
+
 .home-section {
   position: relative;
   border-top: 1px solid var(--vp-c-divider);
-  padding: clamp(60px, 8vw, 112px) 24px;
+  padding: clamp(56px, 6.4vw, 96px) var(--lat-gutter);
 }
 
 .home-section:first-of-type {
   border-top: 0;
 }
 
-.home-section:nth-child(even) {
+.home-section.is-alt {
   background: var(--vp-c-bg-alt);
 }
 
 .home-inner {
-  max-width: 1120px;
+  max-width: var(--lat-rail);
   margin: 0 auto;
 }
 
-.home-kicker {
+.home-inner.is-narrow {
+  max-width: var(--lat-rail-narrow);
+}
+
+/* Section header: kicker + title + copy on one rail, so every section starts
+   at the same optical position regardless of what follows it. */
+.home-section .home-head {
+  max-width: 780px;
+  margin-bottom: clamp(28px, 3.2vw, 44px);
+}
+
+.home-section .home-kicker {
   display: inline-flex;
   align-items: center;
   gap: 9px;
-  margin: 0 0 16px;
+  margin: 0 0 14px;
   color: var(--vp-c-brand-1);
-  font-size: 12.5px;
+  font-family: var(--vp-font-family-mono);
+  font-size: 11.5px;
   font-weight: 700;
-  letter-spacing: 0.12em;
+  letter-spacing: 0.14em;
   text-transform: uppercase;
 }
 
-.home-kicker::before {
+.home-section .home-kicker::before {
   content: "";
   width: 22px;
   height: 2px;
@@ -222,282 +296,183 @@ body {
   background: linear-gradient(90deg, var(--vp-c-brand-1), transparent);
 }
 
-.home-title {
-  max-width: 840px;
+.home-section .home-title {
   margin: 0;
-  font-size: clamp(29px, 4.6vw, 54px);
-  line-height: 1.05;
+  font-size: clamp(27px, 3.4vw, 42px);
+  line-height: 1.12;
   letter-spacing: -0.025em;
   font-weight: 800;
 }
 
-.home-copy {
-  max-width: 760px;
-  margin: 20px 0 0;
+.home-section .home-copy {
+  margin: 16px 0 0;
   color: var(--vp-c-text-2);
-  font-size: clamp(16px, 1.4vw, 18.5px);
-  line-height: 1.74;
+  font-size: clamp(15.5px, 1.2vw, 17.5px);
+  line-height: 1.72;
 }
 
-/* --- Cards ---------------------------------------------------------------- */
-.path-grid,
-.repo-grid,
-.capability-grid,
-.release-grid {
+.home-section .home-copy code {
+  font-size: 0.88em;
+}
+
+/* --- Install split (copy beside a terminal) -------------------------------- */
+.install-split {
   display: grid;
-  grid-template-columns: repeat(3, minmax(0, 1fr));
-  gap: 16px;
-  margin-top: 36px;
+  grid-template-columns: minmax(0, 0.85fr) minmax(0, 1.15fr);
+  gap: clamp(24px, 3vw, 48px);
+  align-items: start;
 }
 
-.path-card,
-.repo-card,
-.capability-card,
-.release-card {
-  position: relative;
+.term {
   border: 1px solid var(--vp-c-border);
   border-radius: 14px;
-  padding: 24px;
   background: var(--vp-c-bg-elv);
   overflow: hidden;
-  transition: transform 0.2s ease, border-color 0.2s ease, box-shadow 0.2s ease;
 }
 
-/* Accent hairline along the top edge, revealed on hover. */
-.path-card::before,
-.repo-card::before,
-.capability-card::before,
-.release-card::before {
-  content: "";
-  position: absolute;
-  inset: 0 0 auto 0;
-  height: 2px;
-  background: linear-gradient(90deg, var(--vp-c-brand-3), var(--vp-c-brand-1));
-  opacity: 0;
-  transition: opacity 0.2s ease;
-}
-
-.path-card:hover,
-.repo-card:hover,
-.capability-card:hover,
-.release-card:hover {
-  transform: translateY(-4px);
-  border-color: color-mix(in srgb, var(--vp-c-brand-1) 45%, var(--vp-c-border));
-  box-shadow: 0 18px 40px -22px color-mix(in srgb, var(--vp-c-brand-1) 55%, #000);
-}
-
-.path-card:hover::before,
-.repo-card:hover::before,
-.capability-card:hover::before,
-.release-card:hover::before {
-  opacity: 1;
-}
-
-.path-card h3,
-.repo-card h3,
-.capability-card h3,
-.release-card h3 {
-  margin: 0 0 10px;
-  font-size: 18px;
-  letter-spacing: -0.01em;
-  font-weight: 700;
-}
-
-.path-card p,
-.repo-card p,
-.capability-card p,
-.release-card p {
-  margin: 0;
-  color: var(--vp-c-text-2);
-  line-height: 1.66;
-  font-size: 15px;
-}
-
-.path-card a,
-.repo-card a,
-.release-card a {
-  display: inline-flex;
-  align-items: center;
-  gap: 6px;
-  margin-top: 16px;
-  font-weight: 650;
-  font-size: 14.5px;
-}
-
-.path-card a::after,
-.repo-card a::after,
-.release-card a::after {
-  content: "→";
-  transition: transform 0.18s ease;
-}
-
-.path-card a:hover::after,
-.repo-card a:hover::after,
-.release-card a:hover::after {
-  transform: translateX(3px);
-}
-
-/* --- Control-loop flow (numbered, connected) ------------------------------ */
-.flow {
-  counter-reset: flow;
-  display: grid;
-  grid-template-columns: repeat(6, minmax(0, 1fr));
-  gap: 10px;
-  margin-top: 38px;
-}
-
-.flow-step {
-  counter-increment: flow;
-  position: relative;
-  min-height: 132px;
-  border: 1px solid var(--vp-c-border);
-  border-radius: 12px;
-  padding: 18px 16px 16px;
-  background: linear-gradient(180deg, var(--vp-c-bg-elv), var(--vp-c-bg-soft));
-}
-
-.flow-step::before {
-  content: counter(flow, decimal-leading-zero);
-  display: block;
-  margin-bottom: 12px;
-  font-family: var(--vp-font-family-mono);
-  font-size: 12px;
-  font-weight: 700;
-  color: var(--vp-c-brand-1);
-  letter-spacing: 0.05em;
-}
-
-.flow-step strong {
-  display: block;
-  margin-bottom: 7px;
-  font-size: 15px;
-  color: var(--vp-c-text-1);
-}
-
-.flow-step span {
-  color: var(--vp-c-text-2);
-  font-size: 13.5px;
-  line-height: 1.55;
-}
-
-/* --- Status band ---------------------------------------------------------- */
-.status-band {
+.term-bar {
   display: flex;
-  gap: 12px;
-  margin-top: 40px;
-  padding: 20px 22px;
-  border: 1px solid color-mix(in srgb, var(--vp-c-brand-1) 35%, var(--vp-c-border));
-  border-radius: 12px;
-  background: var(--vp-c-brand-soft);
+  align-items: center;
+  gap: 8px;
+  height: 38px;
+  padding: 0 14px;
+  border-bottom: 1px solid var(--vp-c-divider);
+  background: var(--vp-c-bg-soft);
+}
+
+.term-dot {
+  width: 10px;
+  height: 10px;
+  border-radius: 999px;
+  background: var(--vp-c-border);
+}
+
+.term-title {
+  margin-left: 6px;
+  font-family: var(--vp-font-family-mono);
+  font-size: 11px;
+  letter-spacing: 0.06em;
+  color: var(--vp-c-text-3);
+}
+
+.home-section .term pre {
+  margin: 0;
+  padding: 18px 20px;
+  overflow-x: auto;
+  background: transparent;
+  font-family: var(--vp-font-family-mono);
+  font-size: 13px;
+  line-height: 1.9;
   color: var(--vp-c-text-2);
-  font-size: 14.5px;
+}
+
+/* The shell prompt is chrome, not something to copy. */
+.home-section .term pre .p {
+  color: var(--vp-c-brand-1);
+  user-select: none;
+}
+
+.home-section .term-note {
+  padding: 0 20px 16px;
+  color: var(--vp-c-text-3);
+  font-size: 12.5px;
   line-height: 1.6;
 }
 
-.status-band::before {
-  content: "›_";
+/* --- Role entries (three, not six) ---------------------------------------- */
+.entry-grid {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 14px;
+}
+
+.entry-card {
+  display: flex;
+  flex-direction: column;
+  padding: 24px 22px 22px;
+  border: 1px solid var(--vp-c-border);
+  border-radius: 14px;
+  background: var(--vp-c-bg-elv);
+  text-decoration: none !important;
+  transition: border-color 0.18s ease, transform 0.18s ease, box-shadow 0.18s ease;
+}
+
+.entry-card:hover {
+  transform: translateY(-3px);
+  border-color: color-mix(in srgb, var(--vp-c-brand-1) 48%, var(--vp-c-border));
+  box-shadow: 0 18px 40px -26px color-mix(in srgb, var(--vp-c-brand-1) 70%, #000);
+}
+
+.home-section .entry-role {
+  margin-bottom: 10px;
   font-family: var(--vp-font-family-mono);
+  font-size: 10.5px;
   font-weight: 700;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
   color: var(--vp-c-brand-1);
 }
 
-/* --- Split panel + command window ----------------------------------------- */
-.split-panel {
-  display: grid;
-  grid-template-columns: minmax(0, 0.9fr) minmax(0, 1.1fr);
-  gap: clamp(28px, 5vw, 64px);
-  align-items: center;
+.home-section .entry-card h3 {
+  margin: 0 0 9px;
+  font-size: 18.5px;
+  font-weight: 700;
+  letter-spacing: -0.015em;
+  color: var(--vp-c-text-1);
 }
 
-.command-panel {
-  margin-top: 0;
-  border: 1px solid var(--vp-c-border);
-  border-radius: 12px;
-  overflow: hidden;
-  background: #0b1016;
-  box-shadow: 0 24px 60px -30px rgba(0, 0, 0, 0.7);
-}
-
-/* Faux terminal titlebar with traffic-light dots. */
-.command-panel::before {
-  content: "lattice — first run";
-  display: block;
-  padding: 11px 16px 11px 70px;
-  font-family: var(--vp-font-family-mono);
-  font-size: 12px;
-  color: #8a97a6;
-  background:
-    radial-gradient(circle 5px at 22px 50%, #ff5f57 99%, transparent 0),
-    radial-gradient(circle 5px at 42px 50%, #febc2e 99%, transparent 0),
-    radial-gradient(circle 5px at 62px 50%, #28c840 99%, transparent 0),
-    #11171f;
-  background-repeat: no-repeat;
-  border-bottom: 1px solid #1c242e;
-}
-
-.command-panel div[class*="language-"] {
-  margin: 0;
-  border-radius: 0;
-  background: transparent;
-}
-
-.command-panel pre {
-  overflow: auto;
-  margin: 0;
-  border: 0;
-  border-radius: 0;
-  padding: 20px;
-  background: #0b1016;
-  color: #d7e2ee;
-  line-height: 1.75;
-  font-size: 13.5px;
-}
-
-.command-panel code {
-  font-family: var(--vp-font-family-mono);
-}
-
-/* --- Doc callout (used inside guide pages) -------------------------------- */
-.doc-callout {
-  border-left: 3px solid var(--vp-c-brand-1);
-  border-radius: 0 8px 8px 0;
-  padding: 14px 18px;
-  background: var(--vp-c-brand-soft);
+.home-section .entry-card p {
+  margin: 0 0 16px;
   color: var(--vp-c-text-2);
+  font-size: 14.5px;
+  line-height: 1.65;
 }
 
-/* --- Footer --------------------------------------------------------------- */
-.VPFooter {
-  border-top: 1px solid var(--vp-c-divider);
-  background: var(--vp-c-bg-alt);
+.home-section .entry-go {
+  margin-top: auto;
+  color: var(--vp-c-brand-1);
+  font-size: 14px;
+  font-weight: 650;
 }
 
-.VPFooter .message {
-  font-weight: 600;
-  color: var(--vp-c-text-2);
+.home-section .entry-go::after {
+  content: " →";
+  display: inline-block;
+  transition: transform 0.18s ease;
+}
+
+.home-section .entry-card:hover .entry-go::after {
+  transform: translateX(3px);
+}
+
+/* --- Docs pages ----------------------------------------------------------- */
+/* Diagrams need room on documentation pages too, not only on the home page. */
+:root {
+  --vp-layout-max-width: 1520px;
+  --vp-content-width: 820px;
+}
+
+.VPDoc .lat-diagram {
+  margin: 28px 0;
 }
 
 /* --- Responsive ----------------------------------------------------------- */
 @media (max-width: 960px) {
-  .path-grid,
-  .repo-grid,
-  .capability-grid,
-  .release-grid,
-  .split-panel {
-    grid-template-columns: 1fr;
+  .install-split {
+    grid-template-columns: minmax(0, 1fr);
   }
 
-  .flow {
+  .entry-grid {
     grid-template-columns: repeat(2, minmax(0, 1fr));
   }
 }
 
-@media (max-width: 560px) {
-  .home-section {
-    padding-inline: 18px;
+@media (max-width: 720px) {
+  .entry-grid {
+    grid-template-columns: minmax(0, 1fr);
   }
 
-  .flow {
-    grid-template-columns: 1fr;
+  .VPHomeHero .actions {
+    flex-wrap: wrap;
   }
 }

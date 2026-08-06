@@ -28,6 +28,32 @@ const PINS = [
     pattern: /VERSION=(v\d+\.\d+\.\d+)\b/,
     label: "node-agent install VERSION",
   },
+  // The site renders versions from one data file rather than repeating them in
+  // prose. That removes the drift-in-three-places problem but creates a new
+  // one: the single source can itself go stale silently. These pins close it.
+  //
+  // Only the entries marked `verify: 'latest-stable'` in versions.ts are
+  // checked here. Prerelease lanes deliberately are not: an image tag like
+  // alpha-0.2.2a6 is not a GitHub release and has no API to compare against,
+  // and asserting it would mean asserting a constant against itself.
+  {
+    file: "docs/.vitepress/data/versions.ts",
+    repo: "LatticeNet/lattice-node-agent",
+    pattern: /repo:\s*'LatticeNet\/lattice-node-agent',\s*\n\s*version:\s*'(v\d+\.\d+\.\d+)'/,
+    label: "versions.ts lattice-agent",
+  },
+  {
+    file: "docs/.vitepress/data/versions.ts",
+    repo: "LatticeNet/lattice-sdk",
+    pattern: /repo:\s*'LatticeNet\/lattice-sdk',\s*\n\s*version:\s*'(v\d+\.\d+\.\d+)'/,
+    label: "versions.ts lattice-sdk",
+    // The SDK is consumed as a Go module, where `go get …@vX.Y.Z` resolves the
+    // TAG. A GitHub Release is presentation; the tag is the artifact. Checking
+    // this one against the releases API reported v0.2.18 as wrong when it is
+    // exactly what a consumer gets — the repo simply has a tag with no release
+    // attached. Compare against the thing that actually determines the version.
+    source: "tags",
+  },
 ];
 
 if (process.env.SKIP_RELEASE_PIN_CHECK === "1") {
@@ -51,6 +77,21 @@ async function latestStable(repo) {
   return stable[0].tag_name;
 }
 
+async function latestStableTag(repo) {
+  const res = await fetch(`https://api.github.com/repos/${repo}/tags?per_page=100`, {
+    headers: {
+      accept: "application/vnd.github+json",
+      ...(process.env.GITHUB_TOKEN ? { authorization: `Bearer ${process.env.GITHUB_TOKEN}` } : {}),
+    },
+  });
+  if (!res.ok) throw new Error(`tags API for ${repo}: HTTP ${res.status}`);
+  const tags = await res.json();
+  const stable = tags.filter((t) => /^v\d+\.\d+\.\d+$/.test(t.name));
+  if (stable.length === 0) throw new Error(`no stable tag found for ${repo}`);
+  stable.sort((a, b) => cmpVersion(b.name, a.name));
+  return stable[0].name;
+}
+
 function cmpVersion(a, b) {
   const pa = a.replace(/^v/, "").split(".").map(Number);
   const pb = b.replace(/^v/, "").split(".").map(Number);
@@ -70,12 +111,14 @@ for (const pin of PINS) {
     continue;
   }
   const documented = found[1];
-  const actual = await latestStable(pin.repo);
+  const usingTags = pin.source === "tags";
+  const actual = usingTags ? await latestStableTag(pin.repo) : await latestStable(pin.repo);
+  const what = usingTags ? "latest stable tag" : "latest stable release";
   if (documented === actual) {
-    console.log(`check-release-pins: ${pin.label} = ${documented}, matches latest stable of ${pin.repo}`);
+    console.log(`check-release-pins: ${pin.label} = ${documented}, matches ${what} of ${pin.repo}`);
   } else {
     console.error(
-      `check-release-pins: ${pin.label} is ${documented} but ${pin.repo}'s latest stable is ${actual} — ` +
+      `check-release-pins: ${pin.label} is ${documented} but ${pin.repo}'s ${what} is ${actual} — ` +
         `a reader pasting this installs the wrong version (rules/04: the doc update rides the release)`,
     );
     failed += 1;
