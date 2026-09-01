@@ -19,7 +19,7 @@ SHA256SUMS
 Install the matching architecture:
 
 ```sh
-VERSION=v0.3.3
+VERSION=v0.3.8
 ARCH=amd64
 curl -fsSL --proto '=https' --tlsv1.2 -O "https://github.com/LatticeNet/lattice-node-agent/releases/download/${VERSION}/lattice-agent-linux-${ARCH}"
 curl -fsSL --proto '=https' --tlsv1.2 -O "https://github.com/LatticeNet/lattice-node-agent/releases/download/${VERSION}/SHA256SUMS"
@@ -264,7 +264,7 @@ host mutation is acceptable:
 
 The dashboard's Agent update UI defaults to official-release mode:
 
-- target version: `latest` or a concrete version such as `0.3.3`
+- target version: `latest` or a concrete version such as `0.3.8`
 - binary URL: empty
 - SHA-256: empty
 
@@ -365,8 +365,8 @@ target version + HTTPS binary URL + SHA-256 + install path + service name
 For the default service above:
 
 ```txt
-target version: 0.3.3
-binary URL: https://github.com/LatticeNet/lattice-node-agent/releases/download/v0.3.3/lattice-agent-linux-amd64
+target version: 0.3.8
+binary URL: https://github.com/LatticeNet/lattice-node-agent/releases/download/v0.3.8/lattice-agent-linux-amd64
 SHA-256: value from SHA256SUMS
 install path: /opt/lattice/lattice-agent
 service name: lattice-agent.service

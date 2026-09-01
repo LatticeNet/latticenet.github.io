@@ -29,7 +29,7 @@ export type Component = {
   summary: string
 }
 
-export const SERVER_IMAGE_TAG = 'alpha-0.2.2a6'
+export const SERVER_IMAGE_TAG = 'alpha-0.2.2a77'
 
 export const COMPONENTS: Component[] = [
   {
@@ -43,7 +43,7 @@ export const COMPONENTS: Component[] = [
   {
     name: 'lattice-agent',
     repo: 'LatticeNet/lattice-node-agent',
-    version: 'v0.3.3',
+    version: 'v0.3.8',
     channel: 'stable',
     verify: 'latest-stable',
     link: '/guide/node-agent',
@@ -52,7 +52,7 @@ export const COMPONENTS: Component[] = [
   {
     name: 'lattice-sdk',
     repo: 'LatticeNet/lattice-sdk',
-    version: 'v0.2.18',
+    version: 'v0.2.23',
     channel: 'stable',
     verify: 'latest-stable',
     link: '/developers/',
@@ -90,16 +90,14 @@ export const PLUGINS: Plugin[] = [
     id: 'latticenet.sub-store',
     name: 'Sub-Store',
     repo: 'LatticeNet/lattice-plugin-sub-store',
-    version: '0.5.0-alpha.1',
+    version: '0.13.0-alpha.27',
     state: 'live',
     capabilities: [
-      'rpc:call',
       'http:egress',
       'http:operator-target',
       'kv:read',
       'kv:write',
-      'secret:read',
-      'secret:write',
+      'rpc:call',
       'subscription:serve',
     ],
     summary: 'A native subscription platform: store, fetch, process, publish.',
@@ -109,7 +107,7 @@ export const PLUGINS: Plugin[] = [
     id: 'latticenet.vpn-core',
     name: 'VPN Core',
     repo: 'LatticeNet/lattice-plugin-vpn-core',
-    version: '0.8.0-alpha.7',
+    version: '0.8.0-alpha.15',
     state: 'live',
     capabilities: ['node:read', 'network:plan', 'network:apply', 'task:run'],
     summary: 'VLESS + REALITY profiles, lines, users, and usage reporting.',
@@ -119,7 +117,7 @@ export const PLUGINS: Plugin[] = [
     id: 'latticenet.netguard',
     name: 'NetGuard',
     repo: 'LatticeNet/lattice-plugin-netguard',
-    version: '0.1.0-alpha.9',
+    version: '0.1.0-alpha.14',
     state: 'live',
     capabilities: ['node:read', 'network:plan', 'network:apply', 'task:run'],
     summary: 'Reviewed firewall zones, groups and bindings with an adopt path.',
@@ -129,7 +127,7 @@ export const PLUGINS: Plugin[] = [
     id: 'latticenet.wireguard',
     name: 'WireGuard',
     repo: 'LatticeNet/lattice-plugin-wireguard',
-    version: '0.1.0-alpha.9',
+    version: '0.1.0-alpha.13',
     state: 'live',
     capabilities: ['node:read', 'network:plan', 'network:apply', 'task:run'],
     summary: 'WireGuard topology and device peers, planned before applied.',

@@ -3,8 +3,8 @@ layout: home
 
 hero:
   name: LatticeNet
-  text: Every privileged change has a visible plan.
-  tagline: A self-hosted control plane for small fleets. Nodes dial out, never in. Firewall, DNS, WireGuard, proxy-core and subscriptions all move through the same review gate — and the approval hashes what you were actually shown.
+  text: The sovereign control plane for the agent era.
+  tagline: A self-hosted control plane for your fleet, built for hands and agents alike. Nodes dial out, never in. Firewall, DNS, WireGuard, proxy-core and subscriptions all move through one review gate, and the approval hashes what you were actually shown. The work can be delegated; the judgment stays yours.
   actions:
     - theme: brand
       text: Deploy the server
