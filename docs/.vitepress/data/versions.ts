@@ -29,7 +29,7 @@ export type Component = {
   summary: string
 }
 
-export const SERVER_IMAGE_TAG = 'alpha-0.2.2a77'
+export const SERVER_IMAGE_TAG = 'alpha-0.2.2a78'
 
 export const COMPONENTS: Component[] = [
   {
