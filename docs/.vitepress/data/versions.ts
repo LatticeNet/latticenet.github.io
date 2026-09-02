@@ -29,7 +29,7 @@ export type Component = {
   summary: string
 }
 
-export const SERVER_IMAGE_TAG = 'alpha-0.2.2a78'
+export const SERVER_IMAGE_TAG = 'alpha-0.2.2a79'
 
 export const COMPONENTS: Component[] = [
   {
@@ -107,7 +107,7 @@ export const PLUGINS: Plugin[] = [
     id: 'latticenet.vpn-core',
     name: 'VPN Core',
     repo: 'LatticeNet/lattice-plugin-vpn-core',
-    version: '0.8.0-alpha.15',
+    version: '0.8.0-alpha.16',
     state: 'live',
     capabilities: ['node:read', 'network:plan', 'network:apply', 'task:run'],
     summary: 'VLESS + REALITY profiles, lines, users, and usage reporting.',
