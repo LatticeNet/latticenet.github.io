@@ -8,7 +8,7 @@ The public image is:
 ghcr.io/latticenet/lattice-server
 ```
 
-Use `:0.2.1` for the immutable 0.2.1 release image. Use `:latest` for the current stable image, published by the moving `latest` git tag. Use `:alpha` for the moving alpha test channel and `:beta` for the moving beta test channel, and a version tag or digest for unattended production deployments that must not move. There is intentionally no `main` image channel, branch channel, sha channel, or hash-string image channel.
+Use `:0.2.3` for the current immutable stable image. Use `:latest` for the current stable image, published by the moving `latest` git tag. Use `:alpha` for the moving alpha test channel and `:beta` for the moving beta test channel, and a version tag or digest for unattended production deployments that must not move. There is intentionally no `main` image channel, branch channel, sha channel, or hash-string image channel.
 
 ## Compose
 

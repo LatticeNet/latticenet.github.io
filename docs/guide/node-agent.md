@@ -19,7 +19,7 @@ SHA256SUMS
 Install the matching architecture:
 
 ```sh
-VERSION=v0.3.8
+VERSION=v0.3.9
 ARCH=amd64
 curl -fsSL --proto '=https' --tlsv1.2 -O "https://github.com/LatticeNet/lattice-node-agent/releases/download/${VERSION}/lattice-agent-linux-${ARCH}"
 curl -fsSL --proto '=https' --tlsv1.2 -O "https://github.com/LatticeNet/lattice-node-agent/releases/download/${VERSION}/SHA256SUMS"
@@ -365,8 +365,8 @@ target version + HTTPS binary URL + SHA-256 + install path + service name
 For the default service above:
 
 ```txt
-target version: 0.3.8
-binary URL: https://github.com/LatticeNet/lattice-node-agent/releases/download/v0.3.8/lattice-agent-linux-amd64
+target version: 0.3.9
+binary URL: https://github.com/LatticeNet/lattice-node-agent/releases/download/v0.3.9/lattice-agent-linux-amd64
 SHA-256: value from SHA256SUMS
 install path: /opt/lattice/lattice-agent
 service name: lattice-agent.service
