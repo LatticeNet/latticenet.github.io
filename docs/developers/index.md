@@ -16,7 +16,8 @@ own release and security boundary.
 
 ## Contracts
 
-Latest published SDK tag: `github.com/LatticeNet/lattice-sdk v0.2.18`.
+The published SDK tag the site claims is the `lattice-sdk` row in
+`docs/.vitepress/data/versions.ts`. Do not copy that number into this page.
 
 Between milestones `lattice-server` and `lattice-node-agent` pin a Go
 **pseudo-version** of the SDK commit they were built against, so their `go.mod`
