@@ -1,0 +1,34 @@
+name: release-pins
+
+# pages.yml also runs this check before each deploy, but a deploy only happens
+# when this repository changes. The drift this catches is caused by an event in
+# a different repository: a release cut in lattice-node-agent or another
+# LatticeNet repo. This repository gets no push when that happens, so only a
+# schedule can notice the documented install versions going stale.
+on:
+  schedule:
+    - cron: "17 6 * * *"
+  push:
+    branches: [main]
+    paths:
+      - "docs/guide/**"
+      - "scripts/check-release-pins.mjs"
+      - ".github/workflows/release-pins.yml"
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  pins:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v6
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+      - name: Documented install versions match their releases
+        env:
+          # Raises the releases-API rate limit; the script works unauthenticated too.
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: node scripts/check-release-pins.mjs
