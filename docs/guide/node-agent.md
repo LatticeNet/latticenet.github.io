@@ -50,12 +50,14 @@ on that host.
 The dashboard Linux service command is intentionally one-line and Nezha-like:
 
 ```sh
-curl -fsSL --proto '=https' --tlsv1.2 'https://raw.githubusercontent.com/LatticeNet/lattice-node-agent/main/scripts/install.sh' -o lattice-agent-install.sh \
+curl -fsSL --proto '=https' --tlsv1.2 'https://raw.githubusercontent.com/LatticeNet/lattice-node-agent/v0.3.9/scripts/install.sh' -o lattice-agent-install.sh \
   && chmod +x lattice-agent-install.sh \
-  && env LATTICE_SERVER='https://lattice.example.com' LATTICE_NODE_ID='gmami-jp1' LATTICE_NODE_TOKEN='<node-token>' ./lattice-agent-install.sh
+  && env LATTICE_SERVER='https://lattice.example.com' LATTICE_NODE_ID='gmami-jp1' LATTICE_NODE_TOKEN='<node-token>' LATTICE_AGENT_VERSION='v0.3.9' ./lattice-agent-install.sh
 ```
 
-The install script downloads the selected Linux release artifact, verifies it
+The installer is fetched from a stable release tag, and `LATTICE_AGENT_VERSION`
+names the same tag, so the script and the binary it installs come from one
+release. The install script downloads the selected Linux release artifact, verifies it
 against `SHA256SUMS`, installs `/opt/lattice/lattice-agent`, writes
 `/opt/lattice/lattice-agent.env`, and enables `lattice-agent.service`. Missing
 checksum tooling or a missing `SHA256SUMS` manifest aborts before the binary is

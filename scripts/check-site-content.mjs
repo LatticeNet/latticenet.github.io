@@ -12,6 +12,12 @@ const AGENT_VERSION_SHAPE = /VERSION=v\d+\.\d+\.\d+\b/;
 const AGENT_TARGET_VERSION_SHAPE = /target version: \d+\.\d+\.\d+\b/;
 const AGENT_DOWNLOAD_URL_SHAPE = /releases\/download\/v\d+\.\d+\.\d+\/lattice-agent-linux-amd64/;
 const AGENT_TARGET_LATEST_SHAPE = /target version: latest or \d+\.\d+\.\d+\b/;
+// The enroll one-liner fetches the installer at a stable tag and passes the
+// same tag as LATTICE_AGENT_VERSION. Shape here; the value is compared with
+// the latest stable release in check-release-pins.mjs.
+const AGENT_INSTALLER_URL_SHAPE =
+  /curl -fsSL --proto '=https' --tlsv1\.2 'https:\/\/raw\.githubusercontent\.com\/LatticeNet\/lattice-node-agent\/v\d+\.\d+\.\d+\/scripts\/install\.sh'/;
+const AGENT_INSTALLER_VERSION_SHAPE = /LATTICE_AGENT_VERSION='v\d+\.\d+\.\d+' \.\/lattice-agent-install\.sh/;
 
 const checks = [
   {
@@ -95,7 +101,8 @@ const checks = [
       "curl -fsSL --proto '=https' --tlsv1.2 -O",
       "lattice-agent.service",
       "`node-token` is a per-node bearer token",
-      "curl -fsSL --proto '=https' --tlsv1.2 'https://raw.githubusercontent.com/LatticeNet/lattice-node-agent/main/scripts/install.sh'",
+      AGENT_INSTALLER_URL_SHAPE,
+      AGENT_INSTALLER_VERSION_SHAPE,
       "The install script downloads the selected Linux release artifact",
       "Create fresh plan",
       "Force fresh plan",
@@ -299,6 +306,10 @@ const forbidden = [
       "LATTICE_SERVER_URL",
       "curl -fsSLO \"https://github.com/LatticeNet/lattice-node-agent",
       "curl -fsSL https://raw.githubusercontent.com/LatticeNet/lattice-node-agent",
+      // A branch ref pairs whatever installer the branch holds with whatever
+      // binary is latest; the one-liner must name a release tag.
+      "lattice-node-agent/main/scripts/install.sh",
+      "lattice-node-agent/integration/scripts/install.sh",
     ],
   },
 ];

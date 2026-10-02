@@ -28,6 +28,22 @@ const PINS = [
     pattern: /VERSION=(v\d+\.\d+\.\d+)\b/,
     label: "node-agent install VERSION",
   },
+  // The enroll one-liner names the release twice: the tag the installer is
+  // fetched from and the LATTICE_AGENT_VERSION it installs. Both go stale the
+  // day a new stable agent is cut, and the server's enroll constant moves with
+  // them, so both are compared with the release rather than with each other.
+  {
+    file: "docs/guide/node-agent.md",
+    repo: "LatticeNet/lattice-node-agent",
+    pattern: /lattice-node-agent\/(v\d+\.\d+\.\d+)\/scripts\/install\.sh/,
+    label: "node-agent enroll installer ref",
+  },
+  {
+    file: "docs/guide/node-agent.md",
+    repo: "LatticeNet/lattice-node-agent",
+    pattern: /LATTICE_AGENT_VERSION='(v\d+\.\d+\.\d+)'/,
+    label: "node-agent enroll LATTICE_AGENT_VERSION",
+  },
   // The site renders versions from one data file rather than repeating them in
   // prose. That removes the drift-in-three-places problem but creates a new
   // one: the single source can itself go stale silently. These pins close it.
