@@ -176,7 +176,9 @@ const checks = [
   {
     file: "docs/developers/index.md",
     patterns: [
-      `Latest published SDK tag: \`github.com/LatticeNet/lattice-sdk ${SDK_BASELINE}\``,
+      // The page names versions.ts instead of restating the SDK tag (8df4f49);
+      // assert the pointer, not a number the page no longer carries.
+      "`docs/.vitepress/data/versions.ts`. Do not copy that number into this page.",
       // The consumption sentence used to assert that both binaries consume the
       // published tag. They do not - both pin a pseudo-version - and pinning the
       // false sentence here made correcting the page fail this check. Pin the
@@ -200,9 +202,9 @@ const checks = [
   {
     file: "docs/guide/docker-server.md",
     patterns: [
-      "`:latest` for the current stable image",
-      "`:alpha` for the moving alpha test",
-      "no `main` image channel",
+      "`:latest` is the moving stable image",
+      "`:alpha` and `:beta` are the",
+      "is no `main`, branch, sha, or hash-string image channel",
       "The first boot creates `data/master.key` automatically",
       "pointing it at a missing file makes startup fail closed",
       "fixes ownership of the mounted data directory",
