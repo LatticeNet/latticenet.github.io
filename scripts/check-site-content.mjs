@@ -12,6 +12,12 @@ const AGENT_VERSION_SHAPE = /VERSION=v\d+\.\d+\.\d+\b/;
 const AGENT_TARGET_VERSION_SHAPE = /target version: \d+\.\d+\.\d+\b/;
 const AGENT_DOWNLOAD_URL_SHAPE = /releases\/download\/v\d+\.\d+\.\d+\/lattice-agent-linux-amd64/;
 const AGENT_TARGET_LATEST_SHAPE = /target version: latest or \d+\.\d+\.\d+\b/;
+// The enroll one-liner fetches the installer at a stable tag and passes the
+// same tag as LATTICE_AGENT_VERSION. Shape here; the value is compared with
+// the latest stable release in check-release-pins.mjs.
+const AGENT_INSTALLER_URL_SHAPE =
+  /curl -fsSL --proto '=https' --tlsv1\.2 'https:\/\/raw\.githubusercontent\.com\/LatticeNet\/lattice-node-agent\/v\d+\.\d+\.\d+\/scripts\/install\.sh'/;
+const AGENT_INSTALLER_VERSION_SHAPE = /LATTICE_AGENT_VERSION='v\d+\.\d+\.\d+' \.\/lattice-agent-install\.sh/;
 
 const checks = [
   {
@@ -95,7 +101,8 @@ const checks = [
       "curl -fsSL --proto '=https' --tlsv1.2 -O",
       "lattice-agent.service",
       "`node-token` is a per-node bearer token",
-      "curl -fsSL --proto '=https' --tlsv1.2 'https://raw.githubusercontent.com/LatticeNet/lattice-node-agent/main/scripts/install.sh'",
+      AGENT_INSTALLER_URL_SHAPE,
+      AGENT_INSTALLER_VERSION_SHAPE,
       "The install script downloads the selected Linux release artifact",
       "Create fresh plan",
       "Force fresh plan",
@@ -176,7 +183,9 @@ const checks = [
   {
     file: "docs/developers/index.md",
     patterns: [
-      `Latest published SDK tag: \`github.com/LatticeNet/lattice-sdk ${SDK_BASELINE}\``,
+      // The page names versions.ts instead of restating the SDK tag (8df4f49);
+      // assert the pointer, not a number the page no longer carries.
+      "`docs/.vitepress/data/versions.ts`. Do not copy that number into this page.",
       // The consumption sentence used to assert that both binaries consume the
       // published tag. They do not - both pin a pseudo-version - and pinning the
       // false sentence here made correcting the page fail this check. Pin the
@@ -200,9 +209,9 @@ const checks = [
   {
     file: "docs/guide/docker-server.md",
     patterns: [
-      "`:latest` for the current stable image",
-      "`:alpha` for the moving alpha test",
-      "no `main` image channel",
+      "`:latest` is the moving stable image",
+      "`:alpha` and `:beta` are the",
+      "is no `main`, branch, sha, or hash-string image channel",
       "The first boot creates `data/master.key` automatically",
       "pointing it at a missing file makes startup fail closed",
       "fixes ownership of the mounted data directory",
@@ -297,6 +306,10 @@ const forbidden = [
       "LATTICE_SERVER_URL",
       "curl -fsSLO \"https://github.com/LatticeNet/lattice-node-agent",
       "curl -fsSL https://raw.githubusercontent.com/LatticeNet/lattice-node-agent",
+      // A branch ref pairs whatever installer the branch holds with whatever
+      // binary is latest; the one-liner must name a release tag.
+      "lattice-node-agent/main/scripts/install.sh",
+      "lattice-node-agent/integration/scripts/install.sh",
     ],
   },
 ];
